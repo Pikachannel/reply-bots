@@ -36,6 +36,7 @@ The system skips replies when any of the following conditions are met:
 **Post content checks:**
 1. Detects whether a post contains any predefined keywords  
 2. Detects whether a post contains a link or embed
+3. Performs sentiment analysis on the user's post and determines whether it is negative, neutral, or positive (code is currently not included in this repo) 
 
 **Account-level checks:**
 1. Checks if the poster's account has been flagged by Bluesky moderation
