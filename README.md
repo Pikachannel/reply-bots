@@ -1,4 +1,5 @@
 # Bluesky Reply Bots
+- [swedish version here](SV_README.md)
 
 ## Overview
 This repository contains all the code for:
