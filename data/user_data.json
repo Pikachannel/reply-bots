@@ -10,21 +10,21 @@
             "skip":[
                 5
             ]
-        },
-        "BOT_DID_2":{
-            "USER_DID":{
-                "nickname":"example_nickname",
-                "chance":0.0,
-                "interval_posts":20,
-                "interval":[
-                    30.0,
-                    50.5
-                ],
-                "skip":[
-                    5,
-                    7
-                ]
-            }
+        }
+    },
+    "BOT_DID_2":{
+        "USER_DID":{
+            "nickname":"example_nickname",
+            "chance":0.0,
+            "interval_posts":20,
+            "interval":[
+                30.0,
+                50.5
+            ],
+            "skip":[
+                5,
+                7
+            ]
         }
     }
 }
