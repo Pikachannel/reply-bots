@@ -14,11 +14,11 @@ Evil Teto responds to your posts with funny mean messages!
 
 ### Current Features
 1. **Randomly chosen preset messages**, including:
-   - English messages.
+   - English messages
    - Messages that include the user's name.
 2. **Content Filtering System**, including:
    - A post filter system
-   - Allowing users to delete replies under their posts by replying with "delete"
+   - Allowing users to delete replies under their posts by replying with "delete".
 3. **Custom nicknames**: Users can set a custom nickname instead of using their Bluesky display name.
 4. **Post chance**: Users can change the chance of a reply being made under their post.
 5. **Post interval**: Users can change the amount of time in between replies being able to be made under their posts. All replies are subject to a minimum 60 second cooldown.
@@ -26,7 +26,7 @@ Evil Teto responds to your posts with funny mean messages!
 7. **Word of the Day**: Evil Teto will post a random word every single day.
 
 ### How to use
-1. Follow the bot on Bluesky.
+1. Follow the bot on Bluesky
    - If you unfollow or block the bot, it may take up to 5 minutes for this to register and for replies to stop.
 
 ### Content Filtering System
@@ -37,7 +37,7 @@ The system skips replies when any of the following conditions are met:
 **Post content checks:**
 1. Detects whether a post contains any predefined keywords  
 2. Detects whether a post contains a link or embed
-3. Performs sentiment analysis on the user's post and determines whether it is negative, neutral, or positive (code is currently not included in this repo) 
+3. Performs sentiment analysis on the user's post and determines whether it is negative, neutral, or positive (code is currently not included in this repo).
 
 **Account-level checks:**
 1. Checks if the poster's account has been flagged by Bluesky moderation
@@ -86,7 +86,7 @@ To view all your settings:
   - **Setting Variable Interval:** `!interval <lower_bound-upper_bound>` (both numbers must be between 60 and 3600)
   - **Resetting Interval:** `!interval`
 2. Wait for the bot to respond **before** sending a new message.
-   - Responses may take up to 5 minutes
+   - Responses may take up to 5 minutes.
 
 #### Skip posts
 1. Send a direct message to the bot in the format:
@@ -94,7 +94,7 @@ To view all your settings:
    - **Setting Variable Interval:** `!skip <lower_bound-upper_bound>` (both integers must be between 0 and 50)
    - **Resetting Interval:** `!skip`
 2. Wait for the bot to respond **before** sending a new message.
-   - Responses may take up to 5 minutes
+   - Responses may take up to 5 minutes.
 
 ## Privacy Policy
 
