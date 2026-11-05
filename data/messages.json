@@ -103,14 +103,14 @@
 		 "i'm here for hugs!"
       ],
 	   "sv": [
-		   "Det går superbra, fortsätt så!",
-		   "...",
-		   "jag finns här för kramar!"
+		 "Det går superbra, fortsätt så!",
+		 "...",
+		 "jag finns här för kramar!"
 	   ]
    },
    "EVIL_TETO_DID":{
       "en":[
-         "piss urself",
+		 "piss urself",
          "you SMELL",
 		 "NERD",
 		 "nieghhh",
@@ -155,12 +155,57 @@
 		 "i ATE your dreams",
 		 "i'm going to EAT you",
 		 "that's it. not more pats."
-      ],
+      ], 
 	   "sv":[
-		   "pissa på dig",
-		   "kissa på dig",
-		   "...",
-		   "det var droppen. Inga fler klappar på dig."
+         "ingen mer whimsy.",
+         "inte ens Whimsy Miku skulle gilla det här.",
+		 "Hallåå? Någon där inne? äller e det helt tomt där uppe?",
+		 "pissa på dig",
+		 "kissa på dig",
+		 "du STINKER",
+         "du LUKTAR",
+         "näähh",
+         "NÖRD",
+         "ugh.",
+		 "ew.",
+         "VAD?? stoppa den här GALENSKAPEN",
+         "jag ÅT upp dina drömmar",
+         "jag kommer ÄTA upp dig",
+         "nejnejnejnejnej",
+         "MINA ÖGOOOON",
+         "jag HATAR dig",
+         "hur VÅGAR du",
+         "loser core <3",
+         "SLUTA REDAN!",
+         "weird core.",
+         "äkta SKRÄP",
+         "nerd core!",
+         "din jävla LOSER",
+         "det här borde vara ditt SISTA inlägg",
+         "{display_name} mer som ähh DUM",
+         "jag är en del av hatarna.",
+         "det här är motsatsen till peak.",
+         "få bort det här från min tl",
+         "du kommer INTE till himlen",
+         "det här är inte ens värt min tid!",
+         "åh. ännu ett mid-inlägg.",
+         "låt dom inte koka.",
+         "jag vill ÖRFILA dig!",
+         "trött på den här skiten.",
+         "jag kan inte fatta det här",
+         "vem ens är det här...",
+         "va i helvette är det för fel på dig?!",
+         "{display_name}... kan jag bara fråga vad fan är ditt problem? Altså..",
+         "få mig inte att plocka fram skällsorden",
+         "du kommer få det du förtjänar.",
+         "posta ALDRIG igen. Jag ber er!",
+         "till och med jag kan göra bättre än det här",
+         "{display_name}? aldrig hört talas om",
+         "hoppas du får en MID dag",
+         "du kan bara gå nedåt härifrån - kom ihåg det älskling!",
+         "snacka ALDRIG med mig igen {display_name}",
+         "ja det var droppen, logga ut",
+		 "det var droppen. Inga fler klappar på dig."
 	   ]
    }
 }
