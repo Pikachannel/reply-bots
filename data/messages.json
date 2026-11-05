@@ -101,7 +101,12 @@
 		 "reach your dreams! you can do it",
 		 "*patpat*",
 		 "i'm here for hugs!"
-      ]
+      ],
+	   "sv": [
+		   "Det går superbra, fortsätt så!",
+		   "...",
+		   "jag finns här för kramar!"
+	   ]
    },
    "EVIL_TETO_DID":{
       "en":[
@@ -150,6 +155,12 @@
 		 "i ATE your dreams",
 		 "i'm going to EAT you",
 		 "that's it. not more pats."
-      ]
+      ],
+	   "sv":[
+		   "pissa på dig",
+		   "kissa på dig",
+		   "...",
+		   "det var droppen. Inga fler klappar på dig."
+	   ]
    }
 }
