@@ -13,10 +13,10 @@ Evil Teto - som namnet förhoppningsvis förklarar - svarar på dina inlägg med
 
 ### Nuvarande funktioner
 1. **Slumpmässigt valda förinställda meddelanden**, inklusive:
-   - Meddelanden på engelska. 
+   - Meddelanden på engelska
    - Meddelanden som inkluderar användarens namn.
 2. **System för innehållsfiltrering**, inklusive:
-   - Ett filter för inlägg.
+   - Ett filter för inlägg
    - Möjlighet för användare att radera svar på sina inlägg genom att svara med ordet "delete".
 3. **Anpassade smeknamn**: Användare kan ange ett eget smeknamn istället för att använda sitt visningsnamn på Bluesky.
 4. **Svarschans**: Användare kan justera sannolikheten för att ett svar skapas på deras inlägg.
@@ -27,7 +27,7 @@ Evil Teto - som namnet förhoppningsvis förklarar - svarar på dina inlägg med
 
 
 ### Så här använder du tjänsten
-1. Följ boten på Bluesky. 
+1. Följ boten på Bluesky
    - Om du slutar följa eller blockerar boten kan det ta upp till 5 minuter innan detta registreras och boten slutar svara.
 
 ### System för innehållsfiltrering
