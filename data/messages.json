@@ -2,13 +2,13 @@
     "BOT_DID_1":{
         "en": [
             "message_1", 
-            "message_2"
+            "message_2 {display_name}"
         ]
     },
     "BOT_DID_2":{
         "en": [
             "message_1", 
-            "message_2"
+            "message_2 {display_name}"
         ]
     }
 }
