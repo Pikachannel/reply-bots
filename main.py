@@ -40,6 +40,7 @@ while os.getenv(f"HANDLE_{get_bot_num}"):
 MESSAGES_JSON_PATH = "data/messages.json"
 USER_DATA_PATH = "data/user_data.json"
 BLOCKLIST_PATH = "data/blocklist.txt"
+LOCALES_PATH = "data/locales.json"
 
 # -------- Load json files --------
 with open(MESSAGES_JSON_PATH, "r", encoding="utf-8") as f:
@@ -51,6 +52,8 @@ with open(USER_DATA_PATH, "r", encoding="utf-8") as f:
 with open(BLOCKLIST_PATH, "r") as f:
     keyword_list = {line.strip().lower() for line in f}
 
+with open(LOCALES_PATH, "r", encoding="utf-8") as f:
+    setting_replies = json.load(f)
 
 # ------ Main Function --------
 async def main() -> None:
@@ -69,7 +72,7 @@ async def main() -> None:
 
     # -- Setup classes
     ws = Websocket()
-    command_manager = CommandManager(user_data, json_queue)
+    command_manager = CommandManager(user_data, json_queue, setting_replies)
     dm_worker = DmWorker(bots, command_manager, json_queue, account_dids)
 
     filters = Filters(bots[account_dids[0]]["client"], keyword_list)
