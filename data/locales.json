@@ -22,5 +22,29 @@
         "language": "Your language has been changed to '{language}'!\nYou can change this at any time by sending the same command.\nUse !help at any time to see all commands.",
         "language_error_1": "You're already using '{language}'!\nUse !help at any time to see all commands.",
         "language_error_2": "An error occurred while updating your language setting.\nAvailable languages: {languages}.\nUse !help at any time to see all commands."
+    },
+    "sv": {
+        "remove": "Inställningen '{setting}' har nu blivit återställd till det standardvärdet det var innan ändringen.",
+        "nickname": "Ditt smeknamn har nu uppdaterats till {nickname}\nDock så kan du absolut ändra det när som helst, genom att skicka samma kommando.\nSkriv !help när som helst för att se alla kommandon.",
+        "chance": "Sannolikheten för ett svar under dina inlägg har nu uppdaterats till '{chance_value}%'\nDu kan ändra det när som helst genom att skicka samma kommando.\nSkriv !help när som helst för att se alla kommandon.",
+        "chance_error_1": "Ett fel uppstod när din frekvens-inställning skulle uppdateras.\nSe till att du bara använder siffror.\nSkriv !help när som helst för att se alla kommandon.",
+        "chance_error_2": "Ett fel uppstod när din frekvens-inställning skulle uppdateras.\nSe till att chansen ligger mellan 0-100.\nSkriv !help när som helst för att se alla kommandon.",
+        "interval": "Ditt intervall har nu uppdaterats till '{text_value}' sekunder\nDu kan ändra det när som helst genom att skicka samma kommando.\nSkriv !help när som helst för att se alla kommandon.",
+        "interval_error_1": "Ett fel uppstod när din intervallinställning skulle uppdateras.\nSe till att du bara använder siffror.\nSkriv !help när som helst för att se alla kommandon.",
+        "interval_error_2": "Ett fel uppstod när din intervallinställning skulle uppdateras.\nSe till att ditt första värde är mindre än ditt andra värde.\nSkriv !help när som helst för att se alla kommandon.",
+        "interval_error_3": "Ett fel uppstod när din intervallinställning skulle uppdateras.\nSe till att intervallet ligger mellan '60-3600'.\nSkriv !help när som helst för att se alla kommandon.",
+        "skip": "Ditt intervall har nu uppdaterats till '{text_value}' inlägg\nDu kan ändra det när som helst genom att skicka samma kommando.\nSkriv !help när som helst för att se alla kommandon.",
+        "skip_error_1": "Ett fel uppstod när din skippa-detta-inställning skulle uppdateras.\nSe till att du bara använder siffror.\nSkriv !help när som helst för att se alla kommandon.",
+        "skip_error_2": "Ett fel uppstod när din skippa-detta-inställning skulle uppdateras.\nSe till att ditt första värde är mindre än ditt andra värde.\nSkriv !help när som helst för att se alla kommandon.",
+        "skip_error_3": "Ett fel uppstod när din skippa-detta-inställning skulle uppdateras.\nSe till att intervallet ligger mellan '0-50'.\nSkriv !help när som helst för att se alla kommandon.",
+        "delete": "Dina inställningar har nu tagits bort.\nDu kan bekräfta detta genom att använda '!settings'.\nSkriv !help när som helst för att se alla kommandon.",
+        "view_settings": "Dina inställningar syns här nedanför!\n{format_settings}",
+        "no_settings": "Du har nu inga inställningar konfigurerade med boten.\nSkriv !help för att se tillgängliga inställningar!",
+        "help": "Checka README-filen för en fullständig lista över kommandon och funktioner. Just nu så är den skriven på ENGELSKA(som default) och SVENSKA(som extra).",
+        "sync_with": "Dina inställningar har nu synkats med {handle}!\nSkriv !settings för att se dina synkade inställningar.\nSkriv !help när som helst för att se alla kommandon.",
+        "sync_from": "Andra botar har nu synkats med dina inställningar från {handle}!\nSkriv !settings på dina andra botar för att se dina synkade inställningar.\nSkriv !help när som helst för att se alla kommandon.",
+        "language": "Ditt språk har nu ändrats till '{language}'!\nDu kan ändra det när som helst genom att skicka samma kommando.\nSkriv !help när som helst för att se alla kommandon.",
+        "language_error_1": "Du använder redan '{language}'!\nSkriv !help när som helst för att se alla kommandon.",
+        "language_error_2": "Ett fel uppstod när din språkinställning skulle uppdateras.\nTillgängliga språk: {languages}.\nSkriv !help när som helst för att se alla kommandon."
     }
 }
