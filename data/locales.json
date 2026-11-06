@@ -1,0 +1,26 @@
+{
+    "en": {
+        "remove": "The setting '{setting}' has been reset to the default value.",
+        "nickname": "Your nickname has been updated to {nickname}\nYou can change this at any time by sending the same command.\nUse !help at any time to see all commands.",
+        "chance": "The chance of a reply under your posts has been updated to '{chance_value}%'\nYou can change this at any time by sending the same command.\nUse !help at any time to see all commands.",
+        "chance_error_1": "An error occurred while updating your chance setting.\nPlease make sure you only use numbers.\nUse !help at any time to see all commands.",
+        "chance_error_2": "An error occurred while updating your chance setting.\nPlease make sure your chance is in the range 0-100.\nUse !help at any time to see all commands.",
+        "interval": "Your interval has been updated to '{text_value}' seconds\nYou can change this at any time by sending the same command.\nUse !help at any time to see all commands.",
+        "interval_error_1": "An error occurred while updating your interval setting.\nPlease make sure you only use numbers.\nUse !help at any time to see all commands.",
+        "interval_error_2": "An error occurred while updating your interval setting.\nPlease make sure your first value is less then your second value.\nUse !help at any time to see all commands.",
+        "interval_error_3": "An error occurred while updating your interval setting.\nPlease make sure your interval is in the range '60-3600'.\nUse !help at any time to see all commands.",
+        "skip": "Your interval has been updated to '{text_value}' posts\nYou can change this at any time by sending the same command.\nUse !help at any time to see all commands.",
+        "skip_error_1": "An error occurred while updating your skip setting.\nPlease make sure you only use numbers.\nUse !help at any time to see all commands.",
+        "skip_error_2": "An error occurred while updating your skip setting.\nPlease make sure your first value is less then your second value.\nUse !help at any time to see all commands.",
+        "skip_error_3": "An error occurred while updating your skip setting.\nPlease make sure your interval is in the range '0-50'.\nUse !help at any time to see all commands.",
+        "delete": "Your settings have been deleted.\nYour can confirm this by using '!settings'.\nUse !help at any time to see all commands.",
+        "view_settings": "Your settings can be seen below!\n{format_settings}",
+        "no_settings": "You have no settings configured with the bot.\nUse !help to see options for settings!",
+        "help": "Check out the README file for a full list of commands and features.",
+        "sync_with": "Your settings have been synced with {handle}!\nUse !settings to view your synced settings.\nUse !help at any time to see all commands.",
+        "sync_from": "Other bots have been synced with your settings from {handle}!\nUse !settings on your other bots to view your synced settings.\nUse !help at any time to see all commands.",
+        "language": "Your language has been changed to '{language}'!\nYou can change this at any time by sending the same command.\nUse !help at any time to see all commands.",
+        "language_error_1": "You're already using '{language}'!\nUse !help at any time to see all commands.",
+        "language_error_2": "An error occurred while updating your language setting.\nAvailable languages: {languages}.\nUse !help at any time to see all commands."
+    }
+}
