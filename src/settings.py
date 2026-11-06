@@ -1,11 +1,14 @@
+
 # -------- Imports --------
 import asyncio
 
+
 # -------- Command Class --------
 class CommandManager:
-    def __init__(self, user_data: dict, json_queue: asyncio.Queue) -> None:
+    def __init__(self, user_data: dict, json_queue: asyncio.Queue, setting_replies: dict) -> None:
         self.user_data = user_data
         self.json_queue = json_queue
+        self.setting_replies = setting_replies
 
     # -------------
     # -- To float
@@ -15,7 +18,20 @@ class CommandManager:
             return float(s)
         except (TypeError, ValueError):
             return None
-        
+
+    # -------------
+    # -- Get language
+    # Gets a user's language setting
+    def get_language(self, user_did: str, account_did: str) -> str:
+        return self.user_data.get(account_did, {}).get(user_did, {}).get("lang", "en")
+
+    # -------------
+    # -- Get replies
+    # Gets replies for a user's language
+    def get_replies(self, user_did: str, account_did: str) -> dict:
+        lang = self.get_language(user_did, account_did)
+        return self.setting_replies.get(lang, self.setting_replies["en"])
+
     # -------------
     # -- Remove setting
     # Removes a specific setting
@@ -30,15 +46,19 @@ class CommandManager:
 
         await self.json_queue.put(payload)
 
-        return True, f"The setting '{setting}' has been reset to the default value."
+        # -- Get replies
+        replies = self.get_replies(user_did, account_did)
+
+        # -- Return reply
+        return True, replies["remove"].format(setting=setting)
 
     # -------------
     # -- Nickname
     # A string at max 20 characters
     async def update_nickname(self, user_did: str, nickname: str | None, account_did: str) -> tuple[bool, str]:
-        # -- Validation and mormalisation
+        # -- Validation and normalisation
         if nickname is None:
-            return await self.remove_setting(user_did, "nickname", account_did) 
+            return await self.remove_setting(user_did, "nickname", account_did)
 
         nickname = nickname.strip()[:20]
 
@@ -49,24 +69,33 @@ class CommandManager:
             "user_did": user_did,
             "nickname": nickname
         }
+
         await self.json_queue.put(payload)
 
-        return True, f"Your nickname has been updated to {nickname}\nYou can change this at any time by sending the same command.\nUse !help at any time to see all commands."
+        # -- Get replies
+        replies = self.get_replies(user_did, account_did)
+
+        # -- Return reply
+        return True, replies["nickname"].format(nickname=nickname)
 
     # -------------
     # -- Chance
     # A float between 0 and 100
     async def chance(self, user_did: str, chance: str | None, account_did: str) -> tuple[bool, str]:
-        # -- Validation and mormalisation
+        # -- Validation and normalisation
         if chance is None:
             return await self.remove_setting(user_did, "chance", account_did)
 
         chance_value = self.to_float(chance)
+
+        # -- Get replies
+        replies = self.get_replies(user_did, account_did)
+
         if chance_value is None:
-            return False, "An error occurred while updating your chance setting.\nPlease make sure you only use numbers.\nUse !help at any time to see all commands."
+            return False, replies["chance_error_1"]
 
         if chance_value < 0 or chance_value > 100:
-            return False, "An error occurred while updating your chance setting.\nPlease make sure your chance is in the range 0-100.\nUse !help at any time to see all commands."
+            return False, replies["chance_error_2"]
 
         chance_value = round(chance_value, 2)
 
@@ -80,55 +109,57 @@ class CommandManager:
 
         await self.json_queue.put(payload)
 
-        return True, f"The chance of a reply under your posts has been updated to '{chance_value}%'\nYou can change this at any time by sending the same command.\nUse !help at any time to see all commands."
+        # -- Return reply
+        return True, replies["chance"].format(chance_value=chance_value)
 
     # -------------
     # -- Interval
-    # A static interval with max time of 3600 seconds
-    # A ranged interval between 0 and 3600 seconds
+    # A static interval or a ranged interval
+    # Between 60 and 3600 seconds
     async def interval(self, user_did: str, interval: str | None, account_did: str) -> tuple[bool, str]:
-        # -- Validation and mormalisation
+        # -- Validation and normalisation
         if interval is None:
             return await self.remove_setting(user_did, "interval", account_did)
-    
+
+        # -- Get replies
+        replies = self.get_replies(user_did, account_did)
+
         # -- Check if the interval is a range or static value
-        intervalSplit = interval.split("-")
+        interval_split = interval.split("-")
 
         # -- Range
-        if len(intervalSplit) == 2:
-            interval_value_1 = self.to_float(intervalSplit[0])
-            interval_value_2 = self.to_float(intervalSplit[1])
+        if len(interval_split) == 2:
+            interval_value_1 = self.to_float(interval_split[0])
+            interval_value_2 = self.to_float(interval_split[1])
 
             if interval_value_1 is None or interval_value_2 is None:
-                return False, "An error occurred while updating your interval setting.\nPlease make sure you only use numbers.\nUse !help at any time to see all commands."
-           
-            interval_format_1, interval_format_2 = round(interval_value_1, 2), round(interval_value_2, 2)
-         
+                return False, replies["interval_error_1"]
+
+            interval_format_1 = round(interval_value_1, 2)
+            interval_format_2 = round(interval_value_2, 2)
+
             if interval_format_1 > interval_format_2:
-                return False, "An error occurred while updating your interval setting.\Please make sure your first value is less then your second value.\nUse !help at any time to see all commands."
+                return False, replies["interval_error_2"]
 
-            if interval_format_1 < 60 or interval_format_2 < 60:
-                return False, "An error occurred while updating your interval setting.\Please make sure your interval is in the range '60-3600'.\nUse !help at any time to see all commands."
-
-            if interval_format_2 > 3600:
-                return False, "An error occurred while updating your interval setting.\Please make sure your interval is in the range '60-3600'.\nUse !help at any time to see all commands."
+            if interval_format_1 < 60 or interval_format_2 > 3600:
+                return False, replies["interval_error_3"]
 
             final_value = [interval_format_1, interval_format_2]
             text_value = f"{interval_format_1}-{interval_format_2}"
-        
+
         # -- Static
         else:
             interval_value = self.to_float(interval)
 
             if interval_value is None:
-                return False, "An error occurred while updating your interval setting.\nPlease make sure you only use numbers.\nUse !help at any time to see all commands."
+                return False, replies["interval_error_1"]
 
-            if interval_value > 3600 or interval_value < 0:
-                return False, "An error occurred while updating your interval setting.\nPlease make sure your interval is in the range '0-3600'.\nUse !help at any time to see all commands."
+            if interval_value < 60 or interval_value > 3600:
+                return False, replies["interval_error_3"]
 
             final_value = [round(interval_value, 2)]
             text_value = round(interval_value, 2)
-        
+
         # -- Add to queue
         payload = {
             "type": "update",
@@ -139,55 +170,57 @@ class CommandManager:
 
         await self.json_queue.put(payload)
 
-        return True, f"Your interval has been updated to '{text_value}' seconds\nYou can change this at any time by sending the same command.\nUse !help at any time to see all commands."
+        # -- Return reply
+        return True, replies["interval"].format(text_value=text_value)
 
     # -------------
     # -- Skip posts
-    # A static number of posts the bot will skip, between 0 and 50 posts
-    # A ranged interval of posts the bot will skip, between 0 and 50 posts
+    # A static number or ranged number of posts
+    # Between 0 and 50 posts
     async def skip_posts(self, user_did: str, interval: str | None, account_did: str) -> tuple[bool, str]:
-        # -- Validation and mormalisation
+        # -- Validation and normalisation
         if interval is None:
             return await self.remove_setting(user_did, "skip", account_did)
-    
+
+        # -- Get replies
+        replies = self.get_replies(user_did, account_did)
+
         # -- Check if the interval is a range or static value
-        intervalSplit = interval.split("-")
+        interval_split = interval.split("-")
 
         # -- Range
-        if len(intervalSplit) == 2:
-            interval_value_1 = self.to_float(intervalSplit[0])
-            interval_value_2 = self.to_float(intervalSplit[1])
+        if len(interval_split) == 2:
+            interval_value_1 = self.to_float(interval_split[0])
+            interval_value_2 = self.to_float(interval_split[1])
 
             if interval_value_1 is None or interval_value_2 is None:
-                return False, "An error occurred while updating your interval setting.\nPlease make sure you only use numbers.\nUse !help at any time to see all commands."
-           
-            interval_format_1, interval_format_2 = int(interval_value_1), int(interval_value_2)
-         
+                return False, replies["skip_error_1"]
+
+            interval_format_1 = int(interval_value_1)
+            interval_format_2 = int(interval_value_2)
+
             if interval_format_1 > interval_format_2:
-                return False, "An error occurred while updating your interval setting.\nPlease make sure your first value is less then your second value.\nUse !help at any time to see all commands."
+                return False, replies["skip_error_2"]
 
-            if interval_format_1 < 0 or interval_format_2 < 0:
-                return False, "An error occurred while updating your interval setting.\nPlease make sure your interval is in the range '0-50'.\nUse !help at any time to see all commands."
-
-            if interval_format_2 > 50:
-                return False, "An error occurred while updating your interval setting.\nPlease make sure your interval is in the range '0-50'.\nUse !help at any time to see all commands."
+            if interval_format_1 < 0 or interval_format_2 > 50:
+                return False, replies["skip_error_3"]
 
             final_value = [interval_format_1, interval_format_2]
             text_value = f"{interval_format_1}-{interval_format_2}"
-        
+
         # -- Static
         else:
             interval_value = self.to_float(interval)
 
             if interval_value is None:
-                return False, "An error occurred while updating your interval setting.\nPlease make sure you only use numbers.\nUse !help at any time to see all commands."
+                return False, replies["skip_error_1"]
 
-            if interval_value > 50 or interval_value < 0:
-                return False, "An error occurred while updating your interval setting.\nPlease make sure your interval is in the range '0-50'.\nUse !help at any time to see all commands."
+            if interval_value < 0 or interval_value > 50:
+                return False, replies["skip_error_3"]
 
             final_value = [int(interval_value)]
             text_value = int(interval_value)
-        
+
         # -- Add to queue
         payload = {
             "type": "update",
@@ -198,11 +231,12 @@ class CommandManager:
 
         await self.json_queue.put(payload)
 
-        return True, f"Your interval has been updated to '{text_value}' posts\nYou can change this at any time by sending the same command.\nUse !help at any time to see all commands."
-        
+        # -- Return reply
+        return True, replies["skip"].format(text_value=text_value)
+
     # -------------
     # -- Delete
-    # Delete all the users' settings
+    # Deletes all the user's settings
     async def delete_settings(self, user_did: str, account_did: str) -> tuple[bool, str]:
         # -- Add to queue
         payload = {
@@ -213,34 +247,50 @@ class CommandManager:
 
         await self.json_queue.put(payload)
 
-        return True, "Your settings have been deleted.\nYour can confirm this by using '!settings'.\nUse !help at any time to see all commands."
+        # -- Get replies
+        replies = self.get_replies(user_did, account_did)
+
+        # -- Return reply
+        return True, replies["delete"]
 
     # -------------
     # -- Settings
-    # View a users' settings
+    # Views a user's settings
     async def view_settings(self, user_did: str, account_did: str) -> tuple[bool, str]:
+
         # -- Settings helper
         def format_value(value):
             if isinstance(value, list):
                 return f"{value[0]}-{value[1]}" if len(value) == 2 else value[0]
             return value
 
+        # -- Get replies
+        replies = self.get_replies(user_did, account_did)
+
         # -- Get settings
         user_settings = self.user_data.get(account_did, {}).get(user_did, {})
-      
+
         if not user_settings:
-            return False, "You have no settings configured with the bot.\nUse !help to see options for settings!"
-      
+            return False, replies["no_settings"]
+
         format_settings = "\n".join(
             f"{key.capitalize()}: {format_value(value)}"
             for key, value in user_settings.items()
         )
-        return True, f"Your settings can be seen below!\n{format_settings}"
+
+        # -- Return reply
+        return True, replies["view_settings"].format(
+            format_settings=format_settings
+        )
 
     # -------------
     # -- Sync
-    # Sync a users' settings between bots
+    # Syncs a user's settings between bots
     async def sync_settings(self, user_did: str, handle: str, bots: dict, account_did: str, other_dids: list) -> tuple[bool, str]:
+
+        # -- Get replies
+        replies = self.get_replies(user_did, account_did)
+
         # -- Get the bot to sync with
         sync_did = None
 
@@ -248,16 +298,20 @@ class CommandManager:
             if f"@{bot['handle']}" == handle:
                 sync_did = did
                 break
-        
+
         # -- Validation
         if sync_did is None or sync_did not in bots:
-            return False, "An error occurred while syncing your settings.\nPlease make sure you entered a valid bot handle.\nUse !help at any time to see all commands."
+            return False, replies.get(
+                "sync_error",
+                "An error occurred while syncing your settings.\nPlease make sure you entered a valid bot handle.\nUse !help at any time to see all commands."
+            )
 
-        # -- Get the users' settings on the sync bot
+        # -- Get the user's settings on the sync bot
         sync_settings = self.user_data.get(sync_did, {}).get(user_did, {})
 
-        # -- Sync the settings to the other bot
+        # -- Sync the settings to the other bots
         if sync_did == account_did:
+
             for other_did in other_dids:
                 payload = {
                     "type": "update",
@@ -265,47 +319,73 @@ class CommandManager:
                     "user_did": user_did,
                     **sync_settings
                 }
-                asyncio.create_task(self.json_queue.put(payload))
 
-                return True, f"Other bots have been synced with your settings from {bots[account_did]['handle']}!\nUse !settings on your other bots to view your synced settings.\nUse !help at any time to see all commands."
-     
+                await self.json_queue.put(payload)
+
+            # -- Return reply after all bots are processed
+            return True, replies["sync_from"].format(
+                handle=bots[account_did]["handle"]
+            )
+
         # -- Sync the settings to this bot
-        elif sync_did != account_did:
+        else:
             payload = {
                 "type": "update",
                 "account_did": account_did,
                 "user_did": user_did,
                 **sync_settings
             }
-            asyncio.create_task(self.json_queue.put(payload))
 
-            return True, f"Your settings have been synced with {bots[sync_did]['handle']}!\nUse !settings to view your synced settings.\nUse !help at any time to see all commands."
-        else:
-            return False, "An error occurred while syncing your settings.\nPlease make sure you entered a valid bot handle.\nUse !help at any time to see all commands."
+            await self.json_queue.put(payload)
+
+            # -- Return reply
+            return True, replies["sync_with"].format(
+                handle=bots[sync_did]["handle"]
+            )
 
     # -------------
     # -- Help
-    # Send a help message for the bot
-    async def help(self) -> tuple[bool, str, dict]:
+    # Sends a help message for the bot
+    async def help(self, user_did: str | None = None, account_did: str | None = None) -> tuple[bool, str, dict]:
+
+        # -- Get replies
+        if user_did is not None and account_did is not None:
+            lang = self.get_language(user_did, account_did)
+            replies = self.get_replies(user_did, account_did)
+        else:
+            lang = "en"
+            replies = self.setting_replies["en"]
+
         # -- Format help
-        text = "Check out the README file for a full list of commands and features."
-        link_text = "README file"
-        uri = "https://github.com/Pikachannel/reply-bots/blob/main/README.md"
+        text = replies["help"]
+
+        if lang == "en":
+            link_text = "README file"
+            uri = "https://github.com/Pikachannel/reply-bots/blob/main/README.md"
+        else:
+            link_text = f"{lang.upper()} README file"
+            uri = f"https://github.com/Pikachannel/reply-bots/blob/main/{lang.upper()}_README.md"
+
         byte_start = text.encode("utf-8").find(link_text.encode("utf-8"))
-        byte_end = byte_start + len(link_text.encode("utf-8"))
 
-        # -- Create the clickable link
-        facet = {
-            "index": {
-                "byteStart": byte_start,
-                "byteEnd": byte_end
-            },
-            "features": [
-                {
-                    "$type": "app.bsky.richtext.facet#link",
-                    "uri": uri
-                }
-            ]
-        }
+        # -- Create the clickable link if the text contains README file
+        facet = {}
 
+        if byte_start != -1:
+            byte_end = byte_start + len(link_text.encode("utf-8"))
+
+            facet = {
+                "index": {
+                    "byteStart": byte_start,
+                    "byteEnd": byte_end
+                },
+                "features": [
+                    {
+                        "$type": "app.bsky.richtext.facet#link",
+                        "uri": uri
+                    }
+                ]
+            }
+
+        # -- Return reply
         return True, text, facet
