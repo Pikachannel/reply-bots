@@ -7,8 +7,8 @@ Detta GitHub repo innehåller all kod för:
 ---
 
 ## Botarna!
-
 Whimsy Miku - *som har glimten i ögat* - svarar på dina inlägg med positiva meddelanden!
+
 Evil Teto - som namnet förhoppningsvis förklarar - svarar på dina inlägg med elaka meddelanden i en humoristisk ton!
 
 ### Nuvarande funktioner
@@ -23,8 +23,6 @@ Evil Teto - som namnet förhoppningsvis förklarar - svarar på dina inlägg med
 5. **Svarsintervall**: Användare kan ändra tidsintervallet mellan svar på sina inlägg. Alla svar har en minsta väntetid (nedkylningsperiod) på 60 sekunder.
 6. **Hoppa över inlägg**: Användare kan ställa in hur många inlägg som ska passera mellan de tillfällen då boten kan svara på deras inlägg.
 7. **Dagens ord**: Evil Teto publicerar ett slumpmässigt ord varje dag.
-
-
 
 ### Så här använder du tjänsten
 1. Följ boten på Bluesky
@@ -48,13 +46,11 @@ Systemet hoppar över svar om något av följande villkor är uppfyllt:
    - Etiketter som användaren själv har lagt till.
    - Etiketter från Blueskys moderering.
 
-
-
 #### Ta bort inlägg
 1. Hitta ett svar som skrivits under ett av dina inlägg.
 2. Svara på det med ordet "delete", så tas det bort omedelbart.
 
-#### Inställningar
+### Inställningar
 Du kan justera inställningarna för botarna! Detta görs genom att skicka rätt kommando i ett direktmeddelande (DM) till boten; kommandona finns listade nedan.
 För att se dina nuvarande inställningar:
 1. Skicka ett direktmeddelande till boten med följande kommando:
@@ -79,7 +75,7 @@ För att se dina nuvarande inställningar:
 
 #### Sannolikhet för inlägg
 1. Skicka ett direktmeddelande till boten enligt följande format:
-   - **Ange sannolikhet:** `!chance <sannolikhet>` (måste vara ett tal mellan 1 och 100)
+   - **Ange sannolikhet:** `!chance <sannolikhet>` (måste vara ett tal mellan 0 och 100)
    - **Återställ sannolikhet:** `!chance`
 2. Vänta på svar från boten **innan** du skickar ett nytt meddelande. 
    - Det kan ta upp till 5 minuter att få svar.
