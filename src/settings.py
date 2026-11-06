@@ -360,10 +360,10 @@ class CommandManager:
         text = replies["help"]
 
         if lang == "en":
-            link_text = "README file"
+            link_text = "README"
             uri = "https://github.com/Pikachannel/reply-bots/blob/main/README.md"
         else:
-            link_text = f"{lang.upper()} README file"
+            link_text = f"{lang.upper()}_README"
             uri = f"https://github.com/Pikachannel/reply-bots/blob/main/{lang.upper()}_README.md"
 
         byte_start = text.encode("utf-8").find(link_text.encode("utf-8"))
