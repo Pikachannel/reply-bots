@@ -75,7 +75,7 @@ To view all your settings:
 
 #### Post chance 
 1. Send a direct message to the bot in the format:
-  - **Setting Chance:** `!chance <chance>` (must be a number between 1 and 100)
+  - **Setting Chance:** `!chance <chance>` (must be a number between 0 and 100)
   - **Resetting Chance:** `!chance`
 2. Wait for the bot to respond **before** sending a new message.
    - Responses may take up to 5 minutes.
@@ -90,7 +90,7 @@ To view all your settings:
 
 #### Skip posts
 1. Send a direct message to the bot in the format:
-   - **Setting Static Interval:** `!skip <intervaL>` (must be a integer between 0 and 50)
+   - **Setting Static Interval:** `!skip <interval>` (must be a integer between 0 and 50)
    - **Setting Variable Interval:** `!skip <lower_bound-upper_bound>` (both integers must be between 0 and 50)
    - **Resetting Interval:** `!skip`
 2. Wait for the bot to respond **before** sending a new message.
