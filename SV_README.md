@@ -13,7 +13,7 @@ Evil Teto - som namnet förhoppningsvis förklarar - svarar på dina inlägg med
 
 ### Nuvarande funktioner
 1. **Slumpmässigt valda förinställda meddelanden**, inklusive:
-   - Meddelanden på engelska
+   - Support for multiple languages //// Needs translating
    - Meddelanden som inkluderar användarens namn.
 2. **System för innehållsfiltrering**, inklusive:
    - Ett filter för inlägg
@@ -23,6 +23,9 @@ Evil Teto - som namnet förhoppningsvis förklarar - svarar på dina inlägg med
 5. **Svarsintervall**: Användare kan ändra tidsintervallet mellan svar på sina inlägg. Alla svar har en minsta väntetid (nedkylningsperiod) på 60 sekunder.
 6. **Hoppa över inlägg**: Användare kan ställa in hur många inlägg som ska passera mellan de tillfällen då boten kan svara på deras inlägg.
 7. **Dagens ord**: Evil Teto publicerar ett slumpmässigt ord varje dag.
+8. **Language Selection**: Users can set their preferred bot response language, currently including:  //// Needs translating
+   - English (EN)
+   - Swedish (SV)
 
 ### Så här använder du tjänsten
 1. Följ boten på Bluesky
@@ -87,6 +90,7 @@ För att se dina nuvarande inställningar:
    - **Återställ intervall:** `!interval`
 2. Vänta på svar från boten **innan** du skickar ett nytt meddelande. 
    - Det kan ta upp till 5 minuter att få svar.
+   - 
 #### Hoppa över inlägg
 1. Skicka ett direktmeddelande till boten enligt följande format:
    - **Ange fast intervall:** `!skip <intervall>` (måste vara ett heltal mellan 0 och 50)
@@ -94,6 +98,14 @@ För att se dina nuvarande inställningar:
    - **Återställ intervall:** `!skip`
 2. Vänta på svar från boten **innan** du skickar ett nytt meddelande. 
    - Det kan ta upp till 5 minuter att få svar.
+
+//// Needs translating
+#### Language
+1. Send a direct message to the bot in the format:
+   - **Setting Language:** `!language <language_code>` (e.g., `!language sv` or `!language en`).
+   - **Resetting Language:** `!language`
+2. Wait for the bot to respond **before** sending a new message.
+   - Responses may take up to 5 minutes.
 
 ## Integritetspolicy
 
