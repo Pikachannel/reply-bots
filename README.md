@@ -14,7 +14,7 @@ Evil Teto responds to your posts with funny mean messages!
 
 ### Current Features
 1. **Randomly chosen preset messages**, including:
-   - English messages
+   - Support for multiple languages
    - Messages that include the user's name.
 2. **Content Filtering System**, including:
    - A post filter system
@@ -24,6 +24,9 @@ Evil Teto responds to your posts with funny mean messages!
 5. **Post interval**: Users can change the amount of time in between replies being able to be made under their posts. All replies are subject to a minimum 60 second cooldown.
 6. **Skip posts**: Users can change the amount of posts in between replies being able to be made under their posts.
 7. **Word of the Day**: Evil Teto will post a random word every single day.
+8. **Language Selection**: Users can set their preferred bot response language, currently including:
+   - English
+   - Swedish
 
 ### How to use
 1. Follow the bot on Bluesky
@@ -93,6 +96,13 @@ To view all your settings:
    - **Setting Static Interval:** `!skip <interval>` (must be a integer between 0 and 50)
    - **Setting Variable Interval:** `!skip <lower_bound-upper_bound>` (both integers must be between 0 and 50)
    - **Resetting Interval:** `!skip`
+2. Wait for the bot to respond **before** sending a new message.
+   - Responses may take up to 5 minutes.
+
+#### Language
+1. Send a direct message to the bot in the format:
+   - **Setting Language:** `!language <language_code>` (e.g., `!language sv` or `!language en`). [language codes](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes).
+   - **Resetting Language:** `!language`
 2. Wait for the bot to respond **before** sending a new message.
    - Responses may take up to 5 minutes.
 
