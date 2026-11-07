@@ -25,8 +25,8 @@ Evil Teto responds to your posts with funny mean messages!
 6. **Skip posts**: Users can change the amount of posts in between replies being able to be made under their posts.
 7. **Word of the Day**: Evil Teto will post a random word every single day.
 8. **Language Selection**: Users can set their preferred bot response language, currently including:
-   - English
-   - Swedish
+   - English (EN)
+   - Swedish (SV)
 
 ### How to use
 1. Follow the bot on Bluesky
@@ -101,7 +101,7 @@ To view all your settings:
 
 #### Language
 1. Send a direct message to the bot in the format:
-   - **Setting Language:** `!language <language_code>` (e.g., `!language sv` or `!language en`). [language codes](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes).
+   - **Setting Language:** `!language <language_code>` (e.g., `!language sv` or `!language en`).
    - **Resetting Language:** `!language`
 2. Wait for the bot to respond **before** sending a new message.
    - Responses may take up to 5 minutes.
