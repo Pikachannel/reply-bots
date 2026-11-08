@@ -108,7 +108,7 @@ class PostManager:
 
     # -------------
     # -- Make post
-    async def make_post(self, message: dict, post_cid: str, post_uri: str, user_did: str, post_text: str, bot_did: str, lang: str = "en") -> None:
+    async def make_post(self, message: dict, post_cid: str, post_uri: str, user_did: str, post_text: str, bot_did: str) -> None:
         # -- Check if the post can be made
         if not self.interval_time_check(user_did, bot_did):
             return
@@ -121,6 +121,8 @@ class PostManager:
 
         if not self.chance_check(user_did, bot_did):
             return
+
+        lang = self.user_data.get(bot_did, {}).get(user_did, {}).get("lang", "en")
 
         # -- Buld the post
         messages = self.messages[bot_did][lang]

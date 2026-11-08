@@ -1,5 +1,9 @@
 {
     "en": {
+        "language_names": {
+            "en": "English",
+            "sv": "Swedish"
+        },
         "remove": "The setting '{setting}' has been reset to the default value.",
         "nickname": "Your nickname has been updated to {nickname}\nYou can change this at any time by sending the same command.\nUse !help at any time to see all commands.",
         "chance": "The chance of a reply under your posts has been updated to '{chance_value}%'\nYou can change this at any time by sending the same command.\nUse !help at any time to see all commands.",
@@ -24,6 +28,10 @@
         "language_error_2": "An error occurred while updating your language setting.\nAvailable languages: {languages}.\nUse !help at any time to see all commands."
     },
     "sv": {
+        "language_names": {
+            "en": "Engelska",
+            "sv": "Svenska"
+        },
         "remove": "Inställningen '{setting}' har nu blivit återställd till det standardvärdet det var innan ändringen.",
         "nickname": "Ditt smeknamn har nu uppdaterats till {nickname}\nDu kan ändra det när som helst genom att skicka samma kommando.\nSkriv !help när som helst för att se alla kommandon.",
         "chance": "Sannolikheten för ett svar under dina inlägg har nu uppdaterats till '{chance_value}%'\nDu kan ändra det när som helst genom att skicka samma kommando.\nSkriv !help när som helst för att se alla kommandon.",

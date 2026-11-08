@@ -10,6 +10,16 @@ class CommandManager:
         self.json_queue = json_queue
         self.setting_replies = setting_replies
 
+        self.language_map = {}
+
+        for key in setting_replies:
+            self.language_map[key.lower()] = key
+
+            for lang, name in setting_replies[key]["language_names"].items():
+                self.language_map[name.lower()] = lang
+
+
+
     # -------------
     # -- To float
     # Converts a string to a float
@@ -235,6 +245,57 @@ class CommandManager:
         return True, replies["skip"].format(text_value=text_value)
 
     # -------------
+    # -- Change language
+    # Change the language that a bot uses
+    async def language(self, user_did: str, lang: str | None, account_did: str) -> tuple[bool, str]:
+        # -- Remove language setting if no value provided
+        if lang is None:
+            return await self.remove_setting(user_did, "lang", account_did)
+
+        # -- Validation and normalisation
+        lang = lang.strip().lower()
+        lang = self.language_map.get(lang)
+
+        # -- Get current user language & active replies dictionary
+        current_lang = self.get_language(user_did, account_did)
+        replies = self.get_replies(user_did, account_did)
+
+        # -- Check if language exists
+        if lang is None:
+            lang_names = replies.get("language_names", {})
+            available_languages = ", ".join(
+                f"{lang_names.get(code, code.upper())} ({code})"
+                for code in self.setting_replies
+            )
+            return False, replies["language_error_2"].format(
+                languages=available_languages
+            )
+
+        # -- Check if already using requested language
+        if lang == current_lang:
+            lang_display_name = replies.get("language_names", {}).get(lang, lang.upper())
+            return False, replies["language_error_1"].format(
+                language=lang_display_name
+            )
+
+        # -- Add update task to queue
+        payload = {
+            "type": "update",
+            "account_did": account_did,
+            "user_did": user_did,
+            "lang": lang
+        }
+
+        await self.json_queue.put(payload)
+
+        # -- Get replies dictionary for the newly targeted language
+        target_replies = self.setting_replies.get(lang, self.setting_replies["en"])
+        target_lang_name = target_replies.get("language_names", {}).get(lang, lang.upper())
+
+        # -- Return successful response
+        return True, target_replies["language"].format(language=target_lang_name)
+
+    # -------------
     # -- Delete
     # Deletes all the user's settings
     async def delete_settings(self, user_did: str, account_did: str) -> tuple[bool, str]:
@@ -259,9 +320,13 @@ class CommandManager:
     async def view_settings(self, user_did: str, account_did: str) -> tuple[bool, str]:
 
         # -- Settings helper
-        def format_value(value):
+        def format_value(key, value):
+            if key == "lang":
+                return replies.get("language_names", {}).get(value, value.upper())
+
             if isinstance(value, list):
                 return f"{value[0]}-{value[1]}" if len(value) == 2 else value[0]
+
             return value
 
         # -- Get replies
@@ -274,7 +339,7 @@ class CommandManager:
             return False, replies["no_settings"]
 
         format_settings = "\n".join(
-            f"{key.capitalize()}: {format_value(value)}"
+            f"{key.capitalize()}: {format_value(key, value)}"
             for key, value in user_settings.items()
         )
 

@@ -56,7 +56,7 @@ class DmWorker:
                 command = parts[0].lower()
                 param = parts[1] if len(parts) > 1 else None
 
-                # Map to CommandManager methods
+                # -- Map to CommandManager
                 msg_to_send = None
                 facet = None
                 if command == "!nickname":
@@ -74,6 +74,8 @@ class DmWorker:
                 elif command == "!sync":
                     other_dids = [did for did in self.account_dids if did != account_did]
                     _, msg_to_send = await self.command_manager.sync_settings(user_did, param, self.bots, account_did, other_dids)
+                elif command == "!language":
+                    _, msg_to_send = await self.command_manager.language(user_did, param, account_did)
                 elif command == "!help":
                     _, msg_to_send, facet = await self.command_manager.help()
                 else:
