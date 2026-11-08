@@ -18,7 +18,7 @@ This repository contains all the code for:
     - [Deleting posts](#deleting-posts)
   - [Settings](#settings)
     - [Syncing Settings](#syncing-settings)
-      - [Custom nickname](#custom-nickname)
+    - [Custom nickname](#custom-nickname)
     - [Post chance](#post-chance)
     - [Post interval](#post-interval)
     - [Skip posts](#skip-posts)
@@ -93,7 +93,7 @@ To view all your settings:
 2. Wait for the bot to respond **before** sending a new message.
    - Responses may take up to 5 minutes.
 
-##### Custom nickname
+#### Custom nickname
 1. Send a direct message to the bot in the format:  
    - **Setting Nickname:** `!nickname <nickname>` (your nickname can be max 20 characters)
    - **Resetting Nickname:** `!nickname`
@@ -125,7 +125,7 @@ To view all your settings:
 
 #### Language
 1. Send a direct message to the bot in the format:
-   - **Setting Language:** `!language <language_code>` (e.g., `!language sv` or `!language en`).
+   - **Setting Language:** `!language <language>` (e.g., `!language sv` or `!language english`).
    - **Resetting Language:** `!language`
 2. Wait for the bot to respond **before** sending a new message.
    - Responses may take up to 5 minutes.
