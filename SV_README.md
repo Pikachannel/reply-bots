@@ -69,7 +69,7 @@ För att se dina nuvarande inställningar:
    - Det kan ta upp till 5 minuter att få svar.
 
 
-##### Anpassat smeknamn
+#### Anpassat smeknamn
 1. Skicka ett direktmeddelande till boten enligt följande format:
    - **Ange smeknamn:** `!nickname <smeknamn>` (ditt smeknamn får vara högst 20 tecken långt)
    - **Återställ smeknamn:** `!nickname`
@@ -101,7 +101,7 @@ För att se dina nuvarande inställningar:
 
 #### Språk
 1. Skicka ett direkt medelande till botten i förljande format:
-   - **Sätt Språket:** `!language <language_code>` (till exempel, `!language sv` eller `!language en`).
+   - **Sätt Språket:** `!language <language>` (till exempel, `!language sv` eller `!language engelska`).
    - **Återställ Språket** `!language`
 2. Vänta tills botten svarar **innan** du skickar ett nytt medelande.
    - Svarstid kan ta up till ett par till 5 minuter.
