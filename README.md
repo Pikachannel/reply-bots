@@ -5,6 +5,29 @@
 This repository contains all the code for:
 - Whimsy Miku Bot (whimsy.pikachannel.xyz)
 - Evil Teto Bot (evil.pikachannel.xyz)
+
+---
+
+## Table of Contents
+- [Overview](#overview)
+- [The Bots!](#the-bots)
+  - [Current Features](#current-features)
+  - [How to use](#how-to-use)
+  - [Content Filtering System](#content-filtering-system)
+    - [Filter system](#filter-system)
+    - [Deleting posts](#deleting-posts)
+  - [Settings](#settings)
+    - [Syncing Settings](#syncing-settings)
+      - [Custom nickname](#custom-nickname)
+    - [Post chance](#post-chance)
+    - [Post interval](#post-interval)
+    - [Skip posts](#skip-posts)
+    - [Language](#language)
+- [Privacy Policy](#privacy-policy)
+  - [Data Collection, Usage, Retention, and Security](#data-collection-usage-retention-and-security)
+  - [Data Deletion](#data-deletion)
+- [License](#license)
+
 --- 
 
 ## The Bots!
@@ -55,7 +78,8 @@ The system skips replies when any of the following conditions are met:
 2. Reply to it with "delete" and it will be removed instantly.
 
 ### Settings
-You can configure settings with the bots! You do this by sending the appropriate command in the bots dms, these can be seen below. 
+You can configure settings with the bots! You do this by sending the appropriate command in the bots DMs, these can be seen below. 
+
 To view all your settings:
 1. Send a direct message to the bot in the format:
    - `!settings`
@@ -93,7 +117,7 @@ To view all your settings:
 
 #### Skip posts
 1. Send a direct message to the bot in the format:
-   - **Setting Static Interval:** `!skip <interval>` (must be a integer between 0 and 50)
+   - **Setting Static Interval:** `!skip <interval>` (must be an integer between 0 and 50)
    - **Setting Variable Interval:** `!skip <lower_bound-upper_bound>` (both integers must be between 0 and 50)
    - **Resetting Interval:** `!skip`
 2. Wait for the bot to respond **before** sending a new message.
