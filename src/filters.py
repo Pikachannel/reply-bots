@@ -25,12 +25,12 @@ class Filters:
             feature.get("$type") == "app.bsky.richtext.facet#link"
             for facet in facets
             for feature in facet.get("features", [])
-)
+        )
         return embed.get("$type") == "app.bsky.embed.external" or has_link
 
     # -------------
     # -- Flag accounts with Bsky labels
-    async def account_flags(self, user_did: str):
+    def account_flags(self, user_did: str):
         # -- Check for cached flags
         if user_did in self.cache:
             flagged, timestamp = self.cache[user_did]
@@ -46,12 +46,12 @@ class Filters:
 
             self.cache[user_did] = (flagged, time.time())
             return flagged
-        except Exception as e:
+        except:
             return True
     
     # -------------
     # -- Flag posts with Bsky labels
-    async def post_flags(self, message, post_uri):
+    def post_flags(self, message, post_uri):
         # -- Check message for self labels
         post_labels = message.get("commit", {}).get("record", {}).get("labels", {}).get("$type", "")
         if post_labels == "com.atproto.label.defs#selfLabels":
@@ -70,6 +70,5 @@ class Filters:
             flagged = len(labels) > 0
             return flagged
 
-        except Exception as e:
+        except:
             return True
-
