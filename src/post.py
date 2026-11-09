@@ -90,7 +90,7 @@ class PostManager:
             # print(f"[Post] Skipping post for {user_did} due to account flags")
             return False
 
-        if await asyncio.to_thread(self.filters.post_flags, user_did, post_uri):
+        if await asyncio.to_thread(self.filters.post_flags, message, post_uri):
             # print(f"[Post] Skipping post for {user_did} due to post flags")
             return False
 
