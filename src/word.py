@@ -2,7 +2,6 @@
 import asyncio
 from datetime import datetime, timedelta, timezone
 from wonderwords import RandomWord
-from atproto import Client
 
 # -------- Functions --------
 
