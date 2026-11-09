@@ -6,10 +6,9 @@ from datetime import datetime, timezone, timedelta
 
 # -------- DmWorker Class --------
 class DmWorker:
-    def __init__(self, bots: dict, command_manager: Any, json_queue: asyncio.Queue, account_dids: list, check_interval: int = 300) -> None:
+    def __init__(self, bots: dict, command_manager: Any, account_dids: list, check_interval: int = 300) -> None:
         self.bots = bots
         self.command_manager = command_manager
-        self.json_queue = json_queue
         self.account_dids = account_dids
         self.check_interval = check_interval
     

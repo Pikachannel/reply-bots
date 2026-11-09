@@ -13,6 +13,7 @@ import asyncio
 import os
 import json
 from dotenv import load_dotenv
+from pathlib import Path
 
 # -------- Variables --------
 load_dotenv()
@@ -37,10 +38,12 @@ while os.getenv(f"HANDLE_{get_bot_num}"):
     get_bot_num += 1
 
 # -- File paths
-MESSAGES_JSON_PATH = "data/messages.json"
-USER_DATA_PATH = "data/user_data.json"
-BLOCKLIST_PATH = "data/blocklist.txt"
-LOCALES_PATH = "data/locales.json"
+BASE_DIR = Path(__file__).resolve().parent
+
+MESSAGES_JSON_PATH = BASE_DIR / "data" / "messages.json"
+USER_DATA_PATH = BASE_DIR / "data" / "user_data.json"
+BLOCKLIST_PATH = BASE_DIR / "data" / "blocklist.txt"
+LOCALES_PATH = BASE_DIR / "data" / "locales.json"
 
 # -------- Load json files --------
 with open(MESSAGES_JSON_PATH, "r", encoding="utf-8") as f:
@@ -73,7 +76,7 @@ async def main() -> None:
     # -- Setup classes
     ws = Websocket()
     command_manager = CommandManager(user_data, json_queue, setting_replies)
-    dm_worker = DmWorker(bots, command_manager, json_queue, account_dids)
+    dm_worker = DmWorker(bots, command_manager, account_dids)
 
     filters = Filters(bots[account_dids[0]]["client"], keyword_list)
 
@@ -81,7 +84,7 @@ async def main() -> None:
 
     # -- Start global workers
     asyncio.create_task(dm_worker.start())
-    asyncio.create_task(json_worker(USER_DATA_PATH, json_queue, user_data))
+    asyncio.create_task(json_worker(str(USER_DATA_PATH), json_queue, user_data))
     asyncio.create_task(word_of_the_day(bots[account_dids[1]]["client"], keyword_list))  # Assuming you want to use the first bot for posting the word of the day
 
     # -- Start per bot queues and workers
