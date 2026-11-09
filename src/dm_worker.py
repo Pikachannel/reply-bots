@@ -64,8 +64,11 @@ class DmWorker:
 
                 # -- Process oldest messages first
                 for message in reversed(unread_messages):
+                    message_text = getattr(message, "text", None)
+                    if not message_text:
+                        continue
+
                     user_did = message.sender.did
-                    message_text = message.text
                     sent_at = datetime.fromisoformat(
                         message.sent_at.replace("Z", "+00:00")
                     )
