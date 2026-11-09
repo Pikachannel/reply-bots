@@ -2,6 +2,7 @@
 import asyncio
 from datetime import datetime, timedelta, timezone
 from wonderwords import RandomWord
+from atproto import models
 
 # -------- Functions --------
 
@@ -31,9 +32,11 @@ async def already_posted(client):
     try:
         response = await asyncio.to_thread(
             client.app.bsky.feed.get_author_feed,
-            actor=client.me.handle,
-            limit=5,
-            filter="posts_no_replies"
+            models.AppBskyFeedGetAuthorFeed.Params(
+                actor=client.me.handle,
+                limit=5,
+                filter="posts_no_replies"
+            )
         )
 
         for feed_view in response.feed:
@@ -53,7 +56,6 @@ async def already_posted(client):
         print(f"[Word] Failed to check recent posts: {e}")
         return None
     
-
 # -- Post a word of the day every day
 async def word_of_the_day(client, blocked_words):
     while True:
