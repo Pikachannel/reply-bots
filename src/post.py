@@ -3,6 +3,7 @@ import random
 from atproto import Client, client_utils
 import time
 from typing import Any
+import asyncio
 
 # -------- Post Manager Class --------
 class PostManager:
@@ -15,6 +16,7 @@ class PostManager:
         # -- Setup the time between posts and number of posts per bot
         self.post_times = {bot_did: {} for bot_did in account_dids}
         self.post_numbers = {bot_did: {} for bot_did in account_dids}
+        self.profile_cache = {}
 
         self.filters = filters
 
@@ -75,7 +77,7 @@ class PostManager:
 
     # -------------
     # -- Filters check
-    def filters_check(self, message: dict, user_did: str) -> bool:
+    async def filters_check(self, message: dict, user_did: str, post_uri: str) -> bool:
         if self.filters.keywords(message):
             # print(f"[Post] Skipping post for {user_did} due to keywords")
             return False
@@ -84,11 +86,11 @@ class PostManager:
             # print(f"[Post] Skipping post for {user_did} due to links")
             return False
 
-        if self.filters.account_flags(user_did):
+        if await asyncio.to_thread(self.filters.account_flags, user_did):
             # print(f"[Post] Skipping post for {user_did} due to account flags")
             return False
 
-        if self.filters.post_flags(message, message.get("commit", {}).get("record", {}).get("uri", "")):
+        if await asyncio.to_thread(self.filters.post_flags, user_did, post_uri):
             # print(f"[Post] Skipping post for {user_did} due to post flags")
             return False
 
@@ -96,24 +98,34 @@ class PostManager:
 
     # -------------
     # -- Get nickname
-    def get_nickname(self, user_did: str, bot_did: str) -> str:
+    async def get_nickname(self, user_did: str, bot_did: str) -> str:
         nickname = self.user_data.get(bot_did, {}).get(user_did, {}).get("nickname")
 
         if nickname:
             return nickname
-        
-        profile = self.bots[bot_did]["client"].get_profile(user_did)
+
+        # -- Check if the username has been cached
+        if user_did in self.profile_cache:
+            user_cache = self.profile_cache[user_did]
+            
+            if time.time() < user_cache.get("time", 0):
+                return user_cache["name"]
+        profile = await asyncio.to_thread(self.bots[bot_did]["client"].get_profile,user_did)
+
+        # -- Save username to cache
         username = profile.display_name or profile.handle.split(".")[0]
+
+        self.profile_cache[user_did] = {
+            "name": username,
+            "time": time.time() + 3600
+        }        
         return username
 
     # -------------
     # -- Make post
     async def make_post(self, message: dict, post_cid: str, post_uri: str, user_did: str, post_text: str, bot_did: str) -> None:
         # -- Check if the post can be made
-        if not self.interval_time_check(user_did, bot_did):
-            return
-
-        if not self.filters_check(message, user_did):
+        if not await self.filters_check(message, user_did, post_uri):
             return
 
         if not self.skip_posts_check(user_did, bot_did):
@@ -122,12 +134,15 @@ class PostManager:
         if not self.chance_check(user_did, bot_did):
             return
 
+        if not self.interval_time_check(user_did, bot_did):
+            return
+
         lang = self.user_data.get(bot_did, {}).get(user_did, {}).get("lang", "en")
 
         # -- Buld the post
         messages = self.messages[bot_did][lang]
 
-        nickname = self.get_nickname(user_did, bot_did)
+        nickname = await self.get_nickname(user_did, bot_did)
 
         random_message = random.choice(messages)
         formatted_message = random_message.format(display_name=nickname)
@@ -136,13 +151,15 @@ class PostManager:
         builder.text(formatted_message)
 
         # -- Make the post
-        post = self.bots[bot_did]["client"].send_post(
+        post = await asyncio.to_thread(
+            self.bots[bot_did]["client"].send_post,
             builder,
             reply_to={
                 "parent": {"cid": post_cid, "uri": post_uri},
                 "root": {"cid": post_cid, "uri": post_uri}
             }
         )
+
 
         # print(f"[Post] Post made ({post.uri})")
 
@@ -160,7 +177,8 @@ class PostManager:
         builder.text(" for a full list of settings you can configure with me.")
 
         # -- Make the post
-        post = self.bots[bot_did]["client"].send_post(
+        post = await asyncio.to_thread(
+            self.bots[bot_did]["client"].send_post,
             builder,
             reply_to={
                 "parent": {"cid": post_cid, "uri": post_uri},
@@ -187,6 +205,6 @@ class PostManager:
         # -- Check if the original post belongs to the user and the reply belongs to the bot
         if user_did == rootDID and bot_did == parentDID:
             if record.get("text", "").lower() == "delete":
-                self.bots[bot_did]["client"].delete_post(parent.get("uri", "")) # Delete the post
+                await asyncio.to_thread(self.bots[bot_did]["client"].delete_post,parent.get("uri", "")) # Delete the post
                 # print(f"[Delete] Post deleted from {user_did}")
 

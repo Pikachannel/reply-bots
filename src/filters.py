@@ -30,7 +30,7 @@ class Filters:
 
     # -------------
     # -- Flag accounts with Bsky labels
-    def account_flags(self, user_did: str):
+    async def account_flags(self, user_did: str):
         # -- Check for cached flags
         if user_did in self.cache:
             flagged, timestamp = self.cache[user_did]
@@ -47,11 +47,11 @@ class Filters:
             self.cache[user_did] = (flagged, time.time())
             return flagged
         except Exception as e:
-            return False
+            return True
     
     # -------------
     # -- Flag posts with Bsky labels
-    def post_flags(self, message, post_uri):
+    async def post_flags(self, message, post_uri):
         # -- Check message for self labels
         post_labels = message.get("commit", {}).get("record", {}).get("labels", {}).get("$type", "")
         if post_labels == "com.atproto.label.defs#selfLabels":
@@ -71,5 +71,5 @@ class Filters:
             return flagged
 
         except Exception as e:
-            return False
+            return True
 
