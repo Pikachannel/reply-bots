@@ -4,15 +4,16 @@ from typing import Any
 
 # -------- Filters Class --------
 class Filters:
-    def __init__(self, client: Any, keyword_list: set) -> None:
+    def __init__(self, client: Any, tone_analysis: Any) -> None:
         self.cache = {}
         self.client = client
-        self.keyword_list = keyword_list
-        
-    # -- Flag keywords
-    def keywords(self, message):
+        self.tone_analysis = tone_analysis
+
+    # -------------
+    # -- Check for negative sentiment
+    def tone(self, message):
         text = message.get("commit", {}).get("record", {}).get("text", "").lower()
-        return any(keyword in text for keyword in self.keyword_list)
+        return self.tone_analysis.get_tone(text)
 
     # -------------
     # -- Flag links
@@ -72,3 +73,4 @@ class Filters:
 
         except:
             return True
+

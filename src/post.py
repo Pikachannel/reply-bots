@@ -78,7 +78,7 @@ class PostManager:
     # -------------
     # -- Filters check
     async def filters_check(self, message: dict, user_did: str, post_uri: str) -> bool:
-        if self.filters.keywords(message):
+        if await asyncio.to_thread(self.filters.tone, message):
             # print(f"[Post] Skipping post for {user_did} due to keywords")
             return False
 
@@ -94,12 +94,12 @@ class PostManager:
             # print(f"[Post] Skipping post for {user_did} due to post flags")
             return False
 
-        return True
+        return True 
 
     # -------------
     # -- Get nickname
     async def get_nickname(self, user_did: str, bot_did: str) -> str:
-        nickname = self.user_data.get(bot_did, {}).get(user_did, {}).get("nickname")
+        nickname = self.user_data.get(bot_did, {}).get(user_did, {}).get("nickname", None)
 
         if nickname:
             return nickname

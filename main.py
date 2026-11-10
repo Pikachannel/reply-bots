@@ -9,6 +9,7 @@ from src.filters import Filters
 from src.client import login
 from src.json_worker import json_worker
 from src.word import word_of_the_day
+from src.tone import ToneAnalysis
 import asyncio
 import os
 import json
@@ -77,15 +78,16 @@ async def main() -> None:
     ws = Websocket()
     command_manager = CommandManager(user_data, json_queue, setting_replies)
     dm_worker = DmWorker(bots, command_manager, account_dids)
+    tone_analysis = ToneAnalysis(keyword_list)
 
-    filters = Filters(bots[account_dids[0]]["client"], keyword_list)
+    filters = Filters(bots[account_dids[0]]["client"], tone_analysis)
 
     post_manager = PostManager(bots, user_data, account_dids, messages, filters)
 
     # -- Start global workers
     asyncio.create_task(dm_worker.start())
     asyncio.create_task(json_worker(str(USER_DATA_PATH), json_queue, user_data))
-    asyncio.create_task(word_of_the_day(bots[account_dids[1]]["client"], keyword_list))  # Assuming you want to use the first bot for posting the word of the day
+    asyncio.create_task(word_of_the_day(bots[account_dids[0]]["client"], keyword_list))  # Assuming you want to use the first bot for posting the word of the day
 
     # -- Start per bot queues and workers
     for i in range(len(account_dids)):
@@ -95,3 +97,6 @@ async def main() -> None:
 
     # -- Setup websocket connection to the bsky jetstream
     await ws.connect(queues)
+
+if __name__ == "__main__":
+    asyncio.run(main())
