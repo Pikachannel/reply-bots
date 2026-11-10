@@ -79,6 +79,7 @@ The system skips replies when any of the following conditions are met:
 
 ### Settings
 You can configure settings with the bots! You do this by sending the appropriate command in the bots DMs, these can be seen below. 
+
 The bot checks for commands every 5 minutes. You can send up to 10 commands per check, and they will be processed in the order they are received.
 
 To view all your settings:
