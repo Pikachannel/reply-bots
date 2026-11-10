@@ -1,4 +1,7 @@
 # Bluesky-svarsbotar
+<p align="left">
+  <a href="README.md"><img src="https://img.shields.io/badge/Lang-English-blue?style=flat-square" alt="English"></a>
+</p>
 
 ## Översikt
 Detta GitHub repo innehåller all kod för:
