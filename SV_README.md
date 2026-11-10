@@ -56,7 +56,7 @@ Systemet hoppar över svar om något av följande villkor är uppfyllt:
 ### Inställningar
 Du kan justera inställningarna för botarna! Detta görs genom att skicka rätt kommando i ett direktmeddelande (DM) till boten; kommandona finns listade nedan.
 
-The bot checks for commands every 5 minutes. You can send up to 10 commands per check, and they will be processed in the order they are received. //// Needs translating
+Den här botten checkar för kommandon för varje 5-minuter. Du kan skicka upp till 10 kommandon per check, och de kommer bli processade i ordern som dom är skrivna i.
 
 För att se dina nuvarande inställningar:
 1. Skicka ett direktmeddelande till boten med följande kommando:
@@ -134,12 +134,11 @@ Botarna samlar in och använder följande data:
 ### Borttagning av data
 Om du vill att dina uppgifter ska tas bort från boten finns det två alternativ:
 
-//// Needs translating
 
 **Automatisk borttagning:**
 1. Skicka ett direktmeddelande till boten med följande innehåll:
-  - **Individual Bot Deletion:** `!delete`
-   - **Global Deletion:** `!delete all`
+  - **Borttagning av Individuell Bot:** `!delete`
+   - **Global Borttagning:** `!delete all`
 2. Vänta på att boten svarar. 
    - Det kan ta upp till 5 minuter att få svar.
 
