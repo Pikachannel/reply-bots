@@ -1,6 +1,6 @@
 # Bluesky-svarsbotar
 <p align="left">
-  <a href="README.md"><img src="https://img.shields.io/badge/Lang-English-blue?style=flat-square" alt="English"></a>
+  <a href="README.md"><img src="https://img.shields.io/badge/Language-English-blue?style=flat-square" alt="English"></a>
 </p>
 
 ## Översikt
