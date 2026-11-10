@@ -135,6 +135,7 @@ Botarna samlar in och använder följande data:
 Om du vill att dina uppgifter ska tas bort från boten finns det två alternativ:
 
 //// Needs translating
+
 **Automatisk borttagning:**
 1. Skicka ett direktmeddelande till boten med följande innehåll:
   - **Individual Bot Deletion:** `!delete`
