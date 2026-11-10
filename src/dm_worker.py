@@ -108,7 +108,7 @@ class DmWorker:
                     elif command == "!language":
                         _, msg_to_send = await self.command_manager.language(user_did, param, account_did)
                     elif command == "!help":
-                        _, msg_to_send, facet = await self.command_manager.help()
+                        _, msg_to_send, facet = await self.command_manager.help(user_did, account_did)
                     else:
                         continue
 
