@@ -1,7 +1,7 @@
 # Bluesky Reply Bots
 
 <p align="left">
-  <a href="SV_README.md"><img src="https://img.shields.io/badge/Lang-Svenska-blue?style=flat-square" alt="Svenska"></a>
+  <a href="SV_README.md"><img src="https://img.shields.io/badge/Språk-Svenska-blue?style=flat-square" alt="Svenska"></a>
 </p>
 
 ## Overview
