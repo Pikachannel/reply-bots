@@ -1,6 +1,6 @@
 # -------- Imports --------
 import random
-from atproto import Client, client_utils
+from atproto import client_utils
 import time
 from typing import Any
 import asyncio
@@ -19,6 +19,29 @@ class PostManager:
         self.profile_cache = {}
 
         self.filters = filters
+
+        self.cache_task = asyncio.create_task(self.cache_cleanup())
+
+    # -------------
+    # -- Clear expired profile cache
+    def clear_cache(self):
+        now = time.time()
+
+        expired = [
+            user_did
+            for user_did, cache in self.profile_cache.items()
+            if now >= cache.get("time", 0)
+        ]
+
+        for user_did in expired:
+            self.profile_cache.pop(user_did, None)
+
+    # -------------
+    # -- Profile cache cleanup loop
+    async def cache_cleanup(self):
+        while True:
+            await asyncio.sleep(900)  # Clear every 15 minutes
+            self.clear_cache()
 
     # -------------
     # -- Interval (time) check
@@ -207,4 +230,3 @@ class PostManager:
             if record.get("text", "").lower() == "delete":
                 await asyncio.to_thread(self.bots[bot_did]["client"].delete_post,parent.get("uri", "")) # Delete the post
                 # print(f"[Delete] Post deleted from {user_did}")
-
