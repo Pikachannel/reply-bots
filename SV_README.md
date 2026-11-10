@@ -9,6 +9,27 @@ Detta GitHub repo innehåller all kod för:
 - Evil Teto Bot (evil.pikachannel.xyz)
 ---
 
+## Table of Contents
+- [Overview](#översikt)
+- [The Bots!](#botarna)
+  - [Current Features](#nuvarande-funktioner)
+  - [How to use](#så-här-använder-du-tjänsten)
+  - [Content Filtering System](#content-filtering-system)
+    - [Filter system](#filter-system)
+    - [Deleting posts](#deleting-posts)
+  - [Settings](#settings)
+    - [Syncing Settings](#syncing-settings)
+    - [Custom nickname](#custom-nickname)
+    - [Post chance](#post-chance)
+    - [Post interval](#post-interval)
+    - [Skip posts](#skip-posts)
+    - [Language](#language)
+- [Privacy Policy](#privacy-policy)
+  - [Data Collection, Usage, Retention, and Security](#data-collection-usage-retention-and-security)
+  - [Data Deletion](#data-deletion)
+- [License](#license)
+
+
 ## Botarna!
 Whimsy Miku - *som har glimten i ögat* - svarar på dina inlägg med positiva meddelanden!
 
