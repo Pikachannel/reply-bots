@@ -1,7 +1,7 @@
 
 # -------- Imports --------
 import asyncio
-from json_worker import submit_json_update
+from .json_worker import submit_json_update
 
 # -------- Command Class --------
 class CommandManager:
