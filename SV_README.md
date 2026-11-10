@@ -56,7 +56,7 @@ Systemet hoppar över svar om något av följande villkor är uppfyllt:
 ### Inställningar
 Du kan justera inställningarna för botarna! Detta görs genom att skicka rätt kommando i ett direktmeddelande (DM) till boten; kommandona finns listade nedan.
 
-Den här botten checkar för kommandon för varje 5-sekund. Du kan skicka upp till 10 kommandon per check, och de kommer bli processade i ordern som dom är skrivna i.
+Den här botten checkar för kommandon för varje 5-minuter. Du kan skicka upp till 10 kommandon per check, och de kommer bli processade i ordern som dom är skrivna i.
 
 För att se dina nuvarande inställningar:
 1. Skicka ett direktmeddelande till boten med följande kommando:
