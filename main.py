@@ -87,7 +87,7 @@ async def main() -> None:
     # -- Start global workers
     asyncio.create_task(dm_worker.start())
     asyncio.create_task(json_worker(str(USER_DATA_PATH), json_queue, user_data))
-    asyncio.create_task(word_of_the_day(bots[account_dids[1]]["client"], keyword_list))  # Assuming you want to use the first bot for posting the word of the day
+    asyncio.create_task(word_of_the_day(bots[account_dids[1]]["client"], keyword_list))  # Assuming the second bot is the one posting word of the day
 
     # -- Start per bot queues and workers
     for i in range(len(account_dids)):
