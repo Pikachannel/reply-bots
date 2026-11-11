@@ -154,4 +154,4 @@ Om du vill att dina uppgifter ska tas bort från boten finns det två alternativ
 ## Licens
 Detta arkiv är öppen källkod och publiceras under MIT-licensen.
 
-Se [LICENSE](https://github.com/Pikachannel/bluesky-bots/blob/main/LICENSE) för mer information.
+Se [LICENSE](LICENSE) för mer information.
