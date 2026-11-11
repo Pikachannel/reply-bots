@@ -75,7 +75,7 @@ class DmWorker:
 
                     # -- Check if the message was sent in the last 5 minutes
                     now = datetime.now(timezone.utc)
-                    if now - sent_at >= timedelta(minutes=5):
+                    if now - sent_at >= timedelta(seconds=self.check_interval+30):
                         continue
 
                     # -- Split the message into a prefix and param
