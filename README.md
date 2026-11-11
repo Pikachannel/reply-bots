@@ -1,5 +1,8 @@
 # Bluesky Reply Bots
-- [swedish version here](SV_README.md)
+
+<p align="left">
+  <a href="SV_README.md"><img src="https://img.shields.io/badge/Språk-Svenska-blue?style=flat-square" alt="Svenska"></a>
+</p>
 
 ## Overview
 This repository contains all the code for:
