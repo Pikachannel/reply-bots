@@ -1,5 +1,5 @@
 # -------- Imports --------
-from atproto import Client, models
+from atproto import models
 from typing import Any
 import asyncio
 from datetime import datetime, timezone, timedelta
@@ -52,7 +52,9 @@ class DmWorker:
                 last_bot_message_index = -1
 
                 for i, message in enumerate(messages):
-                    if message.sender.did == account_did:
+                    sender = getattr(message, "sender", None)
+
+                    if sender is not None and sender.did == account_did:
                         last_bot_message_index = i
                         break
 
@@ -64,6 +66,12 @@ class DmWorker:
 
                 # -- Process oldest messages first
                 for message in reversed(unread_messages):
+                    # -- Ignore system message views
+                    sender = getattr(message, "sender", None)
+                    if sender is None:
+                        continue
+
+                    # -- Ignore messages with no text
                     message_text = getattr(message, "text", None)
                     if not message_text:
                         continue
@@ -73,9 +81,13 @@ class DmWorker:
                         message.sent_at.replace("Z", "+00:00")
                     )
 
+                    # -- Ignore messages sent by the bot
+                    if user_did == account_did:
+                        continue
+
                     # -- Check if the message was sent in the last 5 minutes
                     now = datetime.now(timezone.utc)
-                    if now - sent_at >= timedelta(seconds=self.check_interval+30):
+                    if now - sent_at >= timedelta(seconds=self.check_interval+5):
                         continue
 
                     # -- Split the message into a prefix and param
