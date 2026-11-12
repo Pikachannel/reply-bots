@@ -1,6 +1,6 @@
 # README TEMPLATE
 This is a template used for translating languages.
-Make a copy of this file, and name it ABC_README.md where:
+Make a copy of this file, and name it README_ABC.md where:
 - ABC is **your language code** (e.g the language code for "English" is (en) and "Swedish" is (sv) and "Japanese" is (ja)
 
 
