@@ -2,7 +2,8 @@
     "en": {
         "language_names": {
             "en": "English",
-            "sv": "Swedish"
+            "sv": "Swedish",
+            "de": "German"
         },
         "remove": "The setting '{setting}' has been reset to the default value.",
         "nickname": "Your nickname has been updated to {nickname}\nYou can change this at any time by sending the same command.\nUse !help at any time to see all commands.",
@@ -52,7 +53,7 @@
         "delete_error": "Ett fel uppstod när vi försökte ta bort din data.\nDu kan antingen försöka igen med samma kommando eller begära en manuell data bort-tagning.",
         "view_settings": "Dina inställningar syns här nedanför!\n{format_settings}",
         "no_settings": "Du har nu inga inställningar konfigurerade med boten.\nSkriv !help för att se tillgängliga inställningar!",
-        "help": "Checka SV_README-filen för en fullständig lista över kommandon och funktioner.",   
+        "help": "Checka SV_README-filen för en fullständig lista över kommandon och funktioner.",
         "sync_with": "Dina inställningar har nu synkats med {handle}!\nSkriv !settings för att se dina synkade inställningar.\nSkriv !help när som helst för att se alla kommandon.",
         "sync_from": "Andra botar har nu synkats med dina inställningar från {handle}!\nSkriv !settings på dina andra botar för att se dina synkade inställningar.\nSkriv !help när som helst för att se alla kommandon.",
         "sync_error": "Ett fel uppstod när vi synkroniserade dina inställningar. Några inställningar kanske inte blivit synkade.\nFörsök igen.",
@@ -61,5 +62,33 @@
         "language_error_2": "Ett fel uppstod när din språkinställning skulle uppdateras.\nTillgängliga språk: {languages}.\nSkriv !help när som helst för att se alla kommandon.",
         "json_error": "Ett fel uppstod när vi processade ditt kommando.\nFörsök igen."
 
-    }
+    },
+    "de": {
+        "remove": "Die Einstellung '{setting}' wurde auf ihren Standardwert zurückgesetzt.",
+        "nickname": "Dein Spitzname wurde zu {nickname} aktualisiert.\nDu kannst deinen Spitznamen jederzeit ändern, indem du den gleichen Command nochmal sendest.\nNutze !help, um alle Befehle zu sehen.",
+        "chance": "Die Chance auf eine Antwort auf deine Posts wurde auf '{chance_value}%' aktualisiert.\nDu kannst dies jederzeit ändern, indem du den gleichen Befehl nochmal sendest.\nNutze !help, um alle Befehle zu sehen.",
+        "chance_error_1": "Ein Fehler hat das Ändern deiner Chance-Einstellungen verhindert.\nBitte stelle sicher, dass du nur Zahlen verwendest.\nNutze !help, um alle Befehle zu sehen.",
+        "chance_error_2": "Ein Fehler hat das Ändern deiner Chance-Einstellungen verhindert.\nBitte stelle sicher, dass der Chance-Wert zwischen 1 und 100 liegt.\nNutze !help, um alle Befehle zu sehen.",
+        "interval": "Das Intervall wurde auf '{text_value}' Sekunden gestellt.\nDu kannst dies jederzeit ändern, indem du den gleichen Befehl nochmal sendest.\nNutze !help, um alle Befehle zu sehen.",
+        "interval_error_1": "Ein Fehler hat das Ändern deiner Chance-Einstellungen verhindert.\nBitte stelle sicher, dass du nur Zahlen verwendest.\nNutze !help, um alle Befehle zu sehen.",
+        "interval_error_2": "Ein Fehler hat das Ändern deiner Chance-Einstellungen verhindert.\nBitte stelle sicher, dass die erste Zahl kleiner als die zweite ist.\nNutze !help, um alle Befehle zu sehen.",
+        "interval_error_3": "Ein Fehler hat das Ändern deiner Chance-Einstellungen verhindert.\nBitte stelle sicher, dass das Intervall zwischen 60 und 3600 liegt.\nNutze !help, um alle Befehle zu sehen.",
+        "skip": "Das Intervall wurde auf '{text_value}' Posts gestellt.\nDu kannst dies jederzeit ändern, indem du den gleichen Befehl nochmal sendest.\nNutze !help, um alle Befehle zu sehen.",
+        "skip_error_1": "Ein Fehler hat das Ändern deiner Skip-Einstellungen verhindert.\nBitte stelle sicher, dass du nur Zahlen verwendest.\nNutze !help, um alle Befehle zu sehen.",
+        "skip_error_2": "Ein Fehler hat das Ändern deiner Skip-Einstellungen verhindert.\nBitte stelle sicher, dass die erste Zahl kleiner als die zweite ist.\nNutze !help, um alle Befehle zu sehen.",
+        "skip_error_3": "Ein Fehler hat das Ändern deiner Skip-Einstellungen verhindert.\nBitte stelle sicher, dass das Intervall zwischen 60 und 3600 liegt.\nNutze !help, um alle Befehle zu sehen.",
+        "delete": "Deine Einstellungen wurden gelöscht.\nDu kannst dies bestätigen, indem du '!settings' nutzt.\nNutze !help, um alle Befehle zu sehen.",
+        "delete_error": "Es ist ein Fehler beim Löschen deiner Daten aufgetreten.\nDu kannst es entweder nochmal versuchen oder eine manuelle Löschung anfragen.",
+        "view_settings": "Deine Einstellungen siehst du hier:\n{format_settings}",
+        "no_settings": "Du hast keine Einstellungen mit diesem Bot konfiguriert.\nNutze !help, um Optionen für Einstellungen zu sehen!",
+        "help": "Sehe die DE_README Datei für die volle Liste von Befehlen und Features.",
+        "sync_with": "Deine Einstellungen wurden mit {handle} synchronisiert!\nNutze !settings, um deine synchronisierten Einstellungen zu sehen.\nNutze !help, um alle Befehle zu sehen.",
+        "sync_from": "Andere Bots wurden mit den Einstellungen von {handle} synchronisiert!\nNutze !settings in deinen anderen Bots, um deine synchronisierten Einstellungen zu sehen.\nNutze !help, um alle Befehle zu sehen.",
+        "sync_error": "Es ist ein Fehler während des Synchronisierens deiner Einstellungen aufgetreten. Manche Einstellungen wurden vielleicht nicht synchronisiert.\nBitte versuche es nochmal.",
+        "language": "Deine Sprache wurde zu '{language} geändert'!\nDu kannst dies jederzeit ändern, indem du den gleichen Befehl nochmal sendest.\nNutze !help, um alle Befehle zu sehen.",
+        "language_error_1": "Du benutzt schon '{language}'!\nNutze !help, um alle Befehle zu sehen.",
+        "language_error_2": "Es ist ein Fehler während des Aktualisierens deiner Sprache aufgetreten.\nVerfügbare Sprachen: {languages}.\nNutze !help, um alle Befehle zu sehen.",
+        "json_error": "Es ist ein Fehler während der Verarbeitung deines Befehls aufgetreten.\nBitte versuche es nochmal."
+
+       }
 }
