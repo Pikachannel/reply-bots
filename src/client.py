@@ -3,11 +3,12 @@ from atproto import Client
 from typing import Optional
 
 # -------- Login Function --------
-async def login(username: str, password: str) -> Optional[Client]:
+async def login(did: str, password: str) -> Optional[Client]:
     try:
         # -- Setup client connection
         client = Client()
-        profile = client.login(username, password)
+
+        profile = client.login(did, password)
         client.profile = profile
         print(f"[Client] Logged in as {profile.handle} ({profile.did})")
         return client # Return both the client and profile objects

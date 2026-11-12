@@ -21,19 +21,15 @@ load_dotenv()
 
 # -- Account info
 get_bot_num = 1
-handles = []
 passwords = []
 account_dids = []
 bots = {}
 followers_set = {}
 
 while os.getenv(f"HANDLE_{get_bot_num}"):
-    handles.append(os.getenv(f"HANDLE_{get_bot_num}"))
     passwords.append(os.getenv(f"PASSWORD_{get_bot_num}"))
     account_dids.append(os.getenv(f"ACCOUNT_DID_{get_bot_num}"))
-    bots[account_dids[-1]] = {
-        "handle": handles[-1]
-    }
+    bots[account_dids[-1]] = {}
     followers_set[account_dids[-1]] = set()
 
     get_bot_num += 1
@@ -65,11 +61,13 @@ async def main() -> None:
     queues = []
 
     for i in range(len(account_dids)):
-        client = await login(handles[i], passwords[i])
+        client = await login(account_dids[i], passwords[i])
         if not client:
             input("[Main] Press enter to exit...")
             return
         bots[account_dids[i]]["client"] = client
+        bots[account_dids[i]]["handle"] = client.profile.handle
+    print(bots)
 
     # -- Create queues
     json_queue = asyncio.Queue(maxsize=50)
