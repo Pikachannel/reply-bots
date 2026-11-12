@@ -26,7 +26,7 @@ Dieses GitHub-Repo enthält den Code für:
     - [Einstellungen synchronisieren](#einstellungen-synchronisieren)
     - [Spitzname](#spitzname)
     - [Post Chance](#post-chance)
-    - [Post Intervall](#post-interval)
+    - [Post Intervall](#post-intervall)
     - [Posts überspringen](#posts-überspringen)
     - [Sprache](#sprache)
 - [Datenschutzrichtlinie](#datenschutzrichtlinie)
@@ -70,22 +70,31 @@ Das System überspringt Posts, wenn eine der folgenden Bedingungen erfüllt ist:
 **Post Inhalts Check**
 1. Erkennt, ob der Post eines der vordefinierten Keywords enthält
 2. Erkennt, ob der Post einen Link oder ein Embed enthält
-3. Führt eine Sentimentanalyse auf den Post des Nutzers durch und bestimmt, ob er negativ, neutral oder positiv ist (Der Code dafür ist derzeit nicht in diesem Repo).
+3. Führt eine Sentimentanalyse auf den Post des Nutzers durch und bestimmt, ob er negativ
+
+`//// Needs translating`
+
+**Account-level checks:**
+1. Checks if the poster's account has been flagged by Bluesky moderation
+
+**Post-level checks:**
+1. Detects Bluesky post labels, including:
+   - self-applied labels
+   - Bluesky moderation labels
 
 #### Posts löschen
 1. Finde die Bot-Antwort unter einem deiner Posts.
 2. Antworte auf die Bot-Antwort mit "delete" und sie wird direkt gelöscht.
 
 ### Einstellungen
-Du kannst sogar die Einstellungen der Bots konfigurieren! Das kannst du tun, 
+Du kannst sogar die Einstellungen der Bots konfigurieren! Das kannst du tun, indem du einfach einen der Befehle da unten per Direktnachricht an den Bot schreibst.
 
-indem du einfach einen der Befehle da unten per Direktnachricht an den Bot schreibst.
+The bot checks for commands every 5 minutes. You can send up to 10 commands per check, and they will be processed in the order they are received. `//// Needs translating`
 
 Um alle deine Einstellungen zu sehen:
 1. Sende eine Direktnachricht mit diesem Befehl an den Bot:
-    - `settings`
+    - `!settings`
 2. Warte auf die Antwort des Bots.
-    - Sende während dieser Zeit keine neuen Nachrichten.
     - Die Antwort des Bots kann bis zu 5 Minuten dauern.    
 
 #### Einstellungen synchronisieren
@@ -93,7 +102,6 @@ Um alle deine Einstellungen zu sehen:
     - **Einstellungen des aktuellen Bots mit denen eines anderen Bots synchronisieren:** `!sync <@other_bot_handle>`
     - **Einstellungen aller anderen Bots mit dem aktuellen Bot synchronisieren:** `!sync <@current_bot_handle>`
 2. Warte auf die Antwort des Bots.
-    - Sende während dieser Zeit keine neuen Nachrichten.
     - Die Antwort des Bots kann bis zu 5 Minuten dauern.    
     
 #### Spitzname
@@ -101,7 +109,6 @@ Um alle deine Einstellungen zu sehen:
     - **Spitznamen einstellen:** `!nickname <nickname>` (Dein Spitzname kann maximal 20 Zeichen lang sein)
     - **Spitznamen zurücksetzen:** `!nickname`
 2. Warte auf die Antwort des Bots.
-    - Sende während dieser Zeit keine neuen Nachrichten.
     - Die Antwort des Bots kann bis zu 5 Minuten dauern.    
 
 #### Post Chance
@@ -109,7 +116,6 @@ Um alle deine Einstellungen zu sehen:
     - **Chance einstellen:** `!chance <chance>` (Muss eine Zahl zwischen 0 und 100 sein)
     - **Chance zurücksetzen:** `!chance`
 2. Warte auf die Antwort des Bots.
-    - Sende während dieser Zeit keine neuen Nachrichten.
     - Die Antwort des Bots kann bis zu 5 Minuten dauern. 
 
 #### Post Intervall
@@ -118,7 +124,6 @@ Um alle deine Einstellungen zu sehen:
     - **Variablen Intervall festlegen:** `!interval <lower_bound-upper_bound>` (Beide Zahlen müssen zwischen 60 und 3600 sein)
     - **Intervall zurücksetzen:** `!interval`
 2. Warte auf die Antwort des Bots.
-    - Sende während dieser Zeit keine neuen Nachrichten.
     - Die Antwort des Bots kann bis zu 5 Minuten dauern.    
 
 #### Posts überspringen
@@ -127,7 +132,6 @@ Um alle deine Einstellungen zu sehen:
     - **Variablen Intervall festlegen:** `!skip <lower_bound-upper_bound>` (Beide Zahlen müssen zwischen 0 und 50 sein)
     - **Intervall zurücksetzen:** `!skip`
 2. Warte auf die Antwort des Bots.
-    - Sende während dieser Zeit keine neuen Nachrichten.
     - Die Antwort des Bots kann bis zu 5 Minuten dauern.     
 
 #### Sprache
@@ -135,7 +139,6 @@ Um alle deine Einstellungen zu sehen:
     - **Um die Spracheinstellung einzustellen:** `!language <language>` (z.b.: `!language de` or `!language english`).
     - **Um die Spracheinstellung zurückzusetzen:** `!language`
 2. Warte auf die Antwort des Bots.
-    - Sende während dieser Zeit keine neuen Nachrichten.
     - Die Antwort des Bots kann bis zu 5 Minuten dauern.
 
 ## Datenschutzrichtlinie
@@ -165,9 +168,9 @@ Um deine Daten vom Bot zu löschen, ist das mit den folgenden Wegen möglich:
 
  **Automatischer Löschvorgang:**
  1. Sende eine Direktnachricht mit diesem Befehl an den Bot:
-    - `!delete` 
- 2. Warte auf die Antwort des Bots.
-    - Sende während dieser Zeit keine neuen Nachrichten.
+   - **Individual Bot Deletion:** `!delete` `//// Needs translating`
+   - **Global Deletion:** `!delete all` `//// Needs translating`
+2. Warte auf die Antwort des Bots.
     - Die Antwort des Bots kann bis zu 5 Minuten dauern.
     
  **Manueller Löschvorgang**
@@ -180,4 +183,4 @@ Um deine Daten vom Bot zu löschen, ist das mit den folgenden Wegen möglich:
 
 Dieses GitHub-Repo ist Open Source und unter der MIT-Lizenz freigegeben.
 
-Siehe [LICENSE](https://github.com/Pikachannel/bluesky-bots/blob/main/LICENSE) für mehr Informationen.
+Siehe [LICENSE](LICENSE) für mehr Informationen.
