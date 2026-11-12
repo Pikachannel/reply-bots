@@ -26,7 +26,7 @@ account_dids = []
 bots = {}
 followers_set = {}
 
-while os.getenv(f"HANDLE_{get_bot_num}"):
+while os.getenv(f"ACCOUNT_DID_{get_bot_num}"):
     passwords.append(os.getenv(f"PASSWORD_{get_bot_num}"))
     account_dids.append(os.getenv(f"ACCOUNT_DID_{get_bot_num}"))
     bots[account_dids[-1]] = {}
