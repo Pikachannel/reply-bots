@@ -18,7 +18,7 @@ async def refresh_followers(client: Client, followers_set: set, account_did: str
                     params["cursor"] = cursor
 
                 # -- Get the followers page
-                response = client.app.bsky.graph.get_followers(params=params)
+                response = await asyncio.to_thread(client.app.bsky.graph.get_followers,params=params)
                 followers_page = response.followers
 
                 all_followers.extend(followers_page) # Add new followers to the list

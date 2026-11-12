@@ -1,7 +1,7 @@
 
 # -------- Imports --------
 import asyncio
-
+from .json_worker import submit_json_update
 
 # -------- Command Class --------
 class CommandManager:
@@ -54,10 +54,12 @@ class CommandManager:
             "setting": setting
         }
 
-        await self.json_queue.put(payload)
-
         # -- Get replies
         replies = self.get_replies(user_did, account_did)
+
+        success = await submit_json_update(self.json_queue, payload)
+        if not success:
+            return False, replies["json_error"]
 
         # -- Return reply
         return True, replies["remove"].format(setting=setting)
@@ -80,10 +82,12 @@ class CommandManager:
             "nickname": nickname
         }
 
-        await self.json_queue.put(payload)
-
         # -- Get replies
         replies = self.get_replies(user_did, account_did)
+
+        success = await submit_json_update(self.json_queue, payload)
+        if not success:
+            return False, replies["json_error"]
 
         # -- Return reply
         return True, replies["nickname"].format(nickname=nickname)
@@ -117,7 +121,9 @@ class CommandManager:
             "chance": chance_value
         }
 
-        await self.json_queue.put(payload)
+        success = await submit_json_update(self.json_queue, payload)
+        if not success:
+            return False, replies["json_error"]
 
         # -- Return reply
         return True, replies["chance"].format(chance_value=chance_value)
@@ -178,7 +184,9 @@ class CommandManager:
             "interval": final_value
         }
 
-        await self.json_queue.put(payload)
+        success = await submit_json_update(self.json_queue, payload)
+        if not success:
+            return False, replies["json_error"]
 
         # -- Return reply
         return True, replies["interval"].format(text_value=text_value)
@@ -239,8 +247,10 @@ class CommandManager:
             "skip": final_value
         }
 
-        await self.json_queue.put(payload)
-
+        success = await submit_json_update(self.json_queue, payload)
+        if not success:
+            return False, replies["json_error"]
+        
         # -- Return reply
         return True, replies["skip"].format(text_value=text_value)
 
@@ -286,7 +296,9 @@ class CommandManager:
             "lang": lang
         }
 
-        await self.json_queue.put(payload)
+        success = await submit_json_update(self.json_queue, payload)
+        if not success:
+            return False, replies["json_error"]
 
         # -- Get replies dictionary for the newly targeted language
         target_replies = self.setting_replies.get(lang, self.setting_replies["en"])
@@ -297,19 +309,22 @@ class CommandManager:
 
     # -------------
     # -- Delete
-    # Deletes all the user's settings
-    async def delete_settings(self, user_did: str, account_did: str) -> tuple[bool, str]:
+    # Deletes the user's settings
+    async def delete_settings(self, user_did: str, globally: str | None, account_did: str) -> tuple[bool, str]:
+
+        # -- Get replies
+        replies = self.get_replies(user_did, account_did)
+
         # -- Add to queue
         payload = {
             "type": "delete",
             "user_did": user_did,
-            "account_did": account_did
+            "account_did": None if globally and globally.lower() == "all" else account_did
         }
 
-        await self.json_queue.put(payload)
-
-        # -- Get replies
-        replies = self.get_replies(user_did, account_did)
+        success = await submit_json_update(self.json_queue, payload)
+        if not success:
+            return False, replies["delete_error"]
 
         # -- Return reply
         return True, replies["delete"]
@@ -377,15 +392,21 @@ class CommandManager:
         # -- Sync the settings to the other bots
         if sync_did == account_did:
 
+            all_successful = True
             for other_did in other_dids:
                 payload = {
+                    **sync_settings,
                     "type": "update",
                     "account_did": other_did,
-                    "user_did": user_did,
-                    **sync_settings
+                    "user_did": user_did
                 }
 
-                await self.json_queue.put(payload)
+                success = await submit_json_update(self.json_queue, payload)
+                if not success:
+                    all_successful = False
+
+            if not all_successful:
+                return False, replies["sync_error"]
 
             # -- Return reply after all bots are processed
             return True, replies["sync_from"].format(
@@ -395,14 +416,16 @@ class CommandManager:
         # -- Sync the settings to this bot
         else:
             payload = {
+                **sync_settings,
                 "type": "update",
                 "account_did": account_did,
-                "user_did": user_did,
-                **sync_settings
+                "user_did": user_did
             }
 
-            await self.json_queue.put(payload)
-
+            success = await submit_json_update(self.json_queue, payload)
+            if not success:
+                return False, replies["sync_error"]
+            
             # -- Return reply
             return True, replies["sync_with"].format(
                 handle=bots[sync_did]["handle"]

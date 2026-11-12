@@ -4,15 +4,16 @@ from typing import Any
 
 # -------- Filters Class --------
 class Filters:
-    def __init__(self, client: Any, keyword_list: set) -> None:
+    def __init__(self, client: Any, tone_analysis: Any) -> None:
         self.cache = {}
         self.client = client
-        self.keyword_list = keyword_list
-        
-    # -- Flag keywords
-    def keywords(self, message):
+        self.tone_analysis = tone_analysis
+
+    # -------------
+    # -- Check for negative sentiment
+    def tone(self, message):
         text = message.get("commit", {}).get("record", {}).get("text", "").lower()
-        return any(keyword in text for keyword in self.keyword_list)
+        return self.tone_analysis.get_tone(text)
 
     # -------------
     # -- Flag links
@@ -25,7 +26,7 @@ class Filters:
             feature.get("$type") == "app.bsky.richtext.facet#link"
             for facet in facets
             for feature in facet.get("features", [])
-)
+        )
         return embed.get("$type") == "app.bsky.embed.external" or has_link
 
     # -------------
@@ -46,8 +47,8 @@ class Filters:
 
             self.cache[user_did] = (flagged, time.time())
             return flagged
-        except Exception as e:
-            return False
+        except:
+            return True
     
     # -------------
     # -- Flag posts with Bsky labels
@@ -70,6 +71,6 @@ class Filters:
             flagged = len(labels) > 0
             return flagged
 
-        except Exception as e:
-            return False
+        except:
+            return True
 

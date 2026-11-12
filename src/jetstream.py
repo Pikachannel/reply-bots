@@ -23,6 +23,7 @@ class Websocket():
                 # Connect to the bsky jetstream
                 async with websockets.connect(self.endpoint) as ws:
                     print(f"[Websocket] Connected to {self.endpoint}")
+                    self.reconnect = 1
                     self.ws = ws
 
                     async for raw_message in ws: # Get new messages
@@ -37,14 +38,18 @@ class Websocket():
             except ConnectionClosedError as e:
                 print(f"[Websocket] Connection lost, {e} reconnecting shortly...")
                 await asyncio.sleep(self.reconnect) # Wait to connect upon disconnection 
+                self.reconnect = min(self.reconnect * 2, 60)
+
             except Exception as e:
                 print(f"[Websocket] An error has occured, {e} reconnecting shortly...")
                 await asyncio.sleep(self.reconnect) # Wait to reconnect upon error
-    
+                self.reconnect = min(self.reconnect * 2, 60)
+                
     # -------------
     # -- Disconnect function
     async def disconnect(self) -> None:
         self.connected = False
+
         if self.ws:
             await self.ws.close() # Disconnect if connection is open
             print("[Websocket] Disconnected.")
