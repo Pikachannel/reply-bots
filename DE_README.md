@@ -16,7 +16,7 @@ Dieses GitHub-Repo enthält den Code für:
 
 ## Inhaltsverzeichnis
 - [Übersicht](#übersicht)
-- [Die Bots!](#the-bots)
+- [Die Bots!](#die-bots)
   - [Derzeitige Features](#derzeitige-features)
   - [Nutzung](#nutzung)
   - [Content-Filterungssystem](#content-filterungssystem)
