@@ -9,38 +9,38 @@ from src.filters import Filters
 from src.client import login
 from src.json_worker import json_worker
 from src.word import word_of_the_day
+from src.tone import ToneAnalysis
 import asyncio
 import os
 import json
 from dotenv import load_dotenv
+from pathlib import Path
 
 # -------- Variables --------
 load_dotenv()
 
 # -- Account info
 get_bot_num = 1
-handles = []
 passwords = []
 account_dids = []
 bots = {}
 followers_set = {}
 
-while os.getenv(f"HANDLE_{get_bot_num}"):
-    handles.append(os.getenv(f"HANDLE_{get_bot_num}"))
+while os.getenv(f"ACCOUNT_DID_{get_bot_num}"):
     passwords.append(os.getenv(f"PASSWORD_{get_bot_num}"))
     account_dids.append(os.getenv(f"ACCOUNT_DID_{get_bot_num}"))
-    bots[account_dids[-1]] = {
-        "handle": handles[-1]
-    }
+    bots[account_dids[-1]] = {}
     followers_set[account_dids[-1]] = set()
 
     get_bot_num += 1
 
 # -- File paths
-MESSAGES_JSON_PATH = "data/messages.json"
-USER_DATA_PATH = "data/user_data.json"
-BLOCKLIST_PATH = "data/blocklist.txt"
-LOCALES_PATH = "data/locales.json"
+BASE_DIR = Path(__file__).resolve().parent
+
+MESSAGES_JSON_PATH = BASE_DIR / "data" / "messages.json"
+USER_DATA_PATH = BASE_DIR / "data" / "user_data.json"
+BLOCKLIST_PATH = BASE_DIR / "data" / "blocklist.txt"
+LOCALES_PATH = BASE_DIR / "data" / "locales.json"
 
 # -------- Load json files --------
 with open(MESSAGES_JSON_PATH, "r", encoding="utf-8") as f:
@@ -61,11 +61,13 @@ async def main() -> None:
     queues = []
 
     for i in range(len(account_dids)):
-        client = await login(handles[i], passwords[i])
+        client = await login(account_dids[i], passwords[i])
         if not client:
             input("[Main] Press enter to exit...")
             return
         bots[account_dids[i]]["client"] = client
+        bots[account_dids[i]]["handle"] = client.profile.handle
+    print(bots)
 
     # -- Create queues
     json_queue = asyncio.Queue(maxsize=50)
@@ -73,16 +75,17 @@ async def main() -> None:
     # -- Setup classes
     ws = Websocket()
     command_manager = CommandManager(user_data, json_queue, setting_replies)
-    dm_worker = DmWorker(bots, command_manager, json_queue, account_dids)
+    dm_worker = DmWorker(bots, command_manager, account_dids)
+    tone_analysis = ToneAnalysis(keyword_list)
 
-    filters = Filters(bots[account_dids[0]]["client"], keyword_list)
+    filters = Filters(bots[account_dids[0]]["client"], tone_analysis)
 
     post_manager = PostManager(bots, user_data, account_dids, messages, filters)
 
     # -- Start global workers
     asyncio.create_task(dm_worker.start())
-    asyncio.create_task(json_worker(USER_DATA_PATH, json_queue, user_data))
-    asyncio.create_task(word_of_the_day(bots[account_dids[1]]["client"], keyword_list))  # Assuming you want to use the first bot for posting the word of the day
+    asyncio.create_task(json_worker(str(USER_DATA_PATH), json_queue, user_data))
+    asyncio.create_task(word_of_the_day(bots[account_dids[1]]["client"], keyword_list))  # Assuming the second bot is the one posting word of the day
 
     # -- Start per bot queues and workers
     for i in range(len(account_dids)):
@@ -92,3 +95,6 @@ async def main() -> None:
 
     # -- Setup websocket connection to the bsky jetstream
     await ws.connect(queues)
+
+if __name__ == "__main__":
+    asyncio.run(main())

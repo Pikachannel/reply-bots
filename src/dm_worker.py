@@ -1,15 +1,14 @@
 # -------- Imports --------
-from atproto import Client, models
+from atproto import models
 from typing import Any
 import asyncio
 from datetime import datetime, timezone, timedelta
 
 # -------- DmWorker Class --------
 class DmWorker:
-    def __init__(self, bots: dict, command_manager: Any, json_queue: asyncio.Queue, account_dids: list, check_interval: int = 300) -> None:
+    def __init__(self, bots: dict, command_manager: Any, account_dids: list, check_interval: int = 300) -> None:
         self.bots = bots
         self.command_manager = command_manager
-        self.json_queue = json_queue
         self.account_dids = account_dids
         self.check_interval = check_interval
     
@@ -34,70 +33,108 @@ class DmWorker:
             dm_client = client.with_bsky_chat_proxy()
             dm = dm_client.chat.bsky.convo
 
-            convo_list = dm.list_convos()
-
+            convo_list = await asyncio.to_thread(dm.list_convos)
+            
             # -- Loop through all users dms
             for convo in convo_list.convos:
-                # -- Extract message information
-                user_did = convo.last_message.sender.did
-                last_message = convo.last_message.text
-                sent_at = convo.last_message.sent_at
-                sent_at = datetime.fromisoformat(sent_at.replace("Z", "+00:00"))
+                # -- Get last 10 messages in the conversation
+                messages_response = await asyncio.to_thread(
+                    dm.get_messages,
+                    models.ChatBskyConvoGetMessages.Params(
+                        convo_id=convo.id,
+                        limit=10
+                    )
+                )
 
-                # -- Check if the message was sent in the last 5 minutes
-                now = datetime.now(timezone.utc)
-                if now - sent_at >= timedelta(minutes=5):
-                    break
-                if user_did == account_did:
-                    continue
+                messages = messages_response.messages
 
-                # -- Split the message into a prefix and param 
-                parts = last_message.split(maxsplit=1)
-                command = parts[0].lower()
-                param = parts[1] if len(parts) > 1 else None
+                # -- Find the last message sent by the bot
+                last_bot_message_index = -1
 
-                # -- Map to CommandManager
-                msg_to_send = None
-                facet = None
-                if command == "!nickname":
-                    _, msg_to_send = await self.command_manager.update_nickname(user_did, param, account_did)
-                elif command == "!chance":
-                    _, msg_to_send = await self.command_manager.chance(user_did, param, account_did)
-                elif command == "!interval":
-                    _, msg_to_send = await self.command_manager.interval(user_did, param, account_did)
-                elif command == "!skip":
-                    _, msg_to_send = await self.command_manager.skip_posts(user_did, param, account_did)
-                elif command == "!delete":
-                    _, msg_to_send = await self.command_manager.delete_settings(user_did, account_did)
-                elif command == "!settings":
-                    _, msg_to_send = await self.command_manager.view_settings(user_did, account_did)
-                elif command == "!sync":
-                    other_dids = [did for did in self.account_dids if did != account_did]
-                    _, msg_to_send = await self.command_manager.sync_settings(user_did, param, self.bots, account_did, other_dids)
-                elif command == "!language":
-                    _, msg_to_send = await self.command_manager.language(user_did, param, account_did)
-                elif command == "!help":
-                    _, msg_to_send, facet = await self.command_manager.help()
+                for i, message in enumerate(messages):
+                    sender = getattr(message, "sender", None)
+
+                    if sender is not None and sender.did == account_did:
+                        last_bot_message_index = i
+                        break
+
+                # -- Only process messages after the last bot message
+                if last_bot_message_index == -1:
+                    unread_messages = messages
                 else:
-                    continue
-                
-                if msg_to_send:
-                    if not facet:
-                        dm.send_message(
-                            models.ChatBskyConvoSendMessage.Data(
-                                convo_id=convo.id,
-                                message=models.ChatBskyConvoDefs.MessageInput(
-                                    text=msg_to_send
-                                ),
-                            )
-                        )
+                    unread_messages = messages[:last_bot_message_index]
+
+                # -- Process oldest messages first
+                for message in reversed(unread_messages):
+                    # -- Ignore system message views
+                    sender = getattr(message, "sender", None)
+                    if sender is None:
+                        continue
+
+                    # -- Ignore messages with no text
+                    message_text = getattr(message, "text", None)
+                    if not message_text:
+                        continue
+
+                    user_did = message.sender.did
+                    sent_at = datetime.fromisoformat(
+                        message.sent_at.replace("Z", "+00:00")
+                    )
+
+                    # -- Ignore messages sent by the bot
+                    if user_did == account_did:
+                        continue
+
+                    # -- Check if the message was sent in the last 5 minutes
+                    now = datetime.now(timezone.utc)
+                    if now - sent_at >= timedelta(seconds=self.check_interval+5):
+                        continue
+
+                    # -- Split the message into a prefix and param
+                    parts = message_text.split(maxsplit=1)
+                    if not parts:
+                        continue
+
+                    command = parts[0].lower()
+                    param = parts[1] if len(parts) > 1 else None
+
+                    # -- Map to CommandManager
+                    msg_to_send = None
+                    facet = None
+
+                    if command == "!nickname":
+                        _, msg_to_send = await self.command_manager.update_nickname(user_did, param, account_did)
+                    elif command == "!chance":
+                        _, msg_to_send = await self.command_manager.chance(user_did, param, account_did)
+                    elif command == "!interval":
+                        _, msg_to_send = await self.command_manager.interval(user_did, param, account_did)
+                    elif command == "!skip":
+                        _, msg_to_send = await self.command_manager.skip_posts(user_did, param, account_did)
+                    elif command == "!delete":
+                        _, msg_to_send = await self.command_manager.delete_settings(user_did, param, account_did)
+                    elif command == "!settings":
+                        _, msg_to_send = await self.command_manager.view_settings(user_did, account_did)
+                    elif command == "!sync":
+                        other_dids = [did for did in self.account_dids if did != account_did]
+                        _, msg_to_send = await self.command_manager.sync_settings(user_did, param, self.bots, account_did, other_dids)
+                    elif command == "!language":
+                        _, msg_to_send = await self.command_manager.language(user_did, param, account_did)
+                    elif command == "!help":
+                        _, msg_to_send, facet = await self.command_manager.help(user_did, account_did)
                     else:
-                        dm.send_message(
+                        continue
+
+                    # -- Send response
+                    if msg_to_send:
+                        message_input = models.ChatBskyConvoDefs.MessageInput(
+                            text=msg_to_send,
+                            facets=[facet] if facet else None
+                        )
+
+                        await asyncio.to_thread(
+                            dm.send_message,
                             models.ChatBskyConvoSendMessage.Data(
                                 convo_id=convo.id,
-                                message=models.ChatBskyConvoDefs.MessageInput(
-                                    text=msg_to_send,
-                                    facets=[facet]
-                                ),
+                                message=message_input
                             )
                         )

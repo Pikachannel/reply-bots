@@ -42,7 +42,7 @@ Systemet hoppar över svar om något av följande villkor är uppfyllt:
 **Kontroller av inläggets innehåll:**
 1. Identifierar om ett inlägg innehåller fördefinierade nyckelord.
 2. Identifierar om ett inlägg innehåller en länk eller inbäddat innehåll.
-3. Utför en sentimentanalys av användarens inlägg för att avgöra om det är negativt, neutralt eller positivt (koden för detta ingår för närvarande inte i detta arkiv).
+3. Utför en sentimentanalys av användarens inlägg för att avgöra om det är negativt, neutralt eller positivt.
 
 **Kontroller på kontonivå:**
 1. Kontrollerar om användarens konto har flaggats av Blueskys modereringsteam.
@@ -58,17 +58,20 @@ Systemet hoppar över svar om något av följande villkor är uppfyllt:
 
 ### Inställningar
 Du kan justera inställningarna för botarna! Detta görs genom att skicka rätt kommando i ett direktmeddelande (DM) till boten; kommandona finns listade nedan.
+
+Den här botten checkar för kommandon för varje 5-minuter. Du kan skicka upp till 10 kommandon per check, och de kommer bli processade i ordern som dom är skrivna i.
+
 För att se dina nuvarande inställningar:
 1. Skicka ett direktmeddelande till boten med följande kommando:
    - `!settings`
-2. Vänta på att boten svarar **innan** du skickar ett nytt meddelande. 
+2. Vänta på att boten svarar. 
    - Det kan ta upp till 5 minuter att få svar.
 
 #### Synkronisera inställningar
 1. Skicka ett direktmeddelande till boten med något av följande kommandon:
    - **Synkronisera den aktuella botens inställningar med en annan bot:** `!sync <@annan_bot>`
    - **Synkronisera alla andra botars inställningar med den aktuella boten:** `!sync <@nuvarande_bot>`
-2. Vänta på att boten svarar **innan** du skickar ett nytt meddelande. 
+2. Vänta på att boten svarar. 
    - Det kan ta upp till 5 minuter att få svar.
 
 
@@ -76,14 +79,14 @@ För att se dina nuvarande inställningar:
 1. Skicka ett direktmeddelande till boten enligt följande format:
    - **Ange smeknamn:** `!nickname <smeknamn>` (ditt smeknamn får vara högst 20 tecken långt)
    - **Återställ smeknamn:** `!nickname`
-2. Vänta på svar från boten **innan** du skickar ett nytt meddelande. 
+2. Vänta på svar från boten. 
    - Det kan ta upp till 5 minuter att få svar.
 
 #### Sannolikhet för inlägg
 1. Skicka ett direktmeddelande till boten enligt följande format:
    - **Ange sannolikhet:** `!chance <sannolikhet>` (måste vara ett tal mellan 0 och 100)
    - **Återställ sannolikhet:** `!chance`
-2. Vänta på svar från boten **innan** du skickar ett nytt meddelande. 
+2. Vänta på svar från boten. 
    - Det kan ta upp till 5 minuter att få svar.
 
 #### Intervall för inlägg
@@ -91,7 +94,7 @@ För att se dina nuvarande inställningar:
    - **Ange fast intervall:** `!interval <intervall>` (måste vara ett tal mellan 60 och 3600)
    - **Ange variabelt intervall:** `!interval <lägre_gräns-övre_gräns>` (båda talen måste vara mellan 60 och 3600)
    - **Återställ intervall:** `!interval`
-2. Vänta på svar från boten **innan** du skickar ett nytt meddelande. 
+2. Vänta på svar från boten. 
    - Det kan ta upp till 5 minuter att få svar.
    - 
 #### Hoppa över inlägg
@@ -99,7 +102,7 @@ För att se dina nuvarande inställningar:
    - **Ange fast intervall:** `!skip <intervall>` (måste vara ett heltal mellan 0 och 50)
    - **Ange variabelt intervall:** `!skip <lägre_gräns-övre_gräns>` (båda heltalen måste vara mellan 0 och 50)
    - **Återställ intervall:** `!skip`
-2. Vänta på svar från boten **innan** du skickar ett nytt meddelande. 
+2. Vänta på svar från boten. 
    - Det kan ta upp till 5 minuter att få svar.
 
 #### Språk
@@ -134,10 +137,12 @@ Botarna samlar in och använder följande data:
 ### Borttagning av data
 Om du vill att dina uppgifter ska tas bort från boten finns det två alternativ:
 
+
 **Automatisk borttagning:**
 1. Skicka ett direktmeddelande till boten med följande innehåll:
-   - `!delete`
-2. Vänta på att boten svarar **innan** du skickar ett nytt meddelande. 
+  - **Borttagning av Individuell Bot:** `!delete`
+   - **Global Borttagning:** `!delete all`
+2. Vänta på att boten svarar. 
    - Det kan ta upp till 5 minuter att få svar.
 
 **Manuell borttagning:**
@@ -149,4 +154,4 @@ Om du vill att dina uppgifter ska tas bort från boten finns det två alternativ
 ## Licens
 Detta arkiv är öppen källkod och publiceras under MIT-licensen.
 
-Se [LICENSE](https://github.com/Pikachannel/bluesky-bots/blob/main/LICENSE) för mer information.
+Se [LICENSE](LICENSE) för mer information.

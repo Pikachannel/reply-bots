@@ -2,3 +2,4 @@ atproto
 python-dotenv
 websockets
 wonderwords
+nltk
