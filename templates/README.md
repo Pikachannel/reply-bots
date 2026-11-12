@@ -7,6 +7,7 @@ Make a copy of this file, and name it ABC_README.md where:
 # How?
 - Using the "Find and Replace" (by pressing CTRL+F), find and replace the sections in the Overview-Table-of-Contents list with your translation:
   - For Example: "Overview" -> "Översikt"
+- Do not translate command names such as `!settings` or `!chance`
 - Remove the `//⚠️Needs translation` lines when you are done, that's it! 
 
 
@@ -100,7 +101,7 @@ The system skips replies when any of the following conditions are met:
 **Post content checks:**
 1. Detects whether a post contains any predefined keywords  
 2. Detects whether a post contains a link or embed
-3. Performs sentiment analysis on the user's post and determines whether it is negative, neutral, or positive (code is currently not included in this repo).
+3. Performs sentiment analysis on the user's post and determines whether it is negative
 
 **Account-level checks:**
 1. Checks if the poster's account has been flagged by Bluesky moderation
@@ -117,31 +118,33 @@ The system skips replies when any of the following conditions are met:
 ### Settings
 You can configure settings with the bots! You do this by sending the appropriate command in the bots DMs, these can be seen below. 
 
+The bot checks for commands every 5 minutes. You can send up to 10 commands per check, and they will be processed in the order they are received.
+
 To view all your settings:
 1. Send a direct message to the bot in the format:
    - `!settings`
-2. Wait for the bot to respond **before** sending a new message.
+2. Wait for the bot to respond.
    - Responses may take up to 5 minutes.
 
 #### Syncing Settings
 1. Send a direct message to the bot in the format:
    - **Sync the current bot’s settings with another bot:** `!sync <@other_bot_handle>`
    - **Sync all other bots’ settings with the current bot:** `!sync <@current_bot_handle>`
-2. Wait for the bot to respond **before** sending a new message.
+2. Wait for the bot to respond.
    - Responses may take up to 5 minutes.
 
 #### Custom nickname
 1. Send a direct message to the bot in the format:  
    - **Setting Nickname:** `!nickname <nickname>` (your nickname can be max 20 characters)
    - **Resetting Nickname:** `!nickname`
-2. Wait for the bot to respond **before** sending a new message.
+2. Wait for the bot to respond.
    - Responses may take up to 5 minutes.
 
 #### Post chance 
 1. Send a direct message to the bot in the format:
   - **Setting Chance:** `!chance <chance>` (must be a number between 0 and 100)
   - **Resetting Chance:** `!chance`
-2. Wait for the bot to respond **before** sending a new message.
+2. Wait for the bot to respond.
    - Responses may take up to 5 minutes.
 
 #### Post interval
@@ -149,7 +152,7 @@ To view all your settings:
   - **Setting Static Interval:** `!interval <interval>` (must be a number between 60 and 3600)
   - **Setting Variable Interval:** `!interval <lower_bound-upper_bound>` (both numbers must be between 60 and 3600)
   - **Resetting Interval:** `!interval`
-2. Wait for the bot to respond **before** sending a new message.
+2. Wait for the bot to respond.
    - Responses may take up to 5 minutes.
 
 #### Skip posts
@@ -157,14 +160,14 @@ To view all your settings:
    - **Setting Static Interval:** `!skip <interval>` (must be an integer between 0 and 50)
    - **Setting Variable Interval:** `!skip <lower_bound-upper_bound>` (both integers must be between 0 and 50)
    - **Resetting Interval:** `!skip`
-2. Wait for the bot to respond **before** sending a new message.
+2. Wait for the bot to respond.
    - Responses may take up to 5 minutes.
 
 #### Language
 1. Send a direct message to the bot in the format:
    - **Setting Language:** `!language <language>` (e.g., `!language sv` or `!language english`).
    - **Resetting Language:** `!language`
-2. Wait for the bot to respond **before** sending a new message.
+2. Wait for the bot to respond.
    - Responses may take up to 5 minutes.
 
 ## Privacy Policy
@@ -193,8 +196,9 @@ If you would like your data deleted from the bot, there are two options:
 
 **Automatic Deletion:**  
 1. Send a direct message to the bot in the format:
-   - `!delete`
-2. Wait for the bot to respond **before** sending a new message.
+   - **Individual Bot Deletion:** `!delete`
+   - **Global Deletion:** `!delete all`
+2. Wait for the bot to respond.
    - Responses may take up to 5 minutes.
 
 **Manual Deletion:**  
@@ -206,4 +210,4 @@ If you would like your data deleted from the bot, there are two options:
 ## License
 This repository is open source and released using the MIT License.
 
-See [LICENSE](https://github.com/Pikachannel/bluesky-bots/blob/main/LICENSE) for further details.
+See [LICENSE](LICENSE) for further details.
