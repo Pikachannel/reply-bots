@@ -70,17 +70,15 @@ Das System überspringt Posts, wenn eine der folgenden Bedingungen erfüllt ist:
 **Post Inhalts Check**
 1. Erkennt, ob der Post eines der vordefinierten Keywords enthält
 2. Erkennt, ob der Post einen Link oder ein Embed enthält
-3. Führt eine Sentimentanalyse auf den Post des Nutzers durch und bestimmt, ob er negativ
+3. Führt eine Sentimentanalyse auf den Post des Nutzers durch und bestimmt, ob er negativ ist.
 
-`//// Needs translating`
+**Account-Level Prüfung:**
+1. Prüft, ob der Nutzer von der Bluesky-Moderation unter irgendeiner Moderationskategorie markiert wurde.
 
-**Account-level checks:**
-1. Checks if the poster's account has been flagged by Bluesky moderation
-
-**Post-level checks:**
-1. Detects Bluesky post labels, including:
-   - self-applied labels
-   - Bluesky moderation labels
+**Post-Level Prüfung:**
+1. Liest Bluesky Post Labels, darunter:
+   - Selbst angehängte Labels.
+   - Bluesky-Moderations-Labels.
 
 #### Posts löschen
 1. Finde die Bot-Antwort unter einem deiner Posts.
@@ -89,7 +87,7 @@ Das System überspringt Posts, wenn eine der folgenden Bedingungen erfüllt ist:
 ### Einstellungen
 Du kannst sogar die Einstellungen der Bots konfigurieren! Das kannst du tun, indem du einfach einen der Befehle da unten per Direktnachricht an den Bot schreibst.
 
-The bot checks for commands every 5 minutes. You can send up to 10 commands per check, and they will be processed in the order they are received. `//// Needs translating`
+Der Bot prüft alle 5 Minuten, ob neue Befehle da sind. Du kannst bis zu 10 Befehle pro Überprüfung senden und sie werden genau in der Reihenfolge verarbeitet, in der sie gesendet wurden.
 
 Um alle deine Einstellungen zu sehen:
 1. Sende eine Direktnachricht mit diesem Befehl an den Bot:
@@ -136,8 +134,8 @@ Um alle deine Einstellungen zu sehen:
 
 #### Sprache
 1. Sende eine Direktnachricht mit einem dieser Befehle an den Bot:
-    - **Um die Spracheinstellung einzustellen:** `!language <language>` (z.b.: `!language de` or `!language english`).
-    - **Um die Spracheinstellung zurückzusetzen:** `!language`
+    - **Spracheinstellung festlegen:** `!language <language>` (z.b.: `!language de` or `!language english`).
+    - **Spracheinstellung zurücksetzen:** `!language`
 2. Warte auf die Antwort des Bots.
     - Die Antwort des Bots kann bis zu 5 Minuten dauern.
 
@@ -166,13 +164,13 @@ werden nur temporär im Cache des Bots gespeichert.
 ### Löschen von Nutzerdaten
 Um deine Daten vom Bot zu löschen, ist das mit den folgenden Wegen möglich:
 
- **Automatischer Löschvorgang:**
- 1. Sende eine Direktnachricht mit diesem Befehl an den Bot:
-   - **Individual Bot Deletion:** `!delete` `//// Needs translating`
-   - **Global Deletion:** `!delete all` `//// Needs translating`
+**Automatischer Löschvorgang:**
+1. Sende eine Direktnachricht mit diesem Befehl an den Bot:
+  - **Einzelner Bot:** `!delete`
+  - **Alle Bots:** `!delete all` 
 2. Warte auf die Antwort des Bots.
-    - Die Antwort des Bots kann bis zu 5 Minuten dauern.
-    
+   - Die Antwort des Bots kann bis zu 5 Minuten dauern.     
+   
  **Manueller Löschvorgang**
  1. Kontaktiere Pikachannel über eine der folgenden:
     - Bluesky: [pikachannel.xyz](https://bsky.app/profile/pikachannel.xyz)
