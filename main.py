@@ -67,7 +67,6 @@ async def main() -> None:
             return
         bots[account_dids[i]]["client"] = client
         bots[account_dids[i]]["handle"] = client.profile.handle
-    print(bots)
 
     # -- Create queues
     json_queue = asyncio.Queue(maxsize=50)
