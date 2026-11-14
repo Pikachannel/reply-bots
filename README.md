@@ -3,6 +3,9 @@
 <p align="left">
   <a href="SV_README.md"><img src="https://img.shields.io/badge/Språk-Svenska-blue?style=flat-square" alt="Svenska"></a>
 </p>
+<p align="left">
+  <a href="DE_README.md"><img src="https://img.shields.io/badge/Sprache-Deutsch-blue?style=flat-square" alt="Deutsch"></a>
+</p>
 
 ## Overview
 This repository contains all the code for:
