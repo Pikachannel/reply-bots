@@ -4,7 +4,7 @@
 </p>
 
 <p align="left">
-  <a href="SV_README.md"><img src="https://img.shields.io/badge/Sprache-Deutsch-blue?style=flat-square" alt="Deutsch"></a>
+  <a href="DE_README.md"><img src="https://img.shields.io/badge/Sprache-Deutsch-blue?style=flat-square" alt="Deutsch"></a>
 </p>
 
 ## Översikt
