@@ -3,6 +3,10 @@
   <a href="README.md"><img src="https://img.shields.io/badge/Language-English-blue?style=flat-square" alt="English"></a>
 </p>
 
+<p align="left">
+  <a href="DE_README.md"><img src="https://img.shields.io/badge/Sprache-Deutsch-blue?style=flat-square" alt="Deutsch"></a>
+</p>
+
 ## Översikt
 Detta GitHub repo innehåller all kod för:
 - Whimsy Miku Bot (whimsy.pikachannel.xyz)
@@ -29,6 +33,7 @@ Evil Teto - som namnet förhoppningsvis förklarar - svarar på dina inlägg med
 8. **Språk Val**: Användare kan sätta botten's svar-språk, vilket för nuvarande inkluderar (men är inte begränsat till) förljande:
    - Engelska (EN)
    - Svenska (SV)
+   - Tyska (DE)
 
 ### Så här använder du tjänsten
 1. Följ boten på Bluesky

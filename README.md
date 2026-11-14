@@ -3,6 +3,9 @@
 <p align="left">
   <a href="SV_README.md"><img src="https://img.shields.io/badge/Språk-Svenska-blue?style=flat-square" alt="Svenska"></a>
 </p>
+<p align="left">
+  <a href="DE_README.md"><img src="https://img.shields.io/badge/Sprache-Deutsch-blue?style=flat-square" alt="Deutsch"></a>
+</p>
 
 ## Overview
 This repository contains all the code for:
@@ -53,6 +56,7 @@ Evil Teto responds to your posts with funny mean messages!
 8. **Language Selection**: Users can set their preferred bot response language, currently including:
    - English (EN)
    - Swedish (SV)
+   - German (DE)
 
 ### How to use
 1. Follow the bot on Bluesky
