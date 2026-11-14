@@ -88,6 +88,7 @@ Evil Teto responds to your posts with funny mean messages!
 8. **Language Selection**: Users can set their preferred bot response language, currently including:
    - English (EN)
    - Swedish (SV)
+   - German (DE)
 
 ### How to use
 1. Follow the bot on Bluesky

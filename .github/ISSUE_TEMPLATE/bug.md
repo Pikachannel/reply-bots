@@ -10,7 +10,7 @@ Thanks for taking the time to report a bug!
 Security notice: If you found a security vulnerability, please do NOT open a public issue. Follow the private reporting instructions in SECURITY.md.
 -->
 
-<!-- Please include a brief description of your bug after the [Bug] in the title -->
+<!-- Please include a brief description of your bug after [Bug] in the title. -->
 
 ## Bug description
 
@@ -21,7 +21,7 @@ Security notice: If you found a security vulnerability, please do NOT open a pub
 <!-- A clear description of what happened -->
 
 ## Steps to reproduce
-<!-- How can the issue be reproduced? If you know -->
+<!-- Describe how the issue can be reproduced, if known. -->
 1.
 2.
 3.
@@ -31,7 +31,7 @@ Security notice: If you found a security vulnerability, please do NOT open a pub
 
 ## Checklist
 <!-- Change each checkbox to [x] (all lowercase, with no spaces between the brackets) to mark it as complete. -->
-<!-- It is not a big deal if you create a duplicate on accident -->
+<!-- IIt's okay if you accidentally create a duplicate issue. -->
 - [ ] I have checked existing issues and pull requests to make sure this bug hasn't already been found.
 - [ ] I have not included any sensitive information in this bug report.
-- [ ] I have checked [SECURITY.md](../SECURITY.md) and confirmed that this is appropriate to report as a public issue.
+- [ ] I have checked [SECURITY.md](../../SECURITY.md) and confirmed that this is appropriate to report as a public issue.

@@ -4,7 +4,7 @@
 
 This project does not currently have a formal release or version schedule.
 
-Security fixes will generally be applied to the `main` branch. Other branches and forks may not receive security updates.
+Security fixes will be applied to the `main` branch. Other branches and forks may not receive security updates.
 
 ## Reporting a Vulnerability
 

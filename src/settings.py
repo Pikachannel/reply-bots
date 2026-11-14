@@ -18,8 +18,6 @@ class CommandManager:
             for lang, name in setting_replies[key]["language_names"].items():
                 self.language_map[name.lower()] = lang
 
-
-
     # -------------
     # -- To float
     # Converts a string to a float
@@ -451,8 +449,8 @@ class CommandManager:
             link_text = "README"
             uri = "https://github.com/Pikachannel/reply-bots/blob/main/README.md"
         else:
-            link_text = f"{lang.upper()}_README"
-            uri = f"https://github.com/Pikachannel/reply-bots/blob/main/{lang.upper()}_README.md"
+            link_text = f"README_{lang.upper()}"
+            uri = f"https://github.com/Pikachannel/reply-bots/blob/main/README_{lang.upper()}.md"
 
         byte_start = text.encode("utf-8").find(link_text.encode("utf-8"))
 

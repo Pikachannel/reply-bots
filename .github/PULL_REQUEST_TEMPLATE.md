@@ -41,7 +41,7 @@ If you are still working on it, please mark it as a draft pull request.
 
 ## Requirements
 
-<!-- These should be completed before requesting a review. -->
+<!-- If you have not completed all of these, you may submit this as a draft. -->
 <!-- Change each checkbox to [x] (all lowercase, with no spaces between the brackets) to mark it as complete. -->
 
 - [ ] I have followed the project's contribution guidelines in [CONTRIBUTING.md](../CONTRIBUTING.md).
