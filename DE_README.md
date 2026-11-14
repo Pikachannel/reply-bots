@@ -47,7 +47,7 @@ Evil Teto antwortet mit lustig-gemeinen Antworten auf deine Posts.
     - Nachrichten, die den Nutzernamen des Nutzers enthalten
 2. **Ein Content-Filterungssystem**, inklusive:
     - Ein Post-Filterungssystem
-    - Ermöglicht es Nutzern, Antworten unter ihren Posts zu löschen (mehr dazu in [Posts löschen](#Posts-löschen)).
+    - Ermöglicht es Nutzern, Antworten unter ihren Posts zu löschen (mehr dazu in [Posts löschen](#posts-löschen)).
 3. **Benutzerdefinierte Spitznamen**: Nutzer können einen benutzerdefinierten Spitznamen festlegen, der statt ihres Bluesky-Anzeigenamens benutzt wird.
 4. **Post Chance**: Nutzer können die Wahrscheinlichkeit auf eine Antwort auf ihre Posts ändern.
 5. **Post Intervall**: Nutzer können den Zeitabstand zwischen Antworten unter ihren Beiträgen anpassen. Für alle Antworten gilt eine Mindestabklingzeit von 60 Sekunden.
@@ -126,15 +126,15 @@ Um alle deine Einstellungen zu sehen:
 
 #### Posts überspringen
 1. Sende eine Direktnachricht mit einem dieser Befehle an den Bot:
-    - **Intervall festlegen:** `!skip <interval>` (Muss eine Zahl zwischen 0 und 50 sein)
-    - **Variablen Intervall festlegen:** `!skip <lower_bound-upper_bound>` (Beide Zahlen müssen zwischen 0 und 50 sein)
-    - **Intervall zurücksetzen:** `!skip`
+    - **Skip-Wert festlegen:** `!skip <interval>` (Muss eine Zahl zwischen 0 und 50 sein)
+    - **ariablen Skip-Bereich festlegen:** `!skip <lower_bound-upper_bound>` (Beide Zahlen müssen zwischen 0 und 50 sein)
+    - **Skip-Wert zurücksetzen:** `!skip`
 2. Warte auf die Antwort des Bots.
     - Die Antwort des Bots kann bis zu 5 Minuten dauern.     
 
 #### Sprache
 1. Sende eine Direktnachricht mit einem dieser Befehle an den Bot:
-    - **Spracheinstellung festlegen:** `!language <language>` (z.b.: `!language de` or `!language english`).
+    - **Spracheinstellung festlegen:** `!language <language>` (z.b.: `!language de` oder `!language english`).
     - **Spracheinstellung zurücksetzen:** `!language`
 2. Warte auf die Antwort des Bots.
     - Die Antwort des Bots kann bis zu 5 Minuten dauern.
@@ -145,7 +145,7 @@ Um alle deine Einstellungen zu sehen:
 Der Bot sammelt und nutzt die folgenden Daten:
 
 **Posts der Follower:**
-- Der Inhalt und Metadaten der Posts, gespostet von Accounts, die dem Bot folgen.
+- Der Inhalt und Metadaten der Posts, veröffentlicht von Accounts, die dem Bot folgen.
 - Informationen von gesammelten Posts werden nicht permanent gespeichert und 
 werden nur temporär im Cache des Bots gespeichert.
 
