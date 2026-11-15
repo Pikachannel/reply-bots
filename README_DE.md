@@ -51,7 +51,7 @@ Evil Teto antwortet mit lustig-gemeinen Antworten auf deine Posts.
 3. **Benutzerdefinierte Spitznamen**: Nutzer können einen benutzerdefinierten Spitznamen festlegen, der statt ihres Bluesky-Anzeigenamens benutzt wird.
 4. **Post Chance**: Nutzer können die Wahrscheinlichkeit auf eine Antwort auf ihre Posts ändern.
 5. **Post Intervall**: Nutzer können den Zeitabstand zwischen Antworten vom Bot unter ihren Beiträgen anpassen. Für alle Antworten gilt eine Mindestabklingzeit von 60 Sekunden.
-6. **Posts überspringen**: Nutzer können ändern, wie viele Posts zwischen den Antworten vom Bot liegen müssen.
+6. **Posts überspringen**: Nutzer können ändern, wie viele Posts zwischen den Antworten des Bots liegen müssen.
 7. **Wort des Tages!**: Evil Teto wird jeden einzelnen Tag ein zufälliges Wort posten.
 8. **Sprachauswahl**: Nutzer können die gewünschte Sprache für Bot-Antworten festlegen, Aktuell werden die folgenden Sprachen unterstützt:
     - Englisch (EN)
