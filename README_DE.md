@@ -85,7 +85,7 @@ Das System überspringt Posts, wenn eine der folgenden Bedingungen erfüllt ist:
 2. Antworte auf die Bot-Antwort mit "delete" und sie wird direkt gelöscht.
 
 ### Einstellungen
-Nutzer können anpassen, wie der Bot sich unter ihren Posts verhält. Das funktioniert mit Einstellungen, die Nutzer für sich selber festlegen. Die Einstellungen können mit den unten gezeigten Befehlen
+Nutzer können anpassen, wie der Bot sich unter ihren Posts verhält. Das funktioniert mit Einstellungen, die Nutzer für sich selber festlegen. Die Einstellungen können mit den unten angezeigten Befehlen
 geändert werden, indem sie (die Befehle) per Direktnachricht an den Bot gesendet werden.
 
 Der Bot prüft alle 5 Minuten, ob neue Befehle da sind. Du kannst bis zu 10 Befehle pro Überprüfung senden und sie werden genau in der Reihenfolge verarbeitet, in der sie gesendet wurden.
@@ -105,7 +105,7 @@ Um alle deine Einstellungen zu sehen:
     
 #### Spitzname
 1. Sende eine Direktnachricht mit einem dieser Befehle an den Bot:
-    - **Spitznamen einstellen:** `!nickname <nickname>` (Dein Spitzname kann maximal 20 Zeichen lang sein)
+    - **Spitznamen einstellen:** `!nickname <nickname>` (Der Spitzname kann maximal 20 Zeichen lang sein)
     - **Spitznamen zurücksetzen:** `!nickname`
 2. Warte auf die Antwort des Bots.
     - Eine Antwort kann bis zu 5 Minuten dauern.    
