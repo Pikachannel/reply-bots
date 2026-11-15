@@ -11,18 +11,32 @@ class DmWorker:
         self.command_manager = command_manager
         self.account_dids = account_dids
         self.check_interval = check_interval
+        self.stop_event = asyncio.Event()
     
     # -------------
     # -- Start the DM Worker
     async def start(self) -> None:
         print("[DM Worker] Starting DM worker")
-        while True:
+
+        while not self.stop_event.is_set():
             try:
                 await self.check_dms()
             except Exception as e:
                 print(f"[DMWorker] Error: {e}")
-            await asyncio.sleep(self.check_interval)
-    
+
+            try:
+                await asyncio.wait_for(self.stop_event.wait(), timeout=self.check_interval)
+            except asyncio.TimeoutError:
+                continue
+
+        print("[DM Worker] DM worker stopped.")
+
+    # -------------
+    # -- Stop the DM Worker
+    async def stop(self) -> None:
+        print("[DM Worker] Stopping DM worker...")
+        self.stop_event.set()
+        
     # -------------
     # -- Check DMs sent to the bot
     async def check_dms(self) -> None:

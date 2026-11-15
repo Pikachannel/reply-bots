@@ -1,4 +1,3 @@
-
 # -------- Imports --------
 import json
 import asyncio
@@ -28,6 +27,11 @@ async def json_worker(path: str, queue: asyncio.Queue, user_data: dict) -> None:
 
     while True:
         item = await queue.get()
+
+        if item == "Stop":
+            queue.task_done()
+            break
+                
         future = item["future"]
 
         try:
