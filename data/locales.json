@@ -103,8 +103,8 @@
     },
     "help": {
         "en": "Check out the README file for a full list of commands and features.",
-        "sv": "Checka SV_README-filen för en fullständig lista över kommandon och funktioner.",
-        "de": "Sehe die DE_README Datei für die volle Liste von Befehlen und Features."
+        "sv": "Checka README_SV-filen för en fullständig lista över kommandon och funktioner.",
+        "de": "Sehe die README_DE Datei für die volle Liste von Befehlen und Features."
     },
     "sync_with": {
         "en": "Your settings have been synced with {handle}!\nUse !settings to view your synced settings.\nUse !help at any time to see all commands.",
