@@ -25,7 +25,7 @@ If you are still working on it, please mark it as a draft pull request.
 
 ## Testing
 
-<!-- Change any applicable checkbox to [x] (all lowercase, with no spaces between the brackets) to mark it as complete. -->
+<!-- Change any applicable checkbox from [ ] to [x].  -->
 
 - [ ] Tested locally
 - [ ] Requires additional testing
@@ -35,9 +35,9 @@ If you are still working on it, please mark it as a draft pull request.
 
 ## Disclosure
 
-<!-- Disclose how any AI tools were used, see guidelines in CONTRIBUTING.md -->
+<!-- Disclose any use of generative AI tools, following the guidelines in CONTRIBUTING.md. -->
 - [ ] No generative AI tools were used
-<!-- If AI tools were used, clarify below -->
+<!-- If generative AI tools were used, describe which tools were used and how they were used below. -->
 
 ## Requirements
 
@@ -47,7 +47,7 @@ If you are still working on it, please mark it as a draft pull request.
 - [ ] I have followed the project's contribution guidelines in [CONTRIBUTING.md](../CONTRIBUTING.md).
 - [ ] I have reviewed my changes before submitting.
 - [ ] I have updated the documentation where necessary.
-- [ ] I have not included credentials, API keys, or other sensitive information.
+- [ ] I have ensured that no credentials, API keys, or other sensitive information are included.
 
 ## Additional notes
 

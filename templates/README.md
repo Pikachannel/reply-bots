@@ -1,7 +1,7 @@
 # README TEMPLATE
 This is a template used for translating languages.
-Make a copy of this file, and name it README_ABC.md where:
-- ABC is **your language code** (e.g the language code for "English" is (en) and "Swedish" is (sv) and "Japanese" is (ja)
+Make a copy of this file and name it `README_XX.md`, where:
+- XX is **your language code** (e.g the language code for "English" is (en) and "Swedish" is (sv) and "Japanese" is (ja))
 
 
 # How?
@@ -36,7 +36,7 @@ Becomes
 
 `//⚠️Needs translation - edit the ALT and Språk-Svenska-blue to <Language in your language>-Your_Lang_Name-blue`
 <p align="left">
-  <a href="SV_README.md"><img src="https://img.shields.io/badge/Språk-Svenska-blue?style=flat-square" alt="Svenska"></a>
+  <a href="README_SV.md"><img src="https://img.shields.io/badge/Språk-Svenska-blue?style=flat-square" alt="Svenska"></a>
 </p>
 
 ## Overview

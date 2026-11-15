@@ -17,8 +17,10 @@ Security notice: If you found a security vulnerability, please do NOT open a pub
 **What did you expect to happen?**
 <!-- A clear description of what you expected to happen -->
 
+
 **What actually happened?**
 <!-- A clear description of what happened -->
+
 
 ## Steps to reproduce
 <!-- Describe how the issue can be reproduced, if known. -->
@@ -26,12 +28,14 @@ Security notice: If you found a security vulnerability, please do NOT open a pub
 2.
 3.
 
+
 ## Additional information
 <!-- Any other information about the problem -->
 
+
 ## Checklist
-<!-- Change each checkbox to [x] (all lowercase, with no spaces between the brackets) to mark it as complete. -->
-<!-- IIt's okay if you accidentally create a duplicate issue. -->
-- [ ] I have checked existing issues and pull requests to make sure this bug hasn't already been found.
-- [ ] I have not included any sensitive information in this bug report.
-- [ ] I have checked [SECURITY.md](../../SECURITY.md) and confirmed that this is appropriate to report as a public issue.
+<!-- Check each box by changing [ ] to [x]. -->
+<!-- It's okay if you accidentally create a duplicate issue. -->
+- [ ] I have searched existing issues and pull requests for duplicates.
+- [ ] I have removed any sensitive or personal information from this report.
+- [ ] This report does not disclose a security vulnerability. If it does, I have followed the reporting instructions in [SECURITY.md](../../SECURITY.md).

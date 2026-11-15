@@ -1,4 +1,4 @@
-## [Unreleased]
+## [0.17.0] - 2026-11-15
 
 ### Added
 
@@ -11,13 +11,14 @@
 ### Changed
 
 - Renamed localised README files from `XX_README.md` to `README_XX.md` and updated the `!help` command accordingly.
+- Reformatted `locales.json` to improve maintainability and updated settings to support the new locales structure.
 
 
 ## [0.16.0] - 2026-11-14
 
 ### Added
 
-- Added a German translation of `loi tcales.json`.
+- Added a German translation of `locales.json`.
 - Added a German translation of `messages.json`.
 - Added a German translation of `README.md`, saved as `DE_README.md`.
 - Added information about German language support to the other localised README files.
