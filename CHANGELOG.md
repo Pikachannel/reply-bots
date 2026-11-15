@@ -23,6 +23,7 @@
 - Added a German translation of `README.md`, saved as `DE_README.md`.
 - Added information about German language support to the other localised README files.
 
+
 ## [0.15.0] - 2026-11-11
 
 

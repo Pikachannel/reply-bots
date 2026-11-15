@@ -12,7 +12,7 @@ Before making any changes:
 
 - **Bugs:** Open a GitHub issue using the bug report template. 
 - **Security vulnerabilities:** Follow the reporting instructions in [SECURITY.md](SECURITY.md) instead of opening a public issue.
-- **Feature requests:** Open a GitHub issue using the feature request template. Please allow time for me to evaluate the idea before starting work on a pull request.
+- **Suggestions:** Open a GitHub issue using the suggestion template. Please allow time for me to evaluate the idea before starting work on a pull request.
 
 ## Making contributions
 
