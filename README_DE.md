@@ -41,7 +41,7 @@ Whimsy Miku antwortet mit positiven Antworten auf deine Posts!
 
 Evil Teto antwortet mit lustig-gemeinen Antworten auf deine Posts.
 
-#### Derzeitige Features
+### Derzeitige Features
 1. **Wählt zufällig vorbestimmte Nachrichten aus**, inklusive:
     - Support für mehrere Sprachen
     - Nachrichten, die den Nutzernamen des Nutzers enthalten
@@ -150,7 +150,7 @@ Der Bot sammelt und nutzt die folgenden Daten:
 - Informationen von gesammelten Posts werden nicht permanent gespeichert und 
 werden nur temporär im Cache des Bots gespeichert.
 
- **Nutzer Metadaten**
+ **Nutzer Metadaten:**
 - Nur öffentlich findbaren Informationen wie Nutzernamen und Profildetails.
 - Nur die DID (Bluesky-Account-gebundene ID) wird gespeichert.
 
