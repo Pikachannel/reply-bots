@@ -2,8 +2,9 @@
 
 ### Added
 
-- Added `SECURITY.md`.
-- Added `CONTRIBUTING.md`.
+- Adds a changelog documenting historical changes in `CHANGELOG.md`.
+- Added a security policy in `SECURITY.md`.
+- Adds contribution guidelines in `CONTRIBUTING.md`.
 - Added `.github/` with issue and pull request templates.
 - Added `.env.example` containing example environment variables.
 - Added a README template for translators and localisers.
