@@ -42,6 +42,10 @@ class DmWorker:
     async def check_dms(self) -> None:
         # -- Run through each bot
         for account_did in self.account_dids:
+            # -- Check if the bot is trying to shutdown
+            if self.stop_event.is_set():
+                return
+
             # -- Get the messages sent to the bot
             client = self.bots[account_did]["client"]
             dm_client = client.with_bsky_chat_proxy()
@@ -51,6 +55,10 @@ class DmWorker:
             
             # -- Loop through all users dms
             for convo in convo_list.convos:
+                # -- Check if the bot is trying to shutdown
+                if self.stop_event.is_set():
+                    return
+
                 # -- Get last 10 messages in the conversation
                 messages_response = await asyncio.to_thread(
                     dm.get_messages,
