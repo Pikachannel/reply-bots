@@ -38,4 +38,4 @@ Security notice: If you found a security vulnerability, please do NOT open a pub
 <!-- It's okay if you accidentally create a duplicate issue. -->
 - [ ] I have searched existing issues and pull requests for duplicates.
 - [ ] I have removed any sensitive or personal information from this report.
-- [ ] This report does not disclose a security vulnerability. If it does, I have followed the reporting instructions in [SECURITY.md](../../SECURITY.md).
+- [ ] This report does not disclose a security vulnerability. If it does, I have followed the reporting instructions in [SECURITY.md](https://github.com/Pikachannel/reply-bots/blob/main/SECURITY.md).

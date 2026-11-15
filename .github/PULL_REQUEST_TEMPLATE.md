@@ -44,7 +44,7 @@ If you are still working on it, please mark it as a draft pull request.
 <!-- If you have not completed all of these, you may submit this as a draft. -->
 <!-- Change each checkbox to [x] (all lowercase, with no spaces between the brackets) to mark it as complete. -->
 
-- [ ] I have followed the project's contribution guidelines in [CONTRIBUTING.md](../CONTRIBUTING.md).
+- [ ] I have followed the project's contribution guidelines in [CONTRIBUTING.md](https://github.com/Pikachannel/reply-bots/blob/main/CONTRIBUTING.md).
 - [ ] I have reviewed my changes before submitting.
 - [ ] I have updated the documentation where necessary.
 - [ ] I have ensured that no credentials, API keys, or other sensitive information are included.
