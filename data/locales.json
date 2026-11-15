@@ -1,100 +1,144 @@
 {
-    "en": {
-        "language_names": {
+    "language_names": {
+        "en": {
             "en": "English",
             "sv": "Swedish",
             "de": "German"
         },
-        "remove": "The setting '{setting}' has been reset to the default value.",
-        "nickname": "Your nickname has been updated to {nickname}\nYou can change this at any time by sending the same command.\nUse !help at any time to see all commands.",
-        "chance": "The chance of a reply under your posts has been updated to '{chance_value}%'\nYou can change this at any time by sending the same command.\nUse !help at any time to see all commands.",
-        "chance_error_1": "An error occurred while updating your chance setting.\nPlease make sure you only use numbers.\nUse !help at any time to see all commands.",
-        "chance_error_2": "An error occurred while updating your chance setting.\nPlease make sure your chance is in the range 0-100.\nUse !help at any time to see all commands.",
-        "interval": "Your interval has been updated to '{text_value}' seconds\nYou can change this at any time by sending the same command.\nUse !help at any time to see all commands.",
-        "interval_error_1": "An error occurred while updating your interval setting.\nPlease make sure you only use numbers.\nUse !help at any time to see all commands.",
-        "interval_error_2": "An error occurred while updating your interval setting.\nPlease make sure your first value is less than your second value.\nUse !help at any time to see all commands.",
-        "interval_error_3": "An error occurred while updating your interval setting.\nPlease make sure your interval is in the range '60-3600'.\nUse !help at any time to see all commands.",
-        "skip": "Your interval has been updated to '{text_value}' posts\nYou can change this at any time by sending the same command.\nUse !help at any time to see all commands.",
-        "skip_error_1": "An error occurred while updating your skip setting.\nPlease make sure you only use numbers.\nUse !help at any time to see all commands.",
-        "skip_error_2": "An error occurred while updating your skip setting.\nPlease make sure your first value is less than your second value.\nUse !help at any time to see all commands.",
-        "skip_error_3": "An error occurred while updating your skip setting.\nPlease make sure your interval is in the range '0-50'.\nUse !help at any time to see all commands.",
-        "delete": "Your settings have been deleted.\nYou can confirm this by using '!settings'.\nUse !help at any time to see all commands.",
-        "delete_error": "An error occured while deleting your data.\nYou can either try again by sending the same command or request manual data deletion.",
-        "view_settings": "Your settings can be seen below!\n{format_settings}",
-        "no_settings": "You have no settings configured with the bot.\nUse !help to see options for settings!",
-        "help": "Check out the README file for a full list of commands and features.",
-        "sync_with": "Your settings have been synced with {handle}!\nUse !settings to view your synced settings.\nUse !help at any time to see all commands.",
-        "sync_from": "Other bots have been synced with your settings from {handle}!\nUse !settings on your other bots to view your synced settings.\nUse !help at any time to see all commands.",
-        "sync_error": "An error occurred while syncing your settings. Some settings may not have been synced.\nPlease try again.",
-        "language": "Your language has been changed to '{language}'!\nYou can change this at any time by sending the same command.\nUse !help at any time to see all commands.",
-        "language_error_1": "You're already using '{language}'!\nUse !help at any time to see all commands.",
-        "language_error_2": "An error occurred while updating your language setting.\nAvailable languages: {languages}.\nUse !help at any time to see all commands.",
-        "json_error": "An error occurred while processing your command.\nPlease try again."
-    },
-    "sv": {
-        "language_names": {
+        "sv": {
             "en": "Engelska",
             "sv": "Svenska",
             "de": "Tyska"
         },
-        "remove": "Inställningen '{setting}' har nu blivit återställd till det standardvärdet det var innan ändringen.",
-        "nickname": "Ditt smeknamn har nu uppdaterats till {nickname}\nDu kan ändra det när som helst genom att skicka samma kommando.\nSkriv !help när som helst för att se alla kommandon.",
-        "chance": "Sannolikheten för ett svar under dina inlägg har nu uppdaterats till '{chance_value}%'\nDu kan ändra det när som helst genom att skicka samma kommando.\nSkriv !help när som helst för att se alla kommandon.",
-        "chance_error_1": "Ett fel uppstod när din Sannolikhets-inställning skulle uppdateras.\nSe till att du bara använder siffror.\nSkriv !help när som helst för att se alla kommandon.",
-        "chance_error_2": "Ett fel uppstod när din Sannolikhets-inställning skulle uppdateras.\nSe till att chansen ligger mellan 0-100.\nSkriv !help när som helst för att se alla kommandon.",
-        "interval": "Ditt intervall har nu uppdaterats till '{text_value}' sekunder\nDu kan ändra det när som helst genom att skicka samma kommando.\nSkriv !help när som helst för att se alla kommandon.",
-        "interval_error_1": "Ett fel uppstod när din intervallinställning skulle uppdateras.\nSe till att du bara använder siffror.\nSkriv !help när som helst för att se alla kommandon.",
-        "interval_error_2": "Ett fel uppstod när din intervallinställning skulle uppdateras.\nSe till att ditt första värde är mindre än ditt andra värde.\nSkriv !help när som helst för att se alla kommandon.",
-        "interval_error_3": "Ett fel uppstod när din intervallinställning skulle uppdateras.\nSe till att intervallet ligger mellan '60-3600'.\nSkriv !help när som helst för att se alla kommandon.",
-        "skip": "Ditt intervall har nu uppdaterats till '{text_value}' inlägg\nDu kan ändra det när som helst genom att skicka samma kommando.\nSkriv !help när som helst för att se alla kommandon.",
-        "skip_error_1": "Ett fel uppstod när din skippa-detta-inställning skulle uppdateras.\nSe till att du bara använder siffror.\nSkriv !help när som helst för att se alla kommandon.",
-        "skip_error_2": "Ett fel uppstod när din skippa-detta-inställning skulle uppdateras.\nSe till att ditt första värde är mindre än ditt andra värde.\nSkriv !help när som helst för att se alla kommandon.",
-        "skip_error_3": "Ett fel uppstod när din skippa-detta-inställning skulle uppdateras.\nSe till att intervallet ligger mellan '0-50'.\nSkriv !help när som helst för att se alla kommandon.",
-        "delete": "Dina inställningar har nu tagits bort.\nDu kan bekräfta detta genom att använda '!settings'.\nSkriv !help när som helst för att se alla kommandon.",
-        "delete_error": "Ett fel uppstod när vi försökte ta bort din data.\nDu kan antingen försöka igen med samma kommando eller begära en manuell data bort-tagning.",
-        "view_settings": "Dina inställningar syns här nedanför!\n{format_settings}",
-        "no_settings": "Du har nu inga inställningar konfigurerade med boten.\nSkriv !help för att se tillgängliga inställningar!",
-        "help": "Checka SV_README-filen för en fullständig lista över kommandon och funktioner.",
-        "sync_with": "Dina inställningar har nu synkats med {handle}!\nSkriv !settings för att se dina synkade inställningar.\nSkriv !help när som helst för att se alla kommandon.",
-        "sync_from": "Andra botar har nu synkats med dina inställningar från {handle}!\nSkriv !settings på dina andra botar för att se dina synkade inställningar.\nSkriv !help när som helst för att se alla kommandon.",
-        "sync_error": "Ett fel uppstod när vi synkroniserade dina inställningar. Några inställningar kanske inte blivit synkade.\nFörsök igen.",
-        "language": "Ditt språk har nu ändrats till '{language}'!\nDu kan ändra det när som helst genom att skicka samma kommando.\nSkriv !help när som helst för att se alla kommandon.",
-        "language_error_1": "Du använder redan '{language}'!\nSkriv !help när som helst för att se alla kommandon.",
-        "language_error_2": "Ett fel uppstod när din språkinställning skulle uppdateras.\nTillgängliga språk: {languages}.\nSkriv !help när som helst för att se alla kommandon.",
-        "json_error": "Ett fel uppstod när vi processade ditt kommando.\nFörsök igen."
-
-    },
-    "de": {
-         "language_names": {
+        "de": {
             "en": "Englisch",
             "sv": "Schwedisch",
             "de": "Deutsch"
-         },
-        "remove": "Die Einstellung '{setting}' wurde auf ihren Standardwert zurückgesetzt.",
-        "nickname": "Dein Spitzname wurde zu {nickname} aktualisiert.\nDu kannst deinen Spitznamen jederzeit ändern, indem du den gleichen Command nochmal sendest.\nNutze !help, um alle Befehle zu sehen.",
-        "chance": "Die Chance auf eine Antwort auf deine Posts wurde auf '{chance_value}%' aktualisiert.\nDu kannst dies jederzeit ändern, indem du den gleichen Befehl nochmal sendest.\nNutze !help, um alle Befehle zu sehen.",
-        "chance_error_1": "Ein Fehler hat das Ändern deiner Chance-Einstellungen verhindert.\nBitte stelle sicher, dass du nur Zahlen verwendest.\nNutze !help, um alle Befehle zu sehen.",
-        "chance_error_2": "Ein Fehler hat das Ändern deiner Chance-Einstellungen verhindert.\nBitte stelle sicher, dass der Chance-Wert zwischen 0 und 100 liegt.\nNutze !help, um alle Befehle zu sehen.",
-        "interval": "Das Intervall wurde auf '{text_value}' Sekunden gestellt.\nDu kannst dies jederzeit ändern, indem du den gleichen Befehl nochmal sendest.\nNutze !help, um alle Befehle zu sehen.",
-        "interval_error_1": "Ein Fehler hat das Ändern deiner Intervall-Einstellungen verhindert.\nBitte stelle sicher, dass du nur Zahlen verwendest.\nNutze !help, um alle Befehle zu sehen.",
-        "interval_error_2": "Ein Fehler hat das Ändern deiner Intervall-Einstellungen verhindert.\nBitte stelle sicher, dass die erste Zahl kleiner als die zweite ist.\nNutze !help, um alle Befehle zu sehen.",
-        "interval_error_3": "Ein Fehler hat das Ändern deiner Intervall-Einstellungen verhindert.\nBitte stelle sicher, dass das Intervall zwischen 60 und 3600 liegt.\nNutze !help, um alle Befehle zu sehen.",
-        "skip": "Der Skip-Intervall wurde auf '{text_value}' Posts gestellt.\nDu kannst dies jederzeit ändern, indem du den gleichen Befehl nochmal sendest.\nNutze !help, um alle Befehle zu sehen.",
-        "skip_error_1": "Ein Fehler hat das Ändern deiner Skip-Einstellungen verhindert.\nBitte stelle sicher, dass du nur Zahlen verwendest.\nNutze !help, um alle Befehle zu sehen.",
-        "skip_error_2": "Ein Fehler hat das Ändern deiner Skip-Einstellungen verhindert.\nBitte stelle sicher, dass die erste Zahl kleiner als die zweite ist.\nNutze !help, um alle Befehle zu sehen.",
-        "skip_error_3": "Ein Fehler hat das Ändern deiner Skip-Einstellungen verhindert.\nBitte stelle sicher, dass der Wert zwischen 0 und 50 liegt.\nNutze !help, um alle Befehle zu sehen.",
-        "delete": "Deine Einstellungen wurden gelöscht.\nDu kannst dies bestätigen, indem du '!settings' nutzt.\nNutze !help, um alle Befehle zu sehen.",
-        "delete_error": "Es ist ein Fehler beim Löschen deiner Daten aufgetreten.\nDu kannst es entweder nochmal versuchen oder eine manuelle Löschung anfragen.",
-        "view_settings": "Deine Einstellungen siehst du hier:\n{format_settings}",
-        "no_settings": "Du hast keine Einstellungen mit diesem Bot konfiguriert.\nNutze !help, um Optionen für Einstellungen zu sehen!",
-        "help": "Sehe die DE_README Datei für die volle Liste von Befehlen und Features.",
-        "sync_with": "Deine Einstellungen wurden mit {handle} synchronisiert!\nNutze !settings, um deine synchronisierten Einstellungen zu sehen.\nNutze !help, um alle Befehle zu sehen.",
-        "sync_from": "Andere Bots wurden mit den Einstellungen von {handle} synchronisiert!\nNutze !settings in deinen anderen Bots, um deine synchronisierten Einstellungen zu sehen.\nNutze !help, um alle Befehle zu sehen.",
-        "sync_error": "Es ist ein Fehler während des Synchronisierens deiner Einstellungen aufgetreten. Manche Einstellungen wurden vielleicht nicht synchronisiert.\nBitte versuche es nochmal.",
-        "language": "Deine Sprache wurde zu '{language}' geändert!\nDu kannst dies jederzeit ändern, indem du den gleichen Befehl nochmal sendest.\nNutze !help, um alle Befehle zu sehen.",
-        "language_error_1": "Du benutzt schon '{language}'!\nNutze !help, um alle Befehle zu sehen.",
-        "language_error_2": "Es ist ein Fehler während des Aktualisierens deiner Sprache aufgetreten.\nVerfügbare Sprachen: {languages}.\nNutze !help, um alle Befehle zu sehen.",
-        "json_error": "Es ist ein Fehler während der Verarbeitung deines Befehls aufgetreten.\nBitte versuche es nochmal."
-
-       }
+        }
+    },
+    "remove": {
+        "en": "The setting '{setting}' has been reset to the default value.",
+        "sv": "Inställningen '{setting}' har nu blivit återställd till det standardvärdet det var innan ändringen.",
+        "de": "Die Einstellung '{setting}' wurde auf ihren Standardwert zurückgesetzt."
+    },
+    "nickname": {
+        "en": "Your nickname has been updated to {nickname}\nYou can change this at any time by sending the same command.\nUse !help at any time to see all commands.",
+        "sv": "Ditt smeknamn har nu uppdaterats till {nickname}\nDu kan ändra det när som helst genom att skicka samma kommando.\nSkriv !help när som helst för att se alla kommandon.",
+        "de": "Dein Spitzname wurde zu {nickname} aktualisiert.\nDu kannst deinen Spitznamen jederzeit ändern, indem du den gleichen Command nochmal sendest.\nNutze !help, um alle Befehle zu sehen."
+    },
+    "chance": {
+        "en": "The chance of a reply under your posts has been updated to '{chance_value}%'\nYou can change this at any time by sending the same command.\nUse !help at any time to see all commands.",
+        "sv": "Sannolikheten för ett svar under dina inlägg har nu uppdaterats till '{chance_value}%'\nDu kan ändra det när som helst genom att skicka samma kommando.\nSkriv !help när som helst för att se alla kommandon.",
+        "de": "Die Chance auf eine Antwort auf deine Posts wurde auf '{chance_value}%' aktualisiert.\nDu kannst dies jederzeit ändern, indem du den gleichen Befehl nochmal sendest.\nNutze !help, um alle Befehle zu sehen."
+    },
+    "chance_error_1": {
+        "en": "An error occurred while updating your chance setting.\nPlease make sure you only use numbers.\nUse !help at any time to see all commands.",
+        "sv": "Ett fel uppstod när din Sannolikhets-inställning skulle uppdateras.\nSe till att du bara använder siffror.\nSkriv !help när som helst för att se alla kommandon.",
+        "de": "Ein Fehler hat das Ändern deiner Chance-Einstellungen verhindert.\nBitte stelle sicher, dass du nur Zahlen verwendest.\nNutze !help, um alle Befehle zu sehen."
+    },
+    "chance_error_2": {
+        "en": "An error occurred while updating your chance setting.\nPlease make sure your chance is in the range 0-100.\nUse !help at any time to see all commands.",
+        "sv": "Ett fel uppstod när din Sannolikhets-inställning skulle uppdateras.\nSe till att chansen ligger mellan 0-100.\nSkriv !help när som helst för att se alla kommandon.",
+        "de": "Ein Fehler hat das Ändern deiner Chance-Einstellungen verhindert.\nBitte stelle sicher, dass der Chance-Wert zwischen 0 und 100 liegt.\nNutze !help, um alle Befehle zu sehen."
+    },
+    "interval": {
+        "en": "Your interval has been updated to '{text_value}' seconds\nYou can change this at any time by sending the same command.\nUse !help at any time to see all commands.",
+        "sv": "Ditt intervall har nu uppdaterats till '{text_value}' sekunder\nDu kan ändra det när som helst genom att skicka samma kommando.\nSkriv !help när som helst för att se alla kommandon.",
+        "de": "Das Intervall wurde auf '{text_value}' Sekunden gestellt.\nDu kannst dies jederzeit ändern, indem du den gleichen Befehl nochmal sendest.\nNutze !help, um alle Befehle zu sehen."
+    },
+    "interval_error_1": {
+        "en": "An error occurred while updating your interval setting.\nPlease make sure you only use numbers.\nUse !help at any time to see all commands.",
+        "sv": "Ett fel uppstod när din intervallinställning skulle uppdateras.\nSe till att du bara använder siffror.\nSkriv !help när som helst för att se alla kommandon.",
+        "de": "Ein Fehler hat das Ändern deiner Intervall-Einstellungen verhindert.\nBitte stelle sicher, dass du nur Zahlen verwendest.\nNutze !help, um alle Befehle zu sehen."
+    },
+    "interval_error_2": {
+        "en": "An error occurred while updating your interval setting.\nPlease make sure your first value is less than your second value.\nUse !help at any time to see all commands.",
+        "sv": "Ett fel uppstod när din intervallinställning skulle uppdateras.\nSe till att ditt första värde är mindre än ditt andra värde.\nSkriv !help när som helst för att se alla kommandon.",
+        "de": "Ein Fehler hat das Ändern deiner Intervall-Einstellungen verhindert.\nBitte stelle sicher, dass die erste Zahl kleiner als die zweite ist.\nNutze !help, um alle Befehle zu sehen."
+    },
+    "interval_error_3": {
+        "en": "An error occurred while updating your interval setting.\nPlease make sure your interval is in the range '60-3600'.\nUse !help at any time to see all commands.",
+        "sv": "Ett fel uppstod när din intervallinställning skulle uppdateras.\nSe till att intervallet ligger mellan '60-3600'.\nSkriv !help när som helst för att se alla kommandon.",
+        "de": "Ein Fehler hat das Ändern deiner Intervall-Einstellungen verhindert.\nBitte stelle sicher, dass das Intervall zwischen 60 und 3600 liegt.\nNutze !help, um alle Befehle zu sehen."
+    },
+    "skip": {
+        "en": "Your interval has been updated to '{text_value}' posts\nYou can change this at any time by sending the same command.\nUse !help at any time to see all commands.",
+        "sv": "Ditt intervall har nu uppdaterats till '{text_value}' inlägg\nDu kan ändra det när som helst genom att skicka samma kommando.\nSkriv !help när som helst för att se alla kommandon.",
+        "de": "Der Skip-Intervall wurde auf '{text_value}' Posts gestellt.\nDu kannst dies jederzeit ändern, indem du den gleichen Befehl nochmal sendest.\nNutze !help, um alle Befehle zu sehen."
+    },
+    "skip_error_1": {
+        "en": "An error occurred while updating your skip setting.\nPlease make sure you only use numbers.\nUse !help at any time to see all commands.",
+        "sv": "Ett fel uppstod när din skippa-detta-inställning skulle uppdateras.\nSe till att du bara använder siffror.\nSkriv !help när som helst för att se alla kommandon.",
+        "de": "Ein Fehler hat das Ändern deiner Skip-Einstellungen verhindert.\nBitte stelle sicher, dass du nur Zahlen verwendest.\nNutze !help, um alle Befehle zu sehen."
+    },
+    "skip_error_2": {
+        "en": "An error occurred while updating your skip setting.\nPlease make sure your first value is less than your second value.\nUse !help at any time to see all commands.",
+        "sv": "Ett fel uppstod när din skippa-detta-inställning skulle uppdateras.\nSe till att ditt första värde är mindre än ditt andra värde.\nSkriv !help när som helst för att se alla kommandon.",
+        "de": "Ein Fehler hat das Ändern deiner Skip-Einstellungen verhindert.\nBitte stelle sicher, dass die erste Zahl kleiner als die zweite ist.\nNutze !help, um alle Befehle zu sehen."
+    },
+    "skip_error_3": {
+        "en": "An error occurred while updating your skip setting.\nPlease make sure your interval is in the range '0-50'.\nUse !help at any time to see all commands.",
+        "sv": "Ett fel uppstod när din skippa-detta-inställning skulle uppdateras.\nSe till att intervallet ligger mellan '0-50'.\nSkriv !help när som helst för att se alla kommandon.",
+        "de": "Ein Fehler hat das Ändern deiner Skip-Einstellungen verhindert.\nBitte stelle sicher, dass der Wert zwischen 0 und 50 liegt.\nNutze !help, um alle Befehle zu sehen."
+    },
+    "delete": {
+        "en": "Your settings have been deleted.\nYou can confirm this by using '!settings'.\nUse !help at any time to see all commands.",
+        "sv": "Dina inställningar har nu tagits bort.\nDu kan bekräfta detta genom att använda '!settings'.\nSkriv !help när som helst för att se alla kommandon.",
+        "de": "Deine Einstellungen wurden gelöscht.\nDu kannst dies bestätigen, indem du '!settings' nutzt.\nNutze !help, um alle Befehle zu sehen."
+    },
+    "delete_error": {
+        "en": "An error occured while deleting your data.\nYou can either try again by sending the same command or request manual data deletion.",
+        "sv": "Ett fel uppstod när vi försökte ta bort din data.\nDu kan antingen försöka igen med samma kommando eller begära en manuell data bort-tagning.",
+        "de": "Es ist ein Fehler beim Löschen deiner Daten aufgetreten.\nDu kannst es entweder nochmal versuchen oder eine manuelle Löschung anfragen."
+    },
+    "view_settings": {
+        "en": "Your settings can be seen below!\n{format_settings}",
+        "sv": "Dina inställningar syns här nedanför!\n{format_settings}",
+        "de": "Deine Einstellungen siehst du hier:\n{format_settings}"
+    },
+    "no_settings": {
+        "en": "You have no settings configured with the bot.\nUse !help to see options for settings!",
+        "sv": "Du har nu inga inställningar konfigurerade med boten.\nSkriv !help för att se tillgängliga inställningar!",
+        "de": "Du hast keine Einstellungen mit diesem Bot konfiguriert.\nNutze !help, um Optionen für Einstellungen zu sehen!"
+    },
+    "help": {
+        "en": "Check out the README file for a full list of commands and features.",
+        "sv": "Checka SV_README-filen för en fullständig lista över kommandon och funktioner.",
+        "de": "Sehe die DE_README Datei für die volle Liste von Befehlen und Features."
+    },
+    "sync_with": {
+        "en": "Your settings have been synced with {handle}!\nUse !settings to view your synced settings.\nUse !help at any time to see all commands.",
+        "sv": "Dina inställningar har nu synkats med {handle}!\nSkriv !settings för att se dina synkade inställningar.\nSkriv !help när som helst för att se alla kommandon.",
+        "de": "Deine Einstellungen wurden mit {handle} synchronisiert!\nNutze !settings, um deine synchronisierten Einstellungen zu sehen.\nNutze !help, um alle Befehle zu sehen."
+    },
+    "sync_from": {
+        "en": "Other bots have been synced with your settings from {handle}!\nUse !settings on your other bots to view your synced settings.\nUse !help at any time to see all commands.",
+        "sv": "Andra botar har nu synkats med dina inställningar från {handle}!\nSkriv !settings på dina andra botar för att se dina synkade inställningar.\nSkriv !help när som helst för att se alla kommandon.",
+        "de": "Andere Bots wurden mit den Einstellungen von {handle} synchronisiert!\nNutze !settings in deinen anderen Bots, um deine synchronisierten Einstellungen zu sehen.\nNutze !help, um alle Befehle zu sehen."
+    },
+    "sync_error": {
+        "en": "An error occurred while syncing your settings. Some settings may not have been synced.\nPlease try again.",
+        "sv": "Ett fel uppstod när vi synkroniserade dina inställningar. Några inställningar kanske inte blivit synkade.\nFörsök igen.",
+        "de": "Es ist ein Fehler während des Synchronisierens deiner Einstellungen aufgetreten. Manche Einstellungen wurden vielleicht nicht synchronisiert.\nBitte versuche es nochmal."
+    },
+    "language": {
+        "en": "Your language has been changed to '{language}'!\nYou can change this at any time by sending the same command.\nUse !help at any time to see all commands.",
+        "sv": "Ditt språk har nu ändrats till '{language}'!\nDu kan ändra det när som helst genom att skicka samma kommando.\nSkriv !help när som helst för att se alla kommandon.",
+        "de": "Deine Sprache wurde zu '{language}' geändert!\nDu kannst dies jederzeit ändern, indem du den gleichen Befehl nochmal sendest.\nNutze !help, um alle Befehle zu sehen."
+    },
+    "language_error_1": {
+        "en": "You're already using '{language}'!\nUse !help at any time to see all commands.",
+        "sv": "Du använder redan '{language}'!\nSkriv !help när som helst för att se alla kommandon.",
+        "de": "Du benutzt schon '{language}'!\nNutze !help, um alle Befehle zu sehen."
+    },
+    "language_error_2": {
+        "en": "An error occurred while updating your language setting.\nAvailable languages: {languages}.\nUse !help at any time to see all commands.",
+        "sv": "Ett fel uppstod när din språkinställning skulle uppdateras.\nTillgängliga språk: {languages}.\nSkriv !help när som helst för att se alla kommandon.",
+        "de": "Es ist ein Fehler während des Aktualisierens deiner Sprache aufgetreten.\nVerfügbare Sprachen: {languages}.\nNutze !help, um alle Befehle zu sehen."
+    },
+    "json_error": {
+        "en": "An error occurred while processing your command.\nPlease try again.",
+        "sv": "Ett fel uppstod när vi processade ditt kommando.\nFörsök igen.",
+        "de": "Es ist ein Fehler während der Verarbeitung deines Befehls aufgetreten.\nBitte versuche es nochmal."
+    }
 }

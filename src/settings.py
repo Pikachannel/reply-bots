@@ -1,4 +1,3 @@
-
 # -------- Imports --------
 import asyncio
 from .json_worker import submit_json_update
@@ -12,11 +11,11 @@ class CommandManager:
 
         self.language_map = {}
 
-        for key in setting_replies:
-            self.language_map[key.lower()] = key
+        for lang, translations in setting_replies["language_names"].items():
+            self.language_map[lang.lower()] = lang
 
-            for lang, name in setting_replies[key]["language_names"].items():
-                self.language_map[name.lower()] = lang
+            for code, name in translations.items():
+                self.language_map[name.lower()] = code
 
     # -------------
     # -- To float
@@ -34,11 +33,12 @@ class CommandManager:
         return self.user_data.get(account_did, {}).get(user_did, {}).get("lang", "en")
 
     # -------------
-    # -- Get replies
-    # Gets replies for a user's language
-    def get_replies(self, user_did: str, account_did: str) -> dict:
-        lang = self.get_language(user_did, account_did)
-        return self.setting_replies.get(lang, self.setting_replies["en"])
+    # -- Get reply
+    # Gets the correct reply
+    def get_reply(self, key: str, lang: str, **kwargs) -> str:
+        return self.setting_replies[key].get(
+            lang, self.setting_replies[key]["en"]
+        ).format(**kwargs)
 
     # -------------
     # -- Remove setting
@@ -52,15 +52,15 @@ class CommandManager:
             "setting": setting
         }
 
-        # -- Get replies
-        replies = self.get_replies(user_did, account_did)
+        # -- Get language and send reply
+        lang = self.get_language(user_did, account_did)
 
         success = await submit_json_update(self.json_queue, payload)
         if not success:
-            return False, replies["json_error"]
+            return False, self.get_reply("json_error", lang)
 
         # -- Return reply
-        return True, replies["remove"].format(setting=setting)
+        return True, self.get_reply("remove", lang, setting=setting)
 
     # -------------
     # -- Nickname
@@ -80,15 +80,15 @@ class CommandManager:
             "nickname": nickname
         }
 
-        # -- Get replies
-        replies = self.get_replies(user_did, account_did)
+        # -- Get language
+        lang = self.get_language(user_did, account_did)
 
         success = await submit_json_update(self.json_queue, payload)
         if not success:
-            return False, replies["json_error"]
+            return False, self.get_reply("json_error", lang)
 
         # -- Return reply
-        return True, replies["nickname"].format(nickname=nickname)
+        return True, self.get_reply("nickname", lang, nickname=nickname)
 
     # -------------
     # -- Chance
@@ -100,14 +100,14 @@ class CommandManager:
 
         chance_value = self.to_float(chance)
 
-        # -- Get replies
-        replies = self.get_replies(user_did, account_did)
+        # -- Get language
+        lang = self.get_language(user_did, account_did)
 
         if chance_value is None:
-            return False, replies["chance_error_1"]
+            return False, self.get_reply("chance_error_1", lang)
 
         if chance_value < 0 or chance_value > 100:
-            return False, replies["chance_error_2"]
+            return False, self.get_reply("chance_error_2", lang)
 
         chance_value = round(chance_value, 2)
 
@@ -121,10 +121,10 @@ class CommandManager:
 
         success = await submit_json_update(self.json_queue, payload)
         if not success:
-            return False, replies["json_error"]
+            return False, self.get_reply("json_error", lang)
 
         # -- Return reply
-        return True, replies["chance"].format(chance_value=chance_value)
+        return True, self.get_reply("chance", lang, chance_value=chance_value)
 
     # -------------
     # -- Interval
@@ -135,8 +135,8 @@ class CommandManager:
         if interval is None:
             return await self.remove_setting(user_did, "interval", account_did)
 
-        # -- Get replies
-        replies = self.get_replies(user_did, account_did)
+        # -- Get language
+        lang = self.get_language(user_did, account_did)
 
         # -- Check if the interval is a range or static value
         interval_split = interval.split("-")
@@ -147,16 +147,16 @@ class CommandManager:
             interval_value_2 = self.to_float(interval_split[1])
 
             if interval_value_1 is None or interval_value_2 is None:
-                return False, replies["interval_error_1"]
+                return False, self.get_reply("interval_error_1", lang)
 
             interval_format_1 = round(interval_value_1, 2)
             interval_format_2 = round(interval_value_2, 2)
 
             if interval_format_1 > interval_format_2:
-                return False, replies["interval_error_2"]
+                return False, self.get_reply("interval_error_2", lang)
 
             if interval_format_1 < 60 or interval_format_2 > 3600:
-                return False, replies["interval_error_3"]
+                return False, self.get_reply("interval_error_3", lang)
 
             final_value = [interval_format_1, interval_format_2]
             text_value = f"{interval_format_1}-{interval_format_2}"
@@ -166,10 +166,10 @@ class CommandManager:
             interval_value = self.to_float(interval)
 
             if interval_value is None:
-                return False, replies["interval_error_1"]
+                return False, self.get_reply("interval_error_1", lang)
 
             if interval_value < 60 or interval_value > 3600:
-                return False, replies["interval_error_3"]
+                return False, self.get_reply("interval_error_3", lang)
 
             final_value = [round(interval_value, 2)]
             text_value = round(interval_value, 2)
@@ -184,10 +184,10 @@ class CommandManager:
 
         success = await submit_json_update(self.json_queue, payload)
         if not success:
-            return False, replies["json_error"]
+            return False, self.get_reply("json_error", lang)
 
         # -- Return reply
-        return True, replies["interval"].format(text_value=text_value)
+        return True, self.get_reply("interval", lang, text_value=text_value)
 
     # -------------
     # -- Skip posts
@@ -198,8 +198,8 @@ class CommandManager:
         if interval is None:
             return await self.remove_setting(user_did, "skip", account_did)
 
-        # -- Get replies
-        replies = self.get_replies(user_did, account_did)
+        # -- Get language
+        lang = self.get_language(user_did, account_did)
 
         # -- Check if the interval is a range or static value
         interval_split = interval.split("-")
@@ -210,16 +210,16 @@ class CommandManager:
             interval_value_2 = self.to_float(interval_split[1])
 
             if interval_value_1 is None or interval_value_2 is None:
-                return False, replies["skip_error_1"]
+                return False, self.get_reply("skip_error_1", lang)
 
             interval_format_1 = int(interval_value_1)
             interval_format_2 = int(interval_value_2)
 
             if interval_format_1 > interval_format_2:
-                return False, replies["skip_error_2"]
+                return False, self.get_reply("skip_error_2", lang)
 
             if interval_format_1 < 0 or interval_format_2 > 50:
-                return False, replies["skip_error_3"]
+                return False, self.get_reply("skip_error_3", lang)
 
             final_value = [interval_format_1, interval_format_2]
             text_value = f"{interval_format_1}-{interval_format_2}"
@@ -229,10 +229,10 @@ class CommandManager:
             interval_value = self.to_float(interval)
 
             if interval_value is None:
-                return False, replies["skip_error_1"]
+                return False, self.get_reply("skip_error_1", lang)
 
             if interval_value < 0 or interval_value > 50:
-                return False, replies["skip_error_3"]
+                return False, self.get_reply("skip_error_3", lang)
 
             final_value = [int(interval_value)]
             text_value = int(interval_value)
@@ -247,10 +247,10 @@ class CommandManager:
 
         success = await submit_json_update(self.json_queue, payload)
         if not success:
-            return False, replies["json_error"]
-        
+            return False, self.get_reply("json_error", lang)
+
         # -- Return reply
-        return True, replies["skip"].format(text_value=text_value)
+        return True, self.get_reply("skip", lang, text_value=text_value)
 
     # -------------
     # -- Change language
@@ -264,27 +264,26 @@ class CommandManager:
         lang = lang.strip().lower()
         lang = self.language_map.get(lang)
 
-        # -- Get current user language & active replies dictionary
+        # -- Get current user language
         current_lang = self.get_language(user_did, account_did)
-        replies = self.get_replies(user_did, account_did)
+
+        # -- Get language names in current language
+        lang_names = self.setting_replies["language_names"].get(
+            current_lang, self.setting_replies["language_names"]["en"]
+        )
 
         # -- Check if language exists
         if lang is None:
-            lang_names = replies.get("language_names", {})
             available_languages = ", ".join(
                 f"{lang_names.get(code, code.upper())} ({code})"
-                for code in self.setting_replies
+                for code in self.setting_replies["language_names"]
             )
-            return False, replies["language_error_2"].format(
-                languages=available_languages
-            )
+            return False, self.get_reply("language_error_2", current_lang, languages=available_languages)
 
         # -- Check if already using requested language
         if lang == current_lang:
-            lang_display_name = replies.get("language_names", {}).get(lang, lang.upper())
-            return False, replies["language_error_1"].format(
-                language=lang_display_name
-            )
+            lang_display_name = lang_names.get(lang, lang.upper())
+            return False, self.get_reply("language_error_1", current_lang, language=lang_display_name)
 
         # -- Add update task to queue
         payload = {
@@ -296,22 +295,23 @@ class CommandManager:
 
         success = await submit_json_update(self.json_queue, payload)
         if not success:
-            return False, replies["json_error"]
+            return False, self.get_reply("json_error", current_lang)
 
-        # -- Get replies dictionary for the newly targeted language
-        target_replies = self.setting_replies.get(lang, self.setting_replies["en"])
-        target_lang_name = target_replies.get("language_names", {}).get(lang, lang.upper())
+        # -- Get language name in the newly selected language
+        target_lang_names = self.setting_replies["language_names"].get(
+            lang, self.setting_replies["language_names"]["en"]
+        )
+        target_lang_name = target_lang_names.get(lang, lang.upper())
 
         # -- Return successful response
-        return True, target_replies["language"].format(language=target_lang_name)
+        return True, self.get_reply("language", lang, language=target_lang_name)
 
     # -------------
     # -- Delete
     # Deletes the user's settings
     async def delete_settings(self, user_did: str, globally: str | None, account_did: str) -> tuple[bool, str]:
-
-        # -- Get replies
-        replies = self.get_replies(user_did, account_did)
+        # -- Get language
+        lang = self.get_language(user_did, account_did)
 
         # -- Add to queue
         payload = {
@@ -322,34 +322,36 @@ class CommandManager:
 
         success = await submit_json_update(self.json_queue, payload)
         if not success:
-            return False, replies["delete_error"]
+            return False, self.get_reply("delete_error", lang)
 
         # -- Return reply
-        return True, replies["delete"]
+        return True, self.get_reply("delete", lang)
 
     # -------------
     # -- Settings
     # Views a user's settings
     async def view_settings(self, user_did: str, account_did: str) -> tuple[bool, str]:
+        # -- Get language and language names
+        lang = self.get_language(user_did, account_did)
+        language_names = self.setting_replies["language_names"].get(
+            lang, self.setting_replies["language_names"]["en"]
+        )
 
         # -- Settings helper
         def format_value(key, value):
             if key == "lang":
-                return replies.get("language_names", {}).get(value, value.upper())
+                return language_names.get(value, value.upper())
 
             if isinstance(value, list):
                 return f"{value[0]}-{value[1]}" if len(value) == 2 else value[0]
 
             return value
 
-        # -- Get replies
-        replies = self.get_replies(user_did, account_did)
-
         # -- Get settings
         user_settings = self.user_data.get(account_did, {}).get(user_did, {})
 
         if not user_settings:
-            return False, replies["no_settings"]
+            return False, self.get_reply("no_settings", lang)
 
         format_settings = "\n".join(
             f"{key.capitalize()}: {format_value(key, value)}"
@@ -357,17 +359,15 @@ class CommandManager:
         )
 
         # -- Return reply
-        return True, replies["view_settings"].format(
-            format_settings=format_settings
-        )
+        return True, self.get_reply("view_settings", lang, format_settings=format_settings)
 
     # -------------
     # -- Sync
     # Syncs a user's settings between bots
     async def sync_settings(self, user_did: str, handle: str, bots: dict, account_did: str, other_dids: list) -> tuple[bool, str]:
 
-        # -- Get replies
-        replies = self.get_replies(user_did, account_did)
+        # -- Get language
+        lang = self.get_language(user_did, account_did)
 
         # -- Get the bot to sync with
         sync_did = None
@@ -379,10 +379,7 @@ class CommandManager:
 
         # -- Validation
         if sync_did is None or sync_did not in bots:
-            return False, replies.get(
-                "sync_error",
-                "An error occurred while syncing your settings.\nPlease make sure you entered a valid bot handle.\nUse !help at any time to see all commands."
-            )
+            return False, self.get_reply("sync_error", lang)
 
         # -- Get the user's settings on the sync bot
         sync_settings = self.user_data.get(sync_did, {}).get(user_did, {})
@@ -404,11 +401,11 @@ class CommandManager:
                     all_successful = False
 
             if not all_successful:
-                return False, replies["sync_error"]
+                return False, self.get_reply("sync_error", lang)
 
             # -- Return reply after all bots are processed
-            return True, replies["sync_from"].format(
-                handle=bots[account_did]["handle"]
+            return True, self.get_reply(
+                "sync_from", lang, handle=bots[account_did]["handle"]
             )
 
         # -- Sync the settings to this bot
@@ -422,28 +419,24 @@ class CommandManager:
 
             success = await submit_json_update(self.json_queue, payload)
             if not success:
-                return False, replies["sync_error"]
-            
+                return False, self.get_reply("sync_error", lang)
+
             # -- Return reply
-            return True, replies["sync_with"].format(
-                handle=bots[sync_did]["handle"]
+            return True, self.get_reply(
+                "sync_with", lang, handle=bots[sync_did]["handle"]
             )
 
     # -------------
     # -- Help
     # Sends a help message for the bot
     async def help(self, user_did: str | None = None, account_did: str | None = None) -> tuple[bool, str, dict]:
-
-        # -- Get replies
+        # -- Get language and reply
         if user_did is not None and account_did is not None:
             lang = self.get_language(user_did, account_did)
-            replies = self.get_replies(user_did, account_did)
         else:
             lang = "en"
-            replies = self.setting_replies["en"]
 
-        # -- Format help
-        text = replies["help"]
+        text = self.get_reply("help", lang)
 
         if lang == "en":
             link_text = "README"
