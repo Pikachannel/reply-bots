@@ -4,7 +4,7 @@ import asyncio
 import os
 import tempfile
 from .definitions import STOP
-
+from .logging import logger
 
 # -------- Submit JSON Update --------
 async def submit_json_update(queue: asyncio.Queue, update: dict) -> bool:
@@ -24,12 +24,13 @@ async def submit_json_update(queue: asyncio.Queue, update: dict) -> bool:
 # -------- JSON Worker Function --------
 async def json_worker(path: str, queue: asyncio.Queue, user_data: dict) -> None:
     # -- Start function
-    print("[JSON Worker] Worker starting")
+    logger.info("[JSON Worker] Worker starting")
 
     while True:
         item = await queue.get()
 
         if item is STOP:
+            logger.info("[JSON Worker] Worker stopping...")
             queue.task_done()
             break
                 
@@ -116,7 +117,7 @@ async def json_worker(path: str, queue: asyncio.Queue, user_data: dict) -> None:
                 future.set_result(True)
 
         except Exception as e:
-            print(f"[JSON Worker] An error has occurred: {e}")
+            logger.error(f"[JSON Worker] An error has occurred: {e}")
 
             # -- Report failure
             if not future.done():
@@ -124,3 +125,4 @@ async def json_worker(path: str, queue: asyncio.Queue, user_data: dict) -> None:
 
         finally:
             queue.task_done()
+    logger.info("[JSON Worker] Worker stopped.")

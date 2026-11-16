@@ -3,6 +3,7 @@ import asyncio
 import websockets
 import json
 from websockets.exceptions import ConnectionClosedError
+from .logging import logger
 
 # -------- Websocket Class --------
 class Websocket():
@@ -22,7 +23,7 @@ class Websocket():
             try:
                 # Connect to the bsky jetstream
                 async with websockets.connect(self.endpoint) as ws:
-                    print(f"[Websocket] Connected to {self.endpoint}")
+                    logger.info(f"[Jetstream] Connected to {self.endpoint}")
                     self.reconnect = 1
                     self.ws = ws
 
@@ -36,12 +37,12 @@ class Websocket():
                         except json.JSONDecodeError:
                             continue
             except ConnectionClosedError as e:
-                print(f"[Websocket] Connection lost, {e} reconnecting shortly...")
+                logger.warning(f"[Jetstream] Connection lost ({e}); reconnecting in {self.reconnect} seconds")
                 await asyncio.sleep(self.reconnect) # Wait to connect upon disconnection 
                 self.reconnect = min(self.reconnect * 2, 60)
 
             except Exception as e:
-                print(f"[Websocket] An error has occured, {e} reconnecting shortly...")
+                logger.error(f"[Jetstream] Connection error ({e}); reconnecting in {self.reconnect} seconds")
                 await asyncio.sleep(self.reconnect) # Wait to reconnect upon error
                 self.reconnect = min(self.reconnect * 2, 60)
                 
@@ -52,4 +53,4 @@ class Websocket():
 
         if self.ws:
             await self.ws.close() # Disconnect if connection is open
-            print("[Websocket] Disconnected.")
+            logger.info("[Jetstream] Disconnected.")

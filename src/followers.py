@@ -1,7 +1,7 @@
 # -------- Imports --------
 import asyncio
-from datetime import datetime 
 from atproto import Client
+from .logging import logger
 
 # -------- Refresh Followers Function --------
 async def refresh_followers(client: Client, followers_set: set, account_did: str, per_page: int = 100) -> None:
@@ -37,7 +37,7 @@ async def refresh_followers(client: Client, followers_set: set, account_did: str
 
             followers_set.clear()      
             followers_set.update(follower_dids)  
-            print(f"[Follower Refresh] {len(followers_set)} followers loaded for {client.profile.handle} at {datetime.now()}")
+            logger.info(f"[Follower Refresh] {len(followers_set)} followers loaded for {client.profile.handle}")
         except Exception as e:
-            print(f"[Follower Refresh] Error: {e}")
+            logger.error(f"[Follower Refresh] Error updating follower list: {e}")
         await asyncio.sleep(300) # Get followers every 5 minutes

@@ -3,6 +3,7 @@ from atproto import models
 from typing import Any
 import asyncio
 from datetime import datetime, timezone, timedelta
+from .logging import logger
 
 # -------- DmWorker Class --------
 class DmWorker:
@@ -16,25 +17,25 @@ class DmWorker:
     # -------------
     # -- Start the DM Worker
     async def start(self) -> None:
-        print("[DM Worker] Starting DM worker")
+        logger.info("[DM Worker] Starting DM worker")
 
         while not self.stop_event.is_set():
             try:
                 await self.check_dms()
             except Exception as e:
-                print(f"[DMWorker] Error: {e}")
+                logger.error(f"[DM Worker] Error: {e}")
 
             try:
                 await asyncio.wait_for(self.stop_event.wait(), timeout=self.check_interval)
             except asyncio.TimeoutError:
                 continue
 
-        print("[DM Worker] DM worker stopped.")
+        logger.info("[DM Worker] DM worker stopped.")
 
     # -------------
     # -- Stop the DM Worker
     async def stop(self) -> None:
-        print("[DM Worker] Stopping DM worker...")
+        logger.info("[DM Worker] Stopping DM worker...")
         self.stop_event.set()
         
     # -------------

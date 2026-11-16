@@ -12,6 +12,7 @@ from src.word import word_of_the_day
 from src.tone import ToneAnalysis
 from src.shutdown import shutdown_signals
 from src.definitions import STOP, ConfigError, AuthenticationError, NetworkError, UnknownError, RateLimitedError
+from src.logging import logger, setup_logger
 import asyncio
 import os
 import json
@@ -20,6 +21,7 @@ from pathlib import Path
 
 # -------- Variables --------
 load_dotenv()
+setup_logger()
 
 # -- Account info
 get_bot_num = 1
@@ -90,6 +92,8 @@ def validate_config():
 
 # -------- Main Function --------
 async def main() -> None:
+    logger.info("[Main] Starting...")
+
     # -- Setup shutdown signals
     stop_event = asyncio.Event()
     shutdown_signals(stop_event)
@@ -103,17 +107,18 @@ async def main() -> None:
     # -- Setup client connection
     for i in range(len(account_dids)):
         if stop_event.is_set():
-            print("[Main] Login failed. Shutting down...")
+            logger.error("[Main] Login failed. Shutting down...")
             return
 
         client = await login(account_dids[i], passwords[i])
         if not client:
-            print("[Main] Login failed. Shutting down...")
+            logger.error("[Main] Login failed. Shutting down...")
             return
 
         bots[account_dids[i]]["client"] = client
         bots[account_dids[i]]["handle"] = client.profile.handle
     if stop_event.is_set():
+        logger.info("[Main] Shutdown requested during login.")
         return
 
     try:
@@ -151,14 +156,14 @@ async def main() -> None:
 
     finally:
         # -- End tasks
-        print("[Main] Shutting down...")
+        logger.info("[Main] Shutting down...")
 
         # -- Stop Jetstream connection
         try:
             if ws:
                 await ws.disconnect()
         except Exception as e:
-            print(f"[Main] Error disconnecting websocket: {e}")
+            logger.error(f"[Main] Error disconnecting websocket: {e}")
 
         if websocket_task:
             websocket_task.cancel()
@@ -169,17 +174,17 @@ async def main() -> None:
             task.cancel()
 
         if workers:
-            print("[Main] Stopping workers...")
+            logger.info("[Main] Stopping workers...")
             await asyncio.gather(*workers, return_exceptions=True)
 
-        print("[Main] Stopped all workers.")
+        logger.info("[Main] Stopped all workers.")
 
         # -- Stop DM Worker
         if dm_worker:
             try:
                 await dm_worker.stop()
             except Exception as e:
-                print(f"[Main] Error stopping DM worker: {e}")
+                logger.error(f"[Main] Error stopping DM worker: {e}")
 
         if dm_task:
             await asyncio.gather(dm_task, return_exceptions=True)
@@ -189,11 +194,11 @@ async def main() -> None:
             try:
                 await post_manager.cache_cleanup_stop()
             except Exception as e:
-                print(f"[Main] Error stopping profile cache cleanup: {e}")
+                logger.error(f"[Main] Error stopping profile cache cleanup: {e}")
    
         # -- Finish pending JSON updates
         if json_queue and json_task:
-            print(f"[Main] Waiting for JSON queue ({json_queue.qsize()} items)...")
+            logger.info(f"[Main] Waiting for JSON queue ({json_queue.qsize()} items)...")
 
             queue_empty = False
 
@@ -201,10 +206,10 @@ async def main() -> None:
                 try:
                     await asyncio.wait_for(json_queue.join(), timeout=30)
                     queue_empty = True
-                    print("[Main] JSON queue finished.")
+                    logger.info("[Main] JSON queue finished.")
 
                 except asyncio.TimeoutError:
-                    print("[Main] JSON queue timed out. Pending updates may be lost.")
+                    logger.warning("[Main] JSON queue timed out. Pending updates may be lost.")
 
             # -- Stop JSON worker
             if queue_empty and not json_task.done():
@@ -213,28 +218,26 @@ async def main() -> None:
                     await asyncio.wait_for(json_task, timeout=15)
 
                 except asyncio.TimeoutError:
-                    print("[Main] JSON worker timed out. Cancelling...")
+                    logger.warning("[Main] JSON worker timed out. Cancelling...")
                     json_task.cancel()
                     await asyncio.gather(json_task, return_exceptions=True)
 
                 except Exception as e:
-                    print(f"[Main] JSON worker failed: {e}")
+                    logger.error(f"[Main] JSON worker failed: {e}")
                     await asyncio.gather(json_task, return_exceptions=True)
 
             else:
                 if not json_task.done():
-                    print("[Main] JSON worker not stopped cleanly. Cancelling...")
+                    logger.warning("[Main] JSON worker not stopped cleanly. Cancelling...")
                     json_task.cancel()
 
                 await asyncio.gather(json_task, return_exceptions=True)
 
-            print("[Main] JSON worker stopped.")
-
-        print("[Main] Shutdown complete.")
+        logger.info("[Main] Shutdown complete.")
 
 if __name__ == "__main__":
     try:
         validate_config()
         asyncio.run(main())
     except (ConfigError, AuthenticationError, NetworkError, RateLimitedError, UnknownError) as e:
-        print(e)
+        logger.critical(f"[Main] {e}")

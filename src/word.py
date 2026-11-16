@@ -3,6 +3,7 @@ import asyncio
 from datetime import datetime, timedelta, timezone
 from wonderwords import RandomWord
 from atproto import models
+from .logging import logger
 
 # -------- Functions --------
 
@@ -14,6 +15,8 @@ async def post_random_word(client, blocked_words):
     candidate = None
 
     # -- Have 10 attempts at finding a word
+    logger.info("[Word] Generating random word.")
+
     for _ in range(10):
         candidate = r.word()
         if candidate.lower() not in blocked_words:
@@ -53,7 +56,7 @@ async def already_posted(client):
         return False
 
     except Exception as e:
-        print(f"[Word] Failed to check recent posts: {e}")
+        logger.error(f"[Word] Failed to check recent posts: {e}")
         return None
     
 # -- Post a word of the day every day
@@ -67,7 +70,7 @@ async def word_of_the_day(client, blocked_words):
                 await post_random_word(client, blocked_words)
 
         except Exception as e:
-            print(f"[Word] Unexpected error: {e}")
+            logger.error(f"[Word] Unexpected error: {e}")
 
         # -- Check again in an hour
         await asyncio.sleep(3600)

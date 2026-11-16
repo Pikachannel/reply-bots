@@ -2,6 +2,7 @@
 from atproto import Client
 from typing import Optional
 from .definitions import AuthenticationError, RateLimitedError, NetworkError, UnknownError
+from .logging import logger
 
 # -------- Login Function --------
 async def login(did: str, password: str) -> Optional[Client]:
@@ -11,7 +12,7 @@ async def login(did: str, password: str) -> Optional[Client]:
 
         profile = client.login(did, password)
         client.profile = profile
-        print(f"[Client] Logged in as {profile.handle} ({profile.did})")
+        logger.info(f"[Client] Logged in as {profile.handle}")
         return client # Return both the client and profile objects
     except Exception as e:
         if hasattr(e, "response") and hasattr(e.response, "status_code"):

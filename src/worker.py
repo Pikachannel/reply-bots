@@ -2,10 +2,11 @@
 import asyncio
 from atproto import Client
 from typing import Any
+from .logging import logger
 
 # -------- Worker Function --------
 async def worker(client: Client , queue: asyncio.Queue[dict], followers_set: set[str], account_did: str, messages: dict, user_data: dict, post_manager: Any) -> None:
-    print("[BSKY Worker] Worker starting")
+    logger.info("[BSKY Worker] Worker starting")
     first_reply = set()
 
     # -- Start Worker
@@ -52,7 +53,7 @@ async def worker(client: Client , queue: asyncio.Queue[dict], followers_set: set
             await post_manager.make_post(message, post_cid, post_uri, user_did, post_text, account_did)
 
         except Exception as e:
-            print(f"[BSKY Worker] An error has occured, {e}")
+            logger.error(f"[BSKY Worker] An error has occurred: {e}")
         finally:
             queue.task_done() # Remove the task from the queue
             del message

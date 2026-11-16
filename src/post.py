@@ -4,6 +4,7 @@ from atproto import client_utils
 import time
 from typing import Any
 import asyncio
+from .logging import logger
 
 # -------- Post Manager Class --------
 class PostManager:
@@ -39,6 +40,7 @@ class PostManager:
     # -------------
     # -- Profile cache cleanup loop
     async def cache_cleanup(self):
+        logger.info("[Post] Cache cleanup started.")
         while True:
             await asyncio.sleep(900)  # Clear every 15 minutes
             self.clear_cache()
@@ -49,7 +51,7 @@ class PostManager:
         if not self.cache_task.done():
             self.cache_task.cancel()
             await asyncio.gather(self.cache_task, return_exceptions=True)
-            print("[Post] Post manager stopped.")
+            logger.info("[Post] Post manager stopped.")
 
     # -------------
     # -- Interval (time) check
