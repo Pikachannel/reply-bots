@@ -1,10 +1,19 @@
+## [Unreleased]
+
+### Added
+
+- Added graceful shutdown handling for workers and Bluesky Jetstream connections, including finishing pending JSON writes.
+- Added bot account configuration validation, including checks for missing credentials and invalid account configuration.
+- Added configurable Word of the Day bot selection through the `.env` file, with the ability to disable the feature.
+
+
 ## [0.17.0] - 2026-11-15
 
 ### Added
 
-- Adds a changelog documenting historical changes in `CHANGELOG.md`.
+- Added a changelog documenting historical changes in `CHANGELOG.md`.
 - Added a security policy in `SECURITY.md`.
-- Adds contribution guidelines in `CONTRIBUTING.md`.
+- Added contribution guidelines in `CONTRIBUTING.md`.
 - Added `.github/` with issue and pull request templates.
 - Added `.env.example` containing example environment variables.
 - Added a README template for translators and localisers.
