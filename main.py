@@ -165,12 +165,11 @@ async def main() -> None:
             await asyncio.gather(websocket_task, return_exceptions=True)
 
         # -- Stop workers
-        print("[Main] Stopping workers...")
-
         for task in workers:
             task.cancel()
 
         if workers:
+            print("[Main] Stopping workers...")
             await asyncio.gather(*workers, return_exceptions=True)
 
         print("[Main] Stopped all workers.")
@@ -185,16 +184,12 @@ async def main() -> None:
         if dm_task:
             await asyncio.gather(dm_task, return_exceptions=True)
 
-        print("[Main] DM Worker stopped.")
-
         # -- Stop profile cache cleanup
         if post_manager:
             try:
                 await post_manager.cache_cleanup_stop()
             except Exception as e:
                 print(f"[Main] Error stopping profile cache cleanup: {e}")
-
-        print("[Main] Post Manager stopped.")
    
         # -- Finish pending JSON updates
         if json_queue and json_task:

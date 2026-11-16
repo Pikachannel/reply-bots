@@ -49,6 +49,7 @@ class PostManager:
         if not self.cache_task.done():
             self.cache_task.cancel()
             await asyncio.gather(self.cache_task, return_exceptions=True)
+            print("[Post] Post manager stopped.")
 
     # -------------
     # -- Interval (time) check
