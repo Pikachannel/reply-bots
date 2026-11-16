@@ -139,12 +139,13 @@ async def main() -> None:
         print("[Main] Shutting down...")
 
         # -- Stop Jetstream connection
-        if ws:
-            await ws.disconnect()
-
-        if websocket_task:
-            websocket_task.cancel()
-            await asyncio.gather(websocket_task, return_exceptions=True)
+        try:
+            if ws:
+                await ws.disconnect()
+        finally:
+            if websocket_task:
+                websocket_task.cancel()
+                await asyncio.gather(websocket_task, return_exceptions=True)
 
         # -- Stop workers
         print("[Main] Stopping workers...")
