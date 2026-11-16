@@ -11,6 +11,7 @@ from src.json_worker import json_worker
 from src.word import word_of_the_day
 from src.tone import ToneAnalysis
 from src.shutdown import shutdown_signals
+from src.definitions import STOP, ConfigError, AuthenticationError, NetworkError, UnknownError, RateLimitedError
 import asyncio
 import os
 import json
@@ -35,13 +36,8 @@ while os.getenv(f"ACCOUNT_DID_{get_bot_num}"):
 
     get_bot_num += 1
 
-# -- Validate account configuration
-if not passwords or not account_dids or len(passwords) != len(account_dids):
-    raise ValueError("[Main] Invalid account configuration.")
-
-for i, password in enumerate(passwords, start=1):
-    if not password:
-        raise ValueError(f"[Main] PASSWORD_{i} is missing.")
+word_bot = os.getenv("WORD_OF_THE_DAY_BOT", "").strip()
+word_bot_did = None
 
 # -- File paths
 BASE_DIR = Path(__file__).resolve().parent
@@ -63,7 +59,36 @@ with open(BLOCKLIST_PATH, "r") as f:
 with open(LOCALES_PATH, "r", encoding="utf-8") as f:
     setting_replies = json.load(f)
 
-# ------ Main Function --------
+# -------- Validate account configuration --------
+def validate_config():
+    global word_bot_did
+
+    if not passwords or not account_dids or len(passwords) != len(account_dids):
+        raise ConfigError("[Main] Invalid account configuration.")
+
+    if len(account_dids) != len(set(account_dids)):
+        raise ConfigError("[Main] Duplicate account DIDs found.")
+
+    for i, password in enumerate(passwords, start=1):
+        if not password:
+            raise ConfigError(f"[Main] PASSWORD_{i} is missing.")
+
+    if word_bot:
+        try:
+            word_bot_num = int(word_bot)
+        except ValueError:
+            raise ConfigError(
+                "[Main] WORD_OF_THE_DAY_BOT must be a valid account number."
+            )
+
+        if not 1 <= word_bot_num <= len(account_dids):
+            raise ConfigError(
+                "[Main] WORD_OF_THE_DAY_BOT must refer to a configured account number."
+            )
+
+        word_bot_did = account_dids[word_bot_num - 1]
+
+# -------- Main Function --------
 async def main() -> None:
     # -- Setup shutdown signals
     stop_event = asyncio.Event()
@@ -110,19 +135,8 @@ async def main() -> None:
         json_task = asyncio.create_task(json_worker(str(USER_DATA_PATH), json_queue, user_data))
 
         # -- Setup Word of the Day
-        word_bot = os.getenv("WORD_OF_THE_DAY_BOT", "").strip()
-
         if word_bot:
-            try:
-                # -- Validate bot number
-                word_bot_num = int(word_bot)
-                if word_bot_num < 1 or word_bot_num > len(account_dids):
-                    raise ValueError
-
-                word_bot_did = account_dids[word_bot_num - 1]
-                workers.append(asyncio.create_task(word_of_the_day(bots[word_bot_did]["client"], keyword_list)))
-            except ValueError:
-                raise ValueError("[Main] WORD_OF_THE_DAY_BOT must refer to a configured account number.")
+            workers.append(asyncio.create_task(word_of_the_day(bots[word_bot_did]["client"], keyword_list)))
 
         # -- Start per bot queues and workers
         for i in range(len(account_dids)):
@@ -200,7 +214,7 @@ async def main() -> None:
             # -- Stop JSON worker
             if queue_empty and not json_task.done():
                 try:
-                    await asyncio.wait_for(json_queue.put("Stop"), timeout=5)
+                    await asyncio.wait_for(json_queue.put(STOP), timeout=5)
                     await asyncio.wait_for(json_task, timeout=15)
 
                 except asyncio.TimeoutError:
@@ -224,4 +238,8 @@ async def main() -> None:
         print("[Main] Shutdown complete.")
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    try:
+        validate_config()
+        asyncio.run(main())
+    except (ConfigError, AuthenticationError, NetworkError, RateLimitedError, UnknownError) as e:
+        print(e)

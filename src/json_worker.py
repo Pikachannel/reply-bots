@@ -3,6 +3,7 @@ import json
 import asyncio
 import os
 import tempfile
+from .definitions import STOP
 
 
 # -------- Submit JSON Update --------
@@ -28,7 +29,7 @@ async def json_worker(path: str, queue: asyncio.Queue, user_data: dict) -> None:
     while True:
         item = await queue.get()
 
-        if item == "Stop":
+        if item is STOP:
             queue.task_done()
             break
                 
