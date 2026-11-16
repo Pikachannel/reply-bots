@@ -73,16 +73,17 @@ async def main() -> None:
     queues = []
     workers = []
 
-    ws, websocket_task, dm_worker, dm_task, json_queue, json_task = None, None, None, None, None, None
+    ws, websocket_task, dm_worker, dm_task, json_queue, json_task, post_manager = None, None, None, None, None, None, None
 
     # -- Setup client connection
     for i in range(len(account_dids)):
         if stop_event.is_set():
+            print("[Main] Login failed. Shutting down...")
             return
 
         client = await login(account_dids[i], passwords[i])
         if not client:
-            input("[Main] Press enter to exit...")
+            print("[Main] Login failed. Shutting down...")
             return
 
         bots[account_dids[i]]["client"] = client
@@ -142,10 +143,12 @@ async def main() -> None:
         try:
             if ws:
                 await ws.disconnect()
-        finally:
-            if websocket_task:
-                websocket_task.cancel()
-                await asyncio.gather(websocket_task, return_exceptions=True)
+        except Exception as e:
+            print(f"[Main] Error disconnecting websocket: {e}")
+
+        if websocket_task:
+            websocket_task.cancel()
+            await asyncio.gather(websocket_task, return_exceptions=True)
 
         # -- Stop workers
         print("[Main] Stopping workers...")
@@ -153,28 +156,68 @@ async def main() -> None:
         for task in workers:
             task.cancel()
 
-        print("[Main] Stopped all workers.")
-
         if workers:
             await asyncio.gather(*workers, return_exceptions=True)
 
+        print("[Main] Stopped all workers.")
+
         # -- Stop DM Worker
         if dm_worker:
-            await dm_worker.stop()
+            try:
+                await dm_worker.stop()
+            except Exception as e:
+                print(f"[Main] Error stopping DM worker: {e}")
 
         if dm_task:
             await asyncio.gather(dm_task, return_exceptions=True)
 
+        print("[Main] DM Worker stopped.")
+
+        # -- Stop profile cache cleanup
+        if post_manager:
+            try:
+                await post_manager.cache_cleanup_stop()
+            except Exception as e:
+                print(f"[Main] Error stopping profile cache cleanup: {e}")
+
+        print("[Main] Post Manager stopped.")
+   
         # -- Finish pending JSON updates
         if json_queue and json_task:
             print(f"[Main] Waiting for JSON queue ({json_queue.qsize()} items)...")
-            await json_queue.join()
 
-            print("[Main] JSON queue finished.")
+            queue_empty = False
+
+            if not json_task.done():
+                try:
+                    await asyncio.wait_for(json_queue.join(), timeout=30)
+                    queue_empty = True
+                    print("[Main] JSON queue finished.")
+
+                except asyncio.TimeoutError:
+                    print("[Main] JSON queue timed out. Pending updates may be lost.")
 
             # -- Stop JSON worker
-            await json_queue.put("Stop")
-            await json_task
+            if queue_empty and not json_task.done():
+                try:
+                    await asyncio.wait_for(json_queue.put("Stop"), timeout=5)
+                    await asyncio.wait_for(json_task, timeout=15)
+
+                except asyncio.TimeoutError:
+                    print("[Main] JSON worker timed out. Cancelling...")
+                    json_task.cancel()
+                    await asyncio.gather(json_task, return_exceptions=True)
+
+                except Exception as e:
+                    print(f"[Main] JSON worker failed: {e}")
+                    await asyncio.gather(json_task, return_exceptions=True)
+
+            else:
+                if not json_task.done():
+                    print("[Main] JSON worker not stopped cleanly. Cancelling...")
+                    json_task.cancel()
+
+                await asyncio.gather(json_task, return_exceptions=True)
 
             print("[Main] JSON worker stopped.")
 

@@ -44,6 +44,13 @@ class PostManager:
             self.clear_cache()
 
     # -------------
+    # -- Stop profile cache cleanup
+    async def cache_cleanup_stop(self):
+        if not self.cache_task.done():
+            self.cache_task.cancel()
+            await asyncio.gather(self.cache_task, return_exceptions=True)
+
+    # -------------
     # -- Interval (time) check
     def interval_time_check(self, user_did: str, bot_did: str) -> bool:
         intervals = self.user_data.get(bot_did, {}).get(user_did, {}).get("interval", [])
