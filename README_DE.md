@@ -41,7 +41,7 @@ Whimsy Miku antwortet mit positiven Antworten auf deine Posts!
 
 Evil Teto antwortet mit lustig-gemeinen Antworten auf deine Posts.
 
-#### Derzeitige Features
+### Derzeitige Features
 1. **Wählt zufällig vorbestimmte Nachrichten aus**, inklusive:
     - Support für mehrere Sprachen
     - Nachrichten, die den Nutzernamen des Nutzers enthalten
@@ -50,8 +50,8 @@ Evil Teto antwortet mit lustig-gemeinen Antworten auf deine Posts.
     - Ermöglicht es Nutzern, Antworten unter ihren Posts zu löschen (mehr dazu in [Posts löschen](#posts-löschen)).
 3. **Benutzerdefinierte Spitznamen**: Nutzer können einen benutzerdefinierten Spitznamen festlegen, der statt ihres Bluesky-Anzeigenamens benutzt wird.
 4. **Post Chance**: Nutzer können die Wahrscheinlichkeit auf eine Antwort auf ihre Posts ändern.
-5. **Post Intervall**: Nutzer können den Zeitabstand zwischen Antworten unter ihren Beiträgen anpassen. Für alle Antworten gilt eine Mindestabklingzeit von 60 Sekunden.
-6. **Posts überspringen**: Nutzer können ändern, wie viele Posts zwischen den Antworten liegen müssen.
+5. **Post Intervall**: Nutzer können den Zeitabstand zwischen Antworten vom Bot unter ihren Beiträgen anpassen. Für alle Antworten gilt eine Mindestabklingzeit von 60 Sekunden.
+6. **Posts überspringen**: Nutzer können ändern, wie viele Posts zwischen den Antworten des Bots liegen müssen.
 7. **Wort des Tages!**: Evil Teto wird jeden einzelnen Tag ein zufälliges Wort posten.
 8. **Sprachauswahl**: Nutzer können die gewünschte Sprache für Bot-Antworten festlegen, Aktuell werden die folgenden Sprachen unterstützt:
     - Englisch (EN)
@@ -73,19 +73,20 @@ Das System überspringt Posts, wenn eine der folgenden Bedingungen erfüllt ist:
 3. Führt eine Sentimentanalyse auf den Post des Nutzers durch und bestimmt, ob er negativ ist.
 
 **Account-Level Prüfung:**
-1. Prüft, ob der Nutzer von der Bluesky-Moderation unter irgendeiner Moderationskategorie markiert wurde.
+1. Prüft, ob der Nutzer von der Bluesky-Moderation (@moderation.bsky.app) ein accountweites Moderations-Label angehängt bekommen hat.
 
 **Post-Level Prüfung:**
-1. Liest Bluesky Post Labels, darunter:
+1. Erkennt Post-Labels, die an den Post angehängt wurden, darunter:
    - Selbst angehängte Labels.
-   - Bluesky-Moderations-Labels.
+   - Moderations-Labels, die von @moderation.bsky.app angehängt wurden.
 
 #### Posts löschen
 1. Finde die Bot-Antwort unter einem deiner Posts.
 2. Antworte auf die Bot-Antwort mit "delete" und sie wird direkt gelöscht.
 
 ### Einstellungen
-Du kannst sogar die Einstellungen der Bots konfigurieren! Das kannst du tun, indem du einfach einen der Befehle da unten per Direktnachricht an den Bot schreibst.
+Nutzer können anpassen, wie der Bot sich unter ihren Posts verhält. Das funktioniert mit Einstellungen, die Nutzer für sich selber festlegen. Die Einstellungen können mit den unten angezeigten Befehlen
+geändert werden, indem sie (die Befehle) per Direktnachricht an den Bot gesendet werden.
 
 Der Bot prüft alle 5 Minuten, ob neue Befehle da sind. Du kannst bis zu 10 Befehle pro Überprüfung senden und sie werden genau in der Reihenfolge verarbeitet, in der sie gesendet wurden.
 
@@ -93,28 +94,28 @@ Um alle deine Einstellungen zu sehen:
 1. Sende eine Direktnachricht mit diesem Befehl an den Bot:
     - `!settings`
 2. Warte auf die Antwort des Bots.
-    - Die Antwort des Bots kann bis zu 5 Minuten dauern.    
+    - Eine Antwort kann bis zu 5 Minuten dauern.    
 
 #### Einstellungen synchronisieren
 1. Sende eine Direktnachricht mit einem dieser Befehle an den Bot:
     - **Einstellungen des aktuellen Bots mit denen eines anderen Bots synchronisieren:** `!sync <@other_bot_handle>`
-    - **Einstellungen aller anderen Bots mit dem aktuellen Bot synchronisieren:** `!sync <@current_bot_handle>`
+    - **Einstellungen aller anderen Bots mit denen des aktuellen Bots synchronisieren:** `!sync <@current_bot_handle>`
 2. Warte auf die Antwort des Bots.
-    - Die Antwort des Bots kann bis zu 5 Minuten dauern.    
+    - Eine Antwort kann bis zu 5 Minuten dauern.    
     
 #### Spitzname
 1. Sende eine Direktnachricht mit einem dieser Befehle an den Bot:
-    - **Spitznamen einstellen:** `!nickname <nickname>` (Dein Spitzname kann maximal 20 Zeichen lang sein)
+    - **Spitznamen einstellen:** `!nickname <nickname>` (Der Spitzname kann maximal 20 Zeichen lang sein)
     - **Spitznamen zurücksetzen:** `!nickname`
 2. Warte auf die Antwort des Bots.
-    - Die Antwort des Bots kann bis zu 5 Minuten dauern.    
+    - Eine Antwort kann bis zu 5 Minuten dauern.    
 
 #### Post Chance
 1. Sende eine Direktnachricht mit einem dieser Befehle an den Bot:
     - **Chance einstellen:** `!chance <chance>` (Muss eine Zahl zwischen 0 und 100 sein)
     - **Chance zurücksetzen:** `!chance`
 2. Warte auf die Antwort des Bots.
-    - Die Antwort des Bots kann bis zu 5 Minuten dauern. 
+    - Eine Antwort kann bis zu 5 Minuten dauern. 
 
 #### Post Intervall
 1. Sende eine Direktnachricht mit einem dieser Befehle an den Bot:
@@ -122,22 +123,22 @@ Um alle deine Einstellungen zu sehen:
     - **Variablen Intervall festlegen:** `!interval <lower_bound-upper_bound>` (Beide Zahlen müssen zwischen 60 und 3600 sein)
     - **Intervall zurücksetzen:** `!interval`
 2. Warte auf die Antwort des Bots.
-    - Die Antwort des Bots kann bis zu 5 Minuten dauern.    
+    - Eine Antwort kann bis zu 5 Minuten dauern.    
 
 #### Posts überspringen
 1. Sende eine Direktnachricht mit einem dieser Befehle an den Bot:
     - **Skip-Wert festlegen:** `!skip <interval>` (Muss eine Zahl zwischen 0 und 50 sein)
-    - **ariablen Skip-Bereich festlegen:** `!skip <lower_bound-upper_bound>` (Beide Zahlen müssen zwischen 0 und 50 sein)
+    - **Variablen Skip-Bereich festlegen:** `!skip <lower_bound-upper_bound>` (Beide Zahlen müssen zwischen 0 und 50 sein)
     - **Skip-Wert zurücksetzen:** `!skip`
 2. Warte auf die Antwort des Bots.
-    - Die Antwort des Bots kann bis zu 5 Minuten dauern.     
+    - Eine Antwort kann bis zu 5 Minuten dauern.     
 
 #### Sprache
 1. Sende eine Direktnachricht mit einem dieser Befehle an den Bot:
     - **Spracheinstellung festlegen:** `!language <language>` (z.b.: `!language de` oder `!language english`).
     - **Spracheinstellung zurücksetzen:** `!language`
 2. Warte auf die Antwort des Bots.
-    - Die Antwort des Bots kann bis zu 5 Minuten dauern.
+    - Eine Antwort kann bis zu 5 Minuten dauern.
 
 ## Datenschutzrichtlinie
 
@@ -149,7 +150,7 @@ Der Bot sammelt und nutzt die folgenden Daten:
 - Informationen von gesammelten Posts werden nicht permanent gespeichert und 
 werden nur temporär im Cache des Bots gespeichert.
 
- **Nutzer Metadaten**
+ **Nutzer Metadaten:**
 - Nur öffentlich findbaren Informationen wie Nutzernamen und Profildetails.
 - Nur die DID (Bluesky-Account-gebundene ID) wird gespeichert.
 
@@ -162,14 +163,14 @@ werden nur temporär im Cache des Bots gespeichert.
 - Keine Daten werden von KI-Modellen genutzt.
 
 ### Löschen von Nutzerdaten
-Um deine Daten vom Bot zu löschen, ist das mit den folgenden Wegen möglich:
+Gesammelte Daten können mit den folgenden Methoden gelöscht werden:
 
 **Automatischer Löschvorgang:**
 1. Sende eine Direktnachricht mit diesem Befehl an den Bot:
   - **Einzelner Bot:** `!delete`
   - **Alle Bots:** `!delete all` 
 2. Warte auf die Antwort des Bots.
-   - Die Antwort des Bots kann bis zu 5 Minuten dauern.     
+   - Eine Antwort kann bis zu 5 Minuten dauern.     
    
  **Manueller Löschvorgang**
  1. Kontaktiere Pikachannel über eine der folgenden:
