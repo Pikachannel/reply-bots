@@ -18,8 +18,8 @@ async def login(did: str, password: str) -> Optional[Client]:
             code = e.response.status_code
             if code == 401:
                 raise AuthenticationError("[Client] Invalid account DID or password.")
-            elif code in [500, 501, 502, 503]:
-                raise NetworkError("[Client] Bluesky network error.")
+            elif code in [500, 501, 502, 503, 504]:
+                raise NetworkError("[Client] A network error has occured.")
             elif code == 429:
                 raise RateLimitedError("[Client] Account is currently being rate limited.")
             else:
