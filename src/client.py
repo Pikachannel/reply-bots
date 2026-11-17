@@ -1,6 +1,5 @@
 # -------- Imports --------
 from atproto import Client
-from typing import Optional
 import httpx
 from .definitions import AuthenticationError, RateLimitedError, NetworkError, UnknownError, APIError
 from .logging import logger
