@@ -240,4 +240,4 @@ if __name__ == "__main__":
         validate_config()
         asyncio.run(main())
     except (ConfigError, AuthenticationError, NetworkError, RateLimitedError, UnknownError) as e:
-        logger.critical(f"[Main] {e}")
+        logger.critical(f"{e}")
