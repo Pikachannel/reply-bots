@@ -1,0 +1,14 @@
+name: Send Test Discord Commit Message - Manual Trigger
+
+on:
+  workflow_dispatch:
+
+jobs:
+  discord_notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: tristanbudd/discord-commit-github-action@master
+        with:
+          webhook-url: ${{ secrets.WEBHOOK_URL }}
