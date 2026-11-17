@@ -12,7 +12,7 @@ from src.word import word_of_the_day
 from src.tone import ToneAnalysis
 from src.shutdown import shutdown_signals
 from src.definitions import STOP, ConfigError, AuthenticationError, NetworkError, UnknownError, RateLimitedError
-from src.logging import logger, setup_logger
+from src.logging import logger, setup_logger, validate_logs
 import asyncio
 import os
 import json
@@ -21,7 +21,6 @@ from pathlib import Path
 
 # -------- Variables --------
 load_dotenv()
-setup_logger()
 
 # -- Account info
 get_bot_num = 1
@@ -237,6 +236,8 @@ async def main() -> None:
 
 if __name__ == "__main__":
     try:
+        validate_logs()
+        setup_logger()
         validate_config()
         asyncio.run(main())
     except (ConfigError, AuthenticationError, NetworkError, RateLimitedError, UnknownError) as e:

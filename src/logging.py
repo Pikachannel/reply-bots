@@ -13,22 +13,27 @@ LOG_FILE = Path(__file__).resolve().parent.parent / "logs" / f"bot-{datetime.now
 LOG_FORMAT = "%(asctime)s | [%(levelname)s] | %(message)s"
 DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
 
+keep_log_ammount = None
+
 # -- Validate the amount of logs to keep
-load_dotenv()
-keep_log_ammount = os.getenv("LOG_AMMOUNT", "").strip()
+def validate_logs():
+    global keep_log_ammount
+    
+    load_dotenv()
+    keep_log_ammount = os.getenv("LOG_AMMOUNT", "").strip()
 
-if keep_log_ammount:
-    try:
-        keep_log_ammount = int(keep_log_ammount)
-    except ValueError:
-        raise ConfigError(
-            "[Logging] LOG_AMMOUNT must be a valid number."
-        )
+    if keep_log_ammount:
+        try:
+            keep_log_ammount = int(keep_log_ammount)
+        except ValueError:
+            raise ConfigError(
+                "[Logging] LOG_AMMOUNT must be a valid number."
+            )
 
-    if not 0 <= keep_log_ammount:
-        raise ConfigError(
-            "[Logging] LOG_AMMOUNT must be greater than 0."
-        )
+        if not 0 <= keep_log_ammount:
+            raise ConfigError(
+                "[Logging] LOG_AMMOUNT must be greater than 0."
+            )
 
 # -------- Cleanup Log Files --------
 def cleanup_log_files(log_dir: Path, current_log: Path) -> None:
