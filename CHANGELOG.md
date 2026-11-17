@@ -3,7 +3,7 @@
 ### Added
 
 - Added graceful shutdown handling for workers and Bluesky Jetstream connections, including completing pending JSON writes.
-- Added bot account configuration validation, including checks for missing credentials and invalid account configurations.
+- Added bot account configuration validation, including checks for missing credentials, duplicate accounts and invalid account numbering.
 - Added configurable Word of the Day bot selection through the `.env` file, with the ability to disable the feature.
 - Added file logging for informational messages, warnings, and errors to .log files in the /logs directory. A unique log file is generated each time a bot starts.
 - Added automatic cleanup of older log files.
