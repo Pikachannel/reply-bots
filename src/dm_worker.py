@@ -161,7 +161,7 @@ class DmWorker:
                                 )
 
                         except Exception as e:
-                            logger.error(f"[DM Worker] An error occured while processing a message: {e}")
+                            logger.error(f"[DM Worker] An error occurred while processing a message: {e}")
                         finally:
                             self.number_of_messages -= 1
                 except Exception as e:
