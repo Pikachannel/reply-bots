@@ -20,19 +20,19 @@ def validate_logs() -> None:
     global keep_log_ammount
     
     load_dotenv()
-    keep_log_ammount = os.getenv("LOG_AMMOUNT", "").strip()
+    keep_log_ammount = os.getenv("LOG_AMOUNT", "").strip()
 
     if keep_log_ammount:
         try:
             keep_log_ammount = int(keep_log_ammount)
         except ValueError:
             raise ConfigError(
-                "[Logging] LOG_AMMOUNT must be a valid number."
+                "[Logging] LOG_AMOUNT must be a valid number."
             )
 
         if not 0 <= keep_log_ammount:
             raise ConfigError(
-                "[Logging] LOG_AMMOUNT must be greater than or equal to 0."
+                "[Logging] LOG_AMOUNT must be greater than or equal to 0."
             )
 
 # -------- Cleanup Log Files --------

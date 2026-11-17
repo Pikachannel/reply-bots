@@ -11,7 +11,7 @@ from src.json_worker import json_worker
 from src.word import word_of_the_day
 from src.tone import ToneAnalysis
 from src.shutdown import shutdown_signals
-from src.definitions import STOP, ConfigError, AuthenticationError, NetworkError, UnknownError, RateLimitedError
+from src.definitions import STOP, ConfigError, AuthenticationError, NetworkError, UnknownError, RateLimitedError, APIError
 from src.logging import logger, setup_logger, validate_logs
 import asyncio
 import os
@@ -235,5 +235,5 @@ if __name__ == "__main__":
     try:
         validate_config()
         asyncio.run(main())
-    except (ConfigError, AuthenticationError, NetworkError, RateLimitedError, UnknownError) as e:
+    except (ConfigError, AuthenticationError, NetworkError, APIError, RateLimitedError, UnknownError) as e:
         logger.critical(f"{e}")
