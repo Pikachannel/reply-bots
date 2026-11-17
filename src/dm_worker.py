@@ -13,6 +13,7 @@ class DmWorker:
         self.account_dids = account_dids
         self.check_interval = check_interval
         self.stop_event = asyncio.Event()
+        self.number_of_messages = 0
     
     # -------------
     # -- Start the DM Worker
@@ -35,7 +36,7 @@ class DmWorker:
     # -------------
     # -- Stop the DM Worker
     async def stop(self) -> None:
-        logger.info("[DM Worker] Stopping DM worker...")
+        logger.info(f"[DM Worker] Shutting down... waiting for {self.number_of_messages} pending messages to finish.")
         self.stop_event.set()
         
     # -------------
@@ -89,6 +90,8 @@ class DmWorker:
                         unread_messages = messages
                     else:
                         unread_messages = messages[:last_bot_message_index]
+
+                    self.number_of_messages = len(unread_messages)
 
                     # -- Process oldest messages first
                     for message in reversed(unread_messages):
@@ -160,5 +163,7 @@ class DmWorker:
 
                         except Exception as e:
                             logger.error(f"[DM Worker] An error occured while processing a message: {e}")
+                        finally:
+                            self.number_of_messages -= 1
                 except Exception as e:
                     logger.error(f"[DM Worker] Unexpected conversation processing error: {e}")
