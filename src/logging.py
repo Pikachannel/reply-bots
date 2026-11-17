@@ -76,7 +76,7 @@ def setup_logger(level: str = "") -> logging.Logger:
         if keep_log_ammount > 0:
             if not any(isinstance(handler, RotatingFileHandler) and Path(handler.baseFilename) == resolved_log_file for handler in logger.handlers):
                 resolved_log_file.parent.mkdir(parents=True, exist_ok=True)
-                file_handler = LogFileHandler(resolved_log_file, maxBytes=5 * 1024 * 1024, backupCount=4, encoding="utf-8")
+                file_handler = LogFileHandler(resolved_log_file, maxBytes=5 * 1024 * 1024, backupCount=keep_log_ammount-1, encoding="utf-8")
                 file_handler.setFormatter(formatter)
                 logger.addHandler(file_handler)
 

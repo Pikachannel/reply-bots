@@ -24,6 +24,6 @@ async def login(did: str, password: str) -> Optional[Client]:
             elif code == 429:
                 raise RateLimitedError("[Client] Account is currently being rate limited.")
             else:
-                raise UnknownError(f"[Client] Unhandled API error (Status {code}): {e}")
+                raise NetworkError(f"[Client] Unhandled API error (Status {code}): {e}")
         else:
             raise UnknownError(f"[Client] Network or unexpected error occurred: {e}")
