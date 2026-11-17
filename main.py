@@ -23,20 +23,10 @@ from pathlib import Path
 load_dotenv()
 
 # -- Account info
-get_bot_num = 1
 passwords = []
 account_dids = []
 bots = {}
 followers_set = {}
-
-while os.getenv(f"ACCOUNT_DID_{get_bot_num}"):
-    passwords.append(os.getenv(f"PASSWORD_{get_bot_num}"))
-    account_dids.append(os.getenv(f"ACCOUNT_DID_{get_bot_num}"))
-    bots[account_dids[-1]] = {}
-    followers_set[account_dids[-1]] = set()
-
-    get_bot_num += 1
-
 word_bot = os.getenv("WORD_OF_THE_DAY_BOT", "").strip()
 word_bot_did = None
 
@@ -61,31 +51,71 @@ with open(LOCALES_PATH, "r", encoding="utf-8") as f:
     setting_replies = json.load(f)
 
 # -------- Validate account configuration --------
+
 def validate_config():
     global word_bot_did
+    global passwords
+    global account_dids
 
-    if not passwords or not account_dids or len(passwords) != len(account_dids):
-        raise ConfigError("[Main] Invalid account configuration.")
+    account_configs = {}
 
-    if len(account_dids) != len(set(account_dids)):
-        raise ConfigError("[Main] Duplicate account DIDs found.")
+    # -- Discover configured accounts
+    for key, value in os.environ.items():
+        if key.startswith("ACCOUNT_DID_"):
+            account_number = key.removeprefix("ACCOUNT_DID_")
 
-    for i, password in enumerate(passwords, start=1):
+            if not account_number.isdigit() or int(account_number) < 1:
+                raise ConfigError(
+                    "[Main] Configured accounts must use positive integers."
+                )
+
+            account_number = int(account_number)
+
+            if account_number in account_configs:
+                raise ConfigError(
+                    f"[Main] Duplicate account number: {account_number}."
+                )
+
+            account_configs[account_number] = value.strip()
+
+    # -- Validate account numbering
+    if not account_configs:
+        raise ConfigError("[Main] No accounts configured.")
+
+    expected_numbers = set(range(1, len(account_configs) + 1))
+
+    if set(account_configs) != expected_numbers:
+        raise ConfigError("[Main] Gap detected in configured accounts.")
+
+    # -- Load accounts in numerical order
+    for account_number in sorted(account_configs):
+        did = account_configs[account_number]
+        password = os.getenv(f"PASSWORD_{account_number}", "").strip()
+
+        if not did:
+            raise ConfigError(f"[Main] ACCOUNT_DID_{account_number} is missing.")
+
         if not password:
-            raise ConfigError(f"[Main] PASSWORD_{i} is missing.")
+            raise ConfigError(f"[Main] PASSWORD_{account_number} is missing.")
 
+        if did in account_dids:
+            raise ConfigError("[Main] Duplicate account DIDs found.")
+
+        account_dids.append(did)
+        passwords.append(password)
+
+        bots[did] = {}
+        followers_set[did] = set()
+
+    # -- Setup Word of the Day
     if word_bot:
         try:
             word_bot_num = int(word_bot)
         except ValueError:
-            raise ConfigError(
-                "[Main] WORD_OF_THE_DAY_BOT must be a valid account number."
-            )
+            raise ConfigError("[Main] WORD_OF_THE_DAY_BOT must be a valid account number.")
 
         if not 1 <= word_bot_num <= len(account_dids):
-            raise ConfigError(
-                "[Main] WORD_OF_THE_DAY_BOT must refer to a configured account number."
-            )
+            raise ConfigError("[Main] WORD_OF_THE_DAY_BOT must refer to a configured account number.")
 
         word_bot_did = account_dids[word_bot_num - 1]
 
