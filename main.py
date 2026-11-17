@@ -183,6 +183,13 @@ async def main() -> None:
                 logger.error(f"[Main] Error stopping DM worker: {e}")
 
         if dm_task:
+            try:
+                await asyncio.wait_for(dm_task, timeout=10)
+            except asyncio.TimeoutError:
+                logger.warning("[Main] DM worker timed out and was cancelled.")
+            except asyncio.CancelledError:
+                logger.info("[Main] DM worker was cancelled.")
+
             await asyncio.gather(dm_task, return_exceptions=True)
 
         # -- Stop profile cache cleanup
