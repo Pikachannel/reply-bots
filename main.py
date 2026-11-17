@@ -104,20 +104,19 @@ async def main() -> None:
     ws, websocket_task, dm_worker, dm_task, json_queue, json_task, post_manager = None, None, None, None, None, None, None
 
     # -- Setup client connection
-    for i in range(len(account_dids)):
-        if stop_event.is_set():
-            logger.error("[Main] Login failed. Shutting down...")
-            return
-
-        client = await login(account_dids[i], passwords[i])
-        bots[account_dids[i]]["client"] = client
-        bots[account_dids[i]]["handle"] = client.profile.handle
-        
-    if stop_event.is_set():
-        logger.info("[Main] Shutdown requested during login.")
-        return
-
     try:
+        for i in range(len(account_dids)):
+            if stop_event.is_set():
+                logger.error("[Main] Login failed. Shutting down...")
+                return
+
+            client = await login(account_dids[i], passwords[i])
+            bots[account_dids[i]]["client"] = client
+            bots[account_dids[i]]["handle"] = client.profile.handle
+            
+        if stop_event.is_set():
+            logger.info("[Main] Shutdown requested during login.")
+            return
         # -- Create queues
         json_queue = asyncio.Queue(maxsize=50)
 
@@ -173,7 +172,7 @@ async def main() -> None:
             logger.info("[Main] Stopping workers...")
             await asyncio.gather(*workers, return_exceptions=True)
 
-        logger.info("[Main] Stopped all workers.")
+            logger.info("[Main] Stopped all workers.")
 
         # -- Stop DM Worker
         if dm_worker:
