@@ -3,6 +3,7 @@ import asyncio
 import websockets
 import json
 from websockets.exceptions import ConnectionClosedError
+from .logging import logger
 
 # -------- Websocket Class --------
 class Websocket():
@@ -12,44 +13,70 @@ class Websocket():
         self.reconnect = 1
         self.connected = False
         self.ws = None
+        self.stop_event = asyncio.Event()
 
     # -------------
     # -- Connect function
     async def connect(self, queues: list) -> None:
-        # Try to connect infinitely 
         self.connected = True
-        while self.connected:
-            try:
-                # Connect to the bsky jetstream
-                async with websockets.connect(self.endpoint) as ws:
-                    print(f"[Websocket] Connected to {self.endpoint}")
-                    self.reconnect = 1
-                    self.ws = ws
+        self.stop_event.clear()
 
-                    async for raw_message in ws: # Get new messages
+        # -- Try to connect infinitely 
+        while self.connected:
+            connected_at = None
+            try:
+                async with websockets.connect(self.endpoint) as ws:
+                    logger.info(f"[Jetstream] Connected to {self.endpoint}")
+                    self.ws = ws
+                    connected_at = asyncio.get_running_loop().time()
+
+                    # -- Get new messages and add them to the queues
+                    async for raw_message in ws:
                         try:
                             message = json.loads(raw_message)
 
-                            # Add them to a queue for the worker function
                             for queue in queues:
                                 await queue.put(message)
                         except json.JSONDecodeError:
                             continue
+
             except ConnectionClosedError as e:
-                print(f"[Websocket] Connection lost, {e} reconnecting shortly...")
-                await asyncio.sleep(self.reconnect) # Wait to connect upon disconnection 
-                self.reconnect = min(self.reconnect * 2, 60)
+                logger.warning(f"[Jetstream] Connection lost ({e})")
 
             except Exception as e:
-                print(f"[Websocket] An error has occured, {e} reconnecting shortly...")
-                await asyncio.sleep(self.reconnect) # Wait to reconnect upon error
-                self.reconnect = min(self.reconnect * 2, 60)
+                logger.error(f"[Jetstream] Connection error ({e})")
+
+            finally:
+                if connected_at is not None:
+                    connected_for = asyncio.get_running_loop().time() - connected_at
+
+                    if connected_for >= 30:
+                        self.reconnect = 1
+
+                self.ws = None
+
+            if self.connected:
+                logger.info(f"[Jetstream] Reconnecting in {self.reconnect} seconds")
+
+                if not await self.wait_reconnect():
+                    break
                 
+    # -------------
+    # -- Reconnect function
+    async def wait_reconnect(self) -> bool:
+        try:
+            await asyncio.wait_for(self.stop_event.wait(), timeout=self.reconnect)
+            return False
+        except asyncio.TimeoutError:
+            self.reconnect = min(self.reconnect * 2, 60)
+            return True
+      
     # -------------
     # -- Disconnect function
     async def disconnect(self) -> None:
         self.connected = False
+        self.stop_event.set()
 
         if self.ws:
-            await self.ws.close() # Disconnect if connection is open
-            print("[Websocket] Disconnected.")
+            await self.ws.close()
+            logger.info("[Jetstream] Disconnected.")

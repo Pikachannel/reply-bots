@@ -1,6 +1,7 @@
 # -------- Imports --------
 import time
 from typing import Any
+from .logging import logger
 
 # -------- Filters Class --------
 class Filters:
@@ -47,7 +48,8 @@ class Filters:
 
             self.cache[user_did] = (flagged, time.time())
             return flagged
-        except:
+        except Exception as e:
+            logger.error(f"[Filter] Error while checking account flags: {e}")
             return True
     
     # -------------
@@ -71,6 +73,7 @@ class Filters:
             flagged = len(labels) > 0
             return flagged
 
-        except:
+        except Exception as e:
+            logger.error(f"[Filter] Error while checking post flags: {e}")
             return True
 

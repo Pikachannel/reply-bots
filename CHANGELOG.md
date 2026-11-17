@@ -1,10 +1,35 @@
+## [Unreleased]
+
+### Added
+
+- Added graceful shutdown handling for workers and Bluesky Jetstream connections, including completing pending JSON writes.
+- Added bot account configuration validation, including checks for missing credentials, duplicate accounts and invalid account numbering.
+- Added configurable Word of the Day bot selection through the `.env` file, with the ability to disable the feature.
+- Added file logging for informational messages, warnings, and errors to .log files in the /logs directory. A unique log file is generated each time a bot starts.
+- Added automatic cleanup of older log files.
+- Added dedicated exception types for authentication, network, API, rate-limit and configuration errors.
+- Added a stop signal to the JSON worker to allow it to shut down cleanly.
+- Added a GitHub Actions workflow to send commit notifications to Discord via a webhook.
+
+### Changed
+
+- Refactored Jetstream reconnection handling into a dedicated helper function.
+- Changed reconnect timing so that the reconnect timer only resets after a connection has remained stable for 30 seconds.
+- Improved DM worker exception handling to prevent individual errors from stopping all command processing.
+- Updated the security policy to clarify the project's release schedule and security update policy.
+
+### Removed
+
+- Removed the five minute message age check from the DM worker, as the existing message processing logic prevents previously handled commands from being processed again.
+
+
 ## [0.17.0] - 2026-11-15
 
 ### Added
 
-- Adds a changelog documenting historical changes in `CHANGELOG.md`.
+- Added a changelog documenting historical changes in `CHANGELOG.md`.
 - Added a security policy in `SECURITY.md`.
-- Adds contribution guidelines in `CONTRIBUTING.md`.
+- Added contribution guidelines in `CONTRIBUTING.md`.
 - Added `.github/` with issue and pull request templates.
 - Added `.env.example` containing example environment variables.
 - Added a README template for translators and localisers.
@@ -50,11 +75,14 @@
 - Changed Word of the Day duplicate checking to check the bot's last five posts instead of relying on the time of day.
 - Updated command handling to process up to ten recent commands within a five-minute window.
 
+### Removed
+
+- Removed unused imports and parameters.
+
 ### Fixed
 
 - Fixed an issue where URIs were incorrectly resolved in the post flags filter.
 - Defaulted missing bot data to an empty dictionary when an account DID was not found in the data file
-- Removed unused imports and parameters.
 
 
 ## [0.14.1] - 2026-11-10
@@ -126,6 +154,9 @@
 ### Changed
 
 - Updated `README.md` to use a new format for command examples.
+
+### Removed
+
 - Removed an unused `requests.Session` instance.
 
 

@@ -2,9 +2,9 @@
 
 ## Supported Versions
 
-This project does not currently have a formal release or version schedule.
+This project does not currently have a guaranteed release schedule.
 
-Security fixes will be applied to the `main` branch. Other branches and forks may not receive security updates.
+Security fixes will be applied to the most recent release. Forks of this project may not receive security updates.
 
 ## Reporting a Vulnerability
 

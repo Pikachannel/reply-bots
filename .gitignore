@@ -210,3 +210,6 @@ __marimo__/
 # Data directory
 data/
 data/*
+
+# Runtime logs
+logs/
