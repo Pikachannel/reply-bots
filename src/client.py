@@ -6,7 +6,7 @@ from .definitions import AuthenticationError, RateLimitedError, NetworkError, Un
 from .logging import logger
 
 # -------- Login Function --------
-async def login(did: str, password: str) -> Optional[Client]:
+async def login(did: str, password: str) -> Client:
     try:
         # -- Setup client connection
         client = Client()

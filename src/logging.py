@@ -16,7 +16,7 @@ DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
 keep_log_ammount = None
 
 # -- Validate the amount of logs to keep
-def validate_logs():
+def validate_logs() -> None:
     global keep_log_ammount
     
     load_dotenv()
@@ -32,7 +32,7 @@ def validate_logs():
 
         if not 0 <= keep_log_ammount:
             raise ConfigError(
-                "[Logging] LOG_AMMOUNT must be greater than 0."
+                "[Logging] LOG_AMMOUNT must be greater than or equal to 0."
             )
 
 # -------- Cleanup Log Files --------

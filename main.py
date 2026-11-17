@@ -110,12 +110,9 @@ async def main() -> None:
             return
 
         client = await login(account_dids[i], passwords[i])
-        if not client:
-            logger.error("[Main] Login failed. Shutting down...")
-            return
-
         bots[account_dids[i]]["client"] = client
         bots[account_dids[i]]["handle"] = client.profile.handle
+        
     if stop_event.is_set():
         logger.info("[Main] Shutdown requested during login.")
         return
