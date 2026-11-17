@@ -9,13 +9,13 @@
 - Added automatic cleanup of older log files.
 - Added dedicated exception types for authentication, network, API, rate-limit and configuration errors.
 - Added a stop signal to the JSON worker to allow it to shut down cleanly.
-- Improved DM worker exception handling to prevent individual errors from stopping all command processing.
 - Added a GitHub Actions workflow to send commit notifications to Discord via a webhook.
 
 ### Changed
 
 - Refactored Jetstream reconnection handling into a dedicated helper function.
 - Changed reconnect timing so that the reconnect timer only resets after a connection has remained stable for 30 seconds.
+- Improved DM worker exception handling to prevent individual errors from stopping all command processing.
 
 ### Removed
 
