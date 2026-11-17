@@ -233,8 +233,6 @@ async def main() -> None:
 
 if __name__ == "__main__":
     try:
-        validate_logs()
-        setup_logger()
         validate_config()
         asyncio.run(main())
     except (ConfigError, AuthenticationError, NetworkError, RateLimitedError, UnknownError) as e:

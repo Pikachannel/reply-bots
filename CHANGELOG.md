@@ -2,10 +2,19 @@
 
 ### Added
 
-- Added graceful shutdown handling for workers and Bluesky Jetstream connections, including finishing pending JSON writes.
-- Added bot account configuration validation, including checks for missing credentials and invalid account configuration.
+- Added graceful shutdown handling for workers and Bluesky Jetstream connections, including completing pending JSON writes.
+- Added bot account configuration validation, including checks for missing credentials and invalid account configurations.
 - Added configurable Word of the Day bot selection through the `.env` file, with the ability to disable the feature.
-- Added file logging for informational messages, warnings, and errors to `.log` files in the `/logs` directory, with a unique log file generated on each bot startup.
+- Added file logging for informational messages, warnings, and errors to .log files in the /logs directory. A unique log file is generated each time a bot starts.
+- Added automatic cleanup of older log files.
+- Added dedicated exception types for authentication, network, API, rate-limit and configuration errors.
+- Added a stop signal to the JSON worker to allow it to shut down cleanly.
+
+### Changed
+
+- Refactored Jetstream reconnection handling into a dedicated helper function.
+- Changed reconnect timing so that the reconnect timer only resets after a connection has remained stable for 30 seconds.
+
 
 
 ## [0.17.0] - 2026-11-15

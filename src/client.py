@@ -2,7 +2,7 @@
 from atproto import Client
 from typing import Optional
 import httpx
-from .definitions import AuthenticationError, RateLimitedError, NetworkError, UnknownError
+from .definitions import AuthenticationError, RateLimitedError, NetworkError, UnknownError, APIError
 from .logging import logger
 
 # -------- Login Function --------
@@ -25,7 +25,7 @@ async def login(did: str, password: str) -> Client:
             elif code == 429:
                 raise RateLimitedError("[Client] Account is currently being rate limited.")
             else:
-                raise NetworkError(f"[Client] Unhandled API error (Status {code}): {e}")
+                raise APIError(f"[Client] Unhandled API error (Status {code}): {e}")
         elif isinstance(e, httpx.RequestError):
             raise NetworkError(f"[Client] Network error occurred: {e}")
         else:

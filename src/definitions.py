@@ -22,3 +22,7 @@ class RateLimitedError(Exception):
 # ---- Unknown Error ----
 class UnknownError(Exception):
     pass
+
+# ---- API Error ----
+class APIError(Exception):
+    pass

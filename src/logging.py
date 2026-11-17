@@ -83,4 +83,5 @@ def setup_logger(level: str = "") -> logging.Logger:
         cleanup_log_files(resolved_log_file.parent, resolved_log_file)
     return logger
 
+validate_logs()
 logger = setup_logger()
