@@ -17,8 +17,6 @@ DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
 load_dotenv()
 keep_log_ammount = os.getenv("LOG_AMMOUNT", "").strip()
 
-if not keep_log_ammount:
-    keep_log_ammount = 0
 if keep_log_ammount:
     try:
         keep_log_ammount = int(keep_log_ammount)
@@ -69,14 +67,15 @@ def setup_logger(level: str = "") -> logging.Logger:
 
     # -- File handler
     resolved_log_file = Path(LOG_FILE).resolve()
-    if keep_log_ammount > 0:
-        if not any(isinstance(handler, RotatingFileHandler) and Path(handler.baseFilename) == resolved_log_file for handler in logger.handlers):
-            resolved_log_file.parent.mkdir(parents=True, exist_ok=True)
-            file_handler = LogFileHandler(resolved_log_file, maxBytes=5 * 1024 * 1024, backupCount=4, encoding="utf-8")
-            file_handler.setFormatter(formatter)
-            logger.addHandler(file_handler)
+    if type(keep_log_ammount) == int:
+        if keep_log_ammount > 0:
+            if not any(isinstance(handler, RotatingFileHandler) and Path(handler.baseFilename) == resolved_log_file for handler in logger.handlers):
+                resolved_log_file.parent.mkdir(parents=True, exist_ok=True)
+                file_handler = LogFileHandler(resolved_log_file, maxBytes=5 * 1024 * 1024, backupCount=4, encoding="utf-8")
+                file_handler.setFormatter(formatter)
+                logger.addHandler(file_handler)
 
-    cleanup_log_files(resolved_log_file.parent, resolved_log_file)
+        cleanup_log_files(resolved_log_file.parent, resolved_log_file)
     return logger
 
 logger = setup_logger()
