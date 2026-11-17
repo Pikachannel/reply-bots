@@ -16,6 +16,7 @@
 - Refactored Jetstream reconnection handling into a dedicated helper function.
 - Changed reconnect timing so that the reconnect timer only resets after a connection has remained stable for 30 seconds.
 - Improved DM worker exception handling to prevent individual errors from stopping all command processing.
+- Updated the security policy to clarify the project's release schedule and security update policy.
 
 ### Removed
 
