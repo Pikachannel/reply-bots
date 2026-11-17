@@ -10,6 +10,7 @@
 - Added dedicated exception types for authentication, network, API, rate-limit and configuration errors.
 - Added a stop signal to the JSON worker to allow it to shut down cleanly.
 - Improved DM worker exception handling to prevent individual errors from stopping all command processing.
+- Added a GitHub Actions workflow to send commit notifications to Discord via a webhook.
 
 ### Changed
 
