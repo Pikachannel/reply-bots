@@ -9,12 +9,16 @@
 - Added automatic cleanup of older log files.
 - Added dedicated exception types for authentication, network, API, rate-limit and configuration errors.
 - Added a stop signal to the JSON worker to allow it to shut down cleanly.
+- Improved DM worker exception handling to prevent individual errors from stopping all command processing.
 
 ### Changed
 
 - Refactored Jetstream reconnection handling into a dedicated helper function.
 - Changed reconnect timing so that the reconnect timer only resets after a connection has remained stable for 30 seconds.
 
+### Removed
+
+- Removed the five minute message age check from the DM worker, as the existing message processing logic prevents previously handled commands from being processed again.
 
 
 ## [0.17.0] - 2026-11-15
@@ -69,11 +73,14 @@
 - Changed Word of the Day duplicate checking to check the bot's last five posts instead of relying on the time of day.
 - Updated command handling to process up to ten recent commands within a five-minute window.
 
+### Removed
+
+- Removed unused imports and parameters.
+
 ### Fixed
 
 - Fixed an issue where URIs were incorrectly resolved in the post flags filter.
 - Defaulted missing bot data to an empty dictionary when an account DID was not found in the data file
-- Removed unused imports and parameters.
 
 
 ## [0.14.1] - 2026-11-10
@@ -145,6 +152,9 @@
 ### Changed
 
 - Updated `README.md` to use a new format for command examples.
+
+### Removed
+
 - Removed an unused `requests.Session` instance.
 
 
