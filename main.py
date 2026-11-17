@@ -119,8 +119,8 @@ def validate_config():
 
         word_bot_did = account_dids[word_bot_num - 1]
 
-# -------- Main Function --------
-async def main() -> None:
+# -------- Main Functions --------
+async def run() -> None:
     logger.info("[Main] Starting...")
 
     # -- Setup shutdown signals
@@ -267,11 +267,15 @@ async def main() -> None:
 
         logger.info("[Main] Shutdown complete.")
 
-if __name__ == "__main__":
+async def main() -> None:
     try:
         validate_logs()
         setup_logger()
         validate_config()
-        asyncio.run(main())
+        await run()
     except (ConfigError, AuthenticationError, NetworkError, APIError, RateLimitedError, UnknownError) as e:
         logger.critical(f"{e}")
+
+if __name__ == "__main__":
+    asyncio.run(main())
+    
