@@ -11,4 +11,4 @@ jobs:
 
       - uses: tristanbudd/discord-commit-github-action@master
         with:
-          webhook-url: ${{ secrets.WEBHOOK_URL }}
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
