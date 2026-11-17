@@ -1,6 +1,7 @@
 # -------- Imports --------
 from atproto import Client
 from typing import Optional
+import httpx
 from .definitions import AuthenticationError, RateLimitedError, NetworkError, UnknownError
 from .logging import logger
 
@@ -25,5 +26,7 @@ async def login(did: str, password: str) -> Optional[Client]:
                 raise RateLimitedError("[Client] Account is currently being rate limited.")
             else:
                 raise NetworkError(f"[Client] Unhandled API error (Status {code}): {e}")
+        elif isinstance(e, httpx.RequestError):
+            raise NetworkError(f"[Client] Network error occurred: {e}")
         else:
-            raise UnknownError(f"[Client] Network or unexpected error occurred: {e}")
+            raise UnknownError(f"[Client] Unexpected error occurred: {e}")
