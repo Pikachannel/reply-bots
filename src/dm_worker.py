@@ -23,7 +23,7 @@ class DmWorker:
             try:
                 await self.check_dms()
             except Exception as e:
-                logger.error(f"[DM Worker] Error: {e}")
+                logger.error(f"[DM Worker] Error: {type(e).__name__} {e}")
 
             try:
                 await asyncio.wait_for(self.stop_event.wait(), timeout=self.check_interval)
@@ -54,7 +54,7 @@ class DmWorker:
                 convo_list = await asyncio.to_thread(dm.list_convos)
 
             except Exception as e:
-                logger.error(f"[DM Worker] Error fetching conversations: {e}")
+                logger.error(f"[DM Worker] Error fetching conversations: {type(e).__name__} {e}")
                 continue
 
             for convo in convo_list.convos:
@@ -73,7 +73,7 @@ class DmWorker:
                     messages = messages_response.messages
                     last_bot_message_index = -1
                 except Exception as e:
-                    logger.error(f"[DM Worker] Error fetching messages: {e}")
+                    logger.error(f"[DM Worker] Error fetching messages: {type(e).__name__} {e}")
                     continue
 
                 try:
@@ -161,8 +161,8 @@ class DmWorker:
                                 )
 
                         except Exception as e:
-                            logger.error(f"[DM Worker] An error occurred while processing a message: {e}")
+                            logger.error(f"[DM Worker] An error occurred while processing a message: {type(e).__name__} {e}")
                         finally:
                             self.pending_messages -= 1
                 except Exception as e:
-                    logger.error(f"[DM Worker] Unexpected conversation processing error: {e}")
+                    logger.error(f"[DM Worker] Unexpected conversation processing error: {type(e).__name__} {e}")

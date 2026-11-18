@@ -49,7 +49,7 @@ class Filters:
             self.cache[user_did] = (flagged, time.time())
             return flagged
         except Exception as e:
-            logger.error(f"[Filter] Error while checking account flags: {e}")
+            logger.error(f"[Filter] Error while checking account flags: {type(e).__name__} {e}")
             return True
     
     # -------------
@@ -74,6 +74,6 @@ class Filters:
             return flagged
 
         except Exception as e:
-            logger.error(f"[Filter] Error while checking post flags: {e}")
+            logger.error(f"[Filter] Error while checking post flags: {type(e).__name__} {e}")
             return True
 

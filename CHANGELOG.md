@@ -1,3 +1,10 @@
+## [0.18.1] - 2026-11-18
+
+### Fixed
+
+- Fixed error logging to include the exception type name so empty exception messages no longer produce blank logs.
+
+
 ## [0.18.0] - 2026-11-17
 
 ### Added

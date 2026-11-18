@@ -117,7 +117,7 @@ async def json_worker(path: str, queue: asyncio.Queue, user_data: dict) -> None:
                 future.set_result(True)
 
         except Exception as e:
-            logger.error(f"[JSON Worker] An error has occurred: {e}")
+            logger.error(f"[JSON Worker] An error has occurred: {type(e).__name__} {e}")
 
             # -- Report failure
             if not future.done():

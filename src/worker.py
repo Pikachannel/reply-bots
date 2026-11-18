@@ -53,7 +53,7 @@ async def worker(client: Client , queue: asyncio.Queue[dict], followers_set: set
             await post_manager.make_post(message, post_cid, post_uri, user_did, post_text, account_did)
 
         except Exception as e:
-            logger.error(f"[BSKY Worker] An error has occurred: {e}")
+            logger.error(f"[BSKY Worker] An error has occurred: {type(e).__name__} {e}")
         finally:
             queue.task_done() # Remove the task from the queue
             del message

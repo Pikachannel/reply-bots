@@ -44,7 +44,7 @@ class Websocket():
                 logger.warning(f"[Jetstream] Connection lost ({e})")
 
             except Exception as e:
-                logger.error(f"[Jetstream] Connection error ({e})")
+                logger.error(f"[Jetstream] Connection error: {type(e).__name__} {e}")
 
             finally:
                 if connected_at is not None:

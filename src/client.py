@@ -24,8 +24,8 @@ async def login(did: str, password: str) -> Client:
             elif code == 429:
                 raise RateLimitedError("[Client] Account is currently being rate limited.")
             else:
-                raise APIError(f"[Client] Unhandled API error (Status {code}): {e}")
+                raise APIError(f"[Client] Unhandled API error (Status {code}) {e}")
         elif isinstance(e, httpx.RequestError):
-            raise NetworkError(f"[Client] Network error occurred: {e}")
+            raise NetworkError(f"[Client] Network error occurred: {type(e).__name__} {e}")
         else:
-            raise UnknownError(f"[Client] Unexpected error occurred: {e}")
+            raise UnknownError(f"[Client] Unexpected error occurred: {type(e).__name__} {e}")

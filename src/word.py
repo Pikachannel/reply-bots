@@ -56,7 +56,7 @@ async def already_posted(client):
         return False
 
     except Exception as e:
-        logger.error(f"[Word] Failed to check recent posts: {e}")
+        logger.error(f"[Word] Failed to check recent posts: {type(e).__name__} {e}")
         return None
     
 # -- Post a word of the day every day
@@ -70,7 +70,7 @@ async def word_of_the_day(client, blocked_words):
                 await post_random_word(client, blocked_words)
 
         except Exception as e:
-            logger.error(f"[Word] Unexpected error: {e}")
+            logger.error(f"[Word] Unexpected error: {type(e).__name__} {e}")
 
         # -- Check again in an hour
         await asyncio.sleep(3600)

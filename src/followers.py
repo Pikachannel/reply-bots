@@ -10,6 +10,7 @@ async def refresh_followers(client: Client, followers_set: set, account_did: str
         try:
             all_followers = []
             cursor = None
+            await asyncio.sleep(10)
 
             # -- Loop through all pages
             while True:
@@ -39,5 +40,5 @@ async def refresh_followers(client: Client, followers_set: set, account_did: str
             followers_set.update(follower_dids)  
             logger.info(f"[Follower Refresh] {len(followers_set)} followers loaded for {client.profile.handle}")
         except Exception as e:
-            logger.error(f"[Follower Refresh] Error updating follower list: {e}")
+            logger.error(f"[Follower Refresh] Error updating follower list: {type(e).__name__} {e}")
         await asyncio.sleep(300) # Get followers every 5 minutes
