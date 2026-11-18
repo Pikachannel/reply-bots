@@ -10,7 +10,6 @@ async def refresh_followers(client: Client, followers_set: set, account_did: str
         try:
             all_followers = []
             cursor = None
-            await asyncio.sleep(10)
 
             # -- Loop through all pages
             while True:
