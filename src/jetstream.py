@@ -15,6 +15,11 @@ class Websocket():
         self.ws = None
         self.stop_event = asyncio.Event()
 
+        self.disconnect_count = 0
+        self.reconnect_count = 0
+        self.total_connected_time = 0
+        self.last_connected_at = None
+
     # -------------
     # -- Connect function
     async def connect(self, queues: list) -> None:
@@ -25,7 +30,7 @@ class Websocket():
         while self.connected:
             connected_at = None
             try:
-                async with websockets.connect(self.endpoint) as ws:
+                async with websockets.connect(self.endpoint, ping_interval=20, ping_timeout=40) as ws:
                     logger.info(f"[Jetstream] Connected to {self.endpoint}")
                     self.ws = ws
                     connected_at = asyncio.get_running_loop().time()
@@ -50,13 +55,24 @@ class Websocket():
                 if connected_at is not None:
                     connected_for = asyncio.get_running_loop().time() - connected_at
 
+                    self.total_connected_time += connected_for
+                    self.disconnect_count += 1
+
+                    logger.info(
+                        f"[Jetstream] Connection duration: {connected_for:.1f}s | "
+                        f"Disconnects: {self.disconnect_count} | "
+                        f"Total uptime: {self.total_connected_time:.1f}s"
+                    )
+
                     if connected_for >= 30:
                         self.reconnect = 1
 
                 self.ws = None
 
             if self.connected:
-                logger.info(f"[Jetstream] Reconnecting in {self.reconnect} seconds")
+                self.reconnect_count += 1
+
+                logger.info(f"[Jetstream] Reconnecting in {self.reconnect}s (attempt {self.reconnect_count})")
 
                 if not await self.wait_reconnect():
                     break

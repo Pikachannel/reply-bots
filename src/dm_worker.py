@@ -3,6 +3,8 @@ from atproto import models
 from typing import Any
 import asyncio
 from .logging import logger
+from atproto.exceptions import NetworkError
+
 
 # -------- DmWorker Class --------
 class DmWorker:
@@ -37,7 +39,36 @@ class DmWorker:
     async def stop(self) -> None:
         logger.info(f"[DM Worker] Shutting down... waiting for {self.pending_messages} pending messages to finish.")
         self.stop_event.set()
-        
+
+    # -------------
+    # -- Fetch converstaions
+    async def fetch_conversations(self, dm: Any):
+        # -- Try to fetch conversations with max 3 attempts
+        attempts = 3
+
+        for attempt in range(attempts):
+            try:
+                return await asyncio.to_thread(dm.list_convos, models.ChatBskyConvoListConvos.Params(read_state="unread"))
+            
+            except Exception as e:
+                # -- Get status code
+                if hasattr(e, "response") and hasattr(e.response, "status_code"):
+                    code = e.response.status_code
+                else:
+                    code = 0
+                retryable = code == 429 or code >= 500 or isinstance(e, NetworkError)
+
+                # -- Log error if not retryable
+                if not retryable or attempt == attempts - 1:
+                    logger.error(f"[DM Worker] An error has occured while fetching conversations: {type(e).__name__} {e}")
+                    raise
+                else:
+                    # -- Retry with delay
+                    delay = 2 ** attempt
+                    logger.warning(f"[DM Worker] Fetching conversations failed ({type(e).__name__}: {e})... retrying in {delay}s)")
+
+                    await asyncio.sleep(delay)
+
     # -------------
     # -- Check DMs sent to the bot
     async def check_dms(self) -> None:
@@ -51,7 +82,7 @@ class DmWorker:
                 dm_client = client.with_bsky_chat_proxy()
                 dm = dm_client.chat.bsky.convo
 
-                convo_list = await asyncio.to_thread(dm.list_convos)
+                convo_list = await self.fetch_conversations(dm)
 
             except Exception as e:
                 logger.error(f"[DM Worker] Error fetching conversations: {type(e).__name__} {e}")
@@ -60,6 +91,8 @@ class DmWorker:
             for convo in convo_list.convos:
                 if self.stop_event.is_set():
                     return
+                if convo.unread_count == 0:
+                    continue
 
                 try:
                     messages_response = await asyncio.to_thread(
@@ -92,7 +125,10 @@ class DmWorker:
 
                     self.pending_messages = len(unread_messages)
 
+
                     # -- Process oldest messages first
+                    all_processed = True
+
                     for message in reversed(unread_messages):
                         try:
                             # -- Ignore system message views
@@ -159,10 +195,15 @@ class DmWorker:
                                         message=message_input
                                     )
                                 )
-
+                            
                         except Exception as e:
+                            all_processed = False
                             logger.error(f"[DM Worker] An error occurred while processing a message: {type(e).__name__} {e}")
                         finally:
                             self.pending_messages -= 1
+
+                    if all_processed:
+                        await asyncio.to_thread(dm.update_read, models.ChatBskyConvoUpdateRead.Data(convo_id=convo.id))
+                    
                 except Exception as e:
                     logger.error(f"[DM Worker] Unexpected conversation processing error: {type(e).__name__} {e}")
