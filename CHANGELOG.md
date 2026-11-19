@@ -2,9 +2,10 @@
 
 ### Changed
 
-- Improved Jetstream disconnection logs to include uptime and the number of disconnections.
-- Updated DM Worker conversation fetching to retry failed requests caused by network and API errors.
-- Updated DM Worker to fetch only unread conversations, skip message fetching when no unread messages are present, and mark conversations as read only when message processing completes without errors.
+- Improved Jetstream disconnection logging to include connection duration, total uptime, and the number of disconnections.
+- Updated DM Worker conversation fetching to retry failed requests up to three times when network errors occur.
+- Optimised DM Worker conversation fetching to fetch messages only from conversations with unread messages.
+- Updated DM Worker to mark conversations as read only after successful message processing.
 
 
 ## [0.18.1] - 2026-11-18
