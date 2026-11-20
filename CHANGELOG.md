@@ -6,7 +6,7 @@
 
 ### Changed
 
-- Changed the Jetstream connection to only recieve post and follow events.
+- Changed the Jetstream connection to only receive post and follow events.
 - Changed the Jetstream connection logic to rotate randomly between all four available endpoints.
 - Changed queue handling to use `put_nowait()` and skip incoming events when a queue is full, preventing the loop from becoming blocked.
 
