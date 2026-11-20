@@ -2,14 +2,28 @@
 import asyncio
 import websockets
 import json
+import random
 from websockets.exceptions import ConnectionClosedError
+from urllib.parse import urlencode
 from .logging import logger
 
 # -------- Websocket Class --------
 class Websocket():
     # -- Setup websocket variables
     def __init__(self):
-        self.endpoint = "wss://jetstream1.us-east.bsky.network/subscribe"
+        self.endpoints = [
+            "wss://jetstream1.us-east.bsky.network/subscribe",
+            "wss://jetstream2.us-east.bsky.network/subscribe",
+            "wss://jetstream1.us-west.bsky.network/subscribe",
+            "wss://jetstream2.us-west.bsky.network/subscribe"
+        ]
+        self.wanted_collections = urlencode([
+            ("wantedCollections", "app.bsky.feed.post"),
+            ("wantedCollections", "app.bsky.graph.follow")
+        ])
+
+        self.current_endpoint = 0
+
         self.reconnect = 1
         self.connected = False
         self.ws = None
@@ -20,6 +34,8 @@ class Websocket():
         self.total_connected_time = 0
         self.last_connected_at = None
 
+        self.queue_status = {}
+
     # -------------
     # -- Connect function
     async def connect(self, queues: list) -> None:
@@ -29,9 +45,15 @@ class Websocket():
         # -- Try to connect infinitely 
         while self.connected:
             connected_at = None
+            if self.current_endpoint >= len(self.endpoints):
+                random.shuffle(self.endpoints)
+                self.current_endpoint = 0
+
             try:
-                async with websockets.connect(self.endpoint, ping_interval=20, ping_timeout=40) as ws:
-                    logger.info(f"[Jetstream] Connected to {self.endpoint}")
+                endpoint = self.endpoints[self.current_endpoint]
+                logger.info(f"[Jetstream] Attempting to connect to {endpoint}...")
+                async with websockets.connect(f"{endpoint}?{self.wanted_collections}", ping_interval=20, ping_timeout=40, open_timeout=20, close_timeout=10) as ws:
+                    logger.info(f"[Jetstream] Connected to {endpoint}")
                     self.ws = ws
                     connected_at = asyncio.get_running_loop().time()
 
@@ -40,8 +62,39 @@ class Websocket():
                         try:
                             message = json.loads(raw_message)
 
-                            for queue in queues:
-                                await queue.put(message)
+                            # -- Add the message to each queue
+                            for i, queue in enumerate(queues):
+                                status = self.queue_status.setdefault(i, {
+                                    "full": False,
+                                    "near_capacity": False
+                                })
+
+                                qsize = queue.qsize()
+                                maxsize = queue.maxsize
+
+                                # -- Report the queue as full
+                                if queue.full():
+                                    if not status["full"]:
+                                        logger.warning(f"[Jetstream] Queue {i} is full ({qsize}/{maxsize})")
+
+                                    status["full"] = True
+                                    status["near_capacity"] = False
+                                    continue
+
+                                # -- Reset status once the queue has room again
+                                status["full"] = False
+
+                                # -- Report the queue as nearing capacity
+                                if maxsize > 0 and qsize >= maxsize * 0.8:
+                                    if not status["near_capacity"]:
+                                        logger.warning(f"[Jetstream] Queue {i} nearing capacity ({qsize}/{maxsize})")
+
+                                    status["near_capacity"] = True
+                                else:
+                                    status["near_capacity"] = False
+
+                                queue.put_nowait(message)
+
                         except json.JSONDecodeError:
                             continue
 
@@ -68,6 +121,7 @@ class Websocket():
                         self.reconnect = 1
 
                 self.ws = None
+                self.current_endpoint += 1
 
             if self.connected:
                 self.reconnect_count += 1
