@@ -1,3 +1,11 @@
+## [0.18.4] - 2026-11-21
+
+### Added
+
+- Added many new messages for Whimsy Miku and Evil Teto.
+- Added a 45-second global posting cooldown for each bot, limiting each bot to one post every 45 seconds.
+
+
 ## [0.18.3] - 2026-11-20
 
 ### Added
