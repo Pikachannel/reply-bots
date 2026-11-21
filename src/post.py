@@ -18,6 +18,7 @@ class PostManager:
         self.post_times = {bot_did: {} for bot_did in account_dids}
         self.post_numbers = {bot_did: {} for bot_did in account_dids}
         self.profile_cache = {}
+        self.global_cooldown = 45
 
         self.filters = filters
 
@@ -60,10 +61,13 @@ class PostManager:
 
         now = time.time()
         next_allowed = self.post_times.get(bot_did, {}).get(user_did, 0)
+        next_global_allowed = self.post_times.get(bot_did, {}).get("global", 0)
 
         if now < next_allowed:
             remaining = next_allowed - now
             # print(f"[Post] Skipping post for {user_did} ({remaining:.2f}s remaining)")
+            return False
+        elif now < next_global_allowed:
             return False
 
         if len(intervals) != 0:
@@ -72,7 +76,9 @@ class PostManager:
             interval = 0
         if interval < 60:
             interval = 60
+        
         self.post_times[bot_did][user_did] = now + interval
+        self.post_times[bot_did]["global"] = now + self.global_cooldown
         return True
 
     # -------------
